@@ -4,6 +4,7 @@ export const PAUSE = "pause";
 export const RESUME = "resume";
 export const STOP = "stop";
 export const HALT = "halt";
+export const LISTENSTATUS = "listen";
 export const STATUS = "status";
 export const ALARM = "status";
 export const UPDATEWELL = "update_well";

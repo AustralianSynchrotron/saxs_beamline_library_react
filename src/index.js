@@ -5,15 +5,18 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import configureStore from "./configureStore";
-import { handleDataFromServer, getServerVersion } from "./actions";
+import { handleDataFromServer, getServerVersion, listenStatus } from "./actions";
 import * as serviceWorker from "./serviceWorker";
 require("typeface-roboto");
 
 const store = configureStore(socket);
 
-socket.onopen = () => {
-  console.log("websocket opened");
+socket.onopen = key => {
+  console.log("websocket " + key + " opened");
   store.dispatch(getServerVersion());
+  if (key == "status") {
+    store.dispatch(listenStatus());
+  };
 };
 socket.onclose = () => {
   console.log("closed");

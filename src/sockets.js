@@ -33,7 +33,7 @@ class ReconnectingWebSocket {
     console.log("new websocket");
     this.instance[key].onopen = (...args) => {
       console.log("websocket open");
-      this.onopen(...args);
+      this.onopen(key, ...args);
     };
     this.instance[key].onmessage = (...args) => {
       this.onmessage(...args);

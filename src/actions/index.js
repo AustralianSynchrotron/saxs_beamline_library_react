@@ -59,3 +59,7 @@ export const updateStatus = status => ({
   data: { status },
   fromServer: true
 });
+export const listenStatus = () => ({
+  type: actions.LISTENSTATUS,
+  key: "status"
+});
