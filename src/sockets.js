@@ -59,7 +59,7 @@ class ReconnectingWebSocket {
 const socket = new ReconnectingWebSocket(
   {
     acquire: `ws://${window.location.hostname}:3142`,
-    status: `ws://${window.location.hostname}:3001`
+    status: `ws://${window.location.hostname}:3143`
   }
   // {
   //   acquire: `ws://${window.location.hostname}:${process.env.ACQUIRE_WEBSOCKET}`,

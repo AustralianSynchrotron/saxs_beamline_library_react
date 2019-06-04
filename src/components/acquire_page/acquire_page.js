@@ -111,7 +111,7 @@ class AcquirePage extends Component {
   handleFilename = event => {
     this.setState({ filename: event.target.value });
 
-    const invalidCharacters = event.target.value.match(/[-!@#$%^&*()_+|~=`{}\[\]:";'<>?,. \\\/]/g);
+    const invalidCharacters = event.target.value.match(/[-!@#$%^&*()+|~=`{}\[\]:";'<>?,. \\\/]/g);
     if (invalidCharacters !== null) {
       this.setState({ validFilename: false });
 

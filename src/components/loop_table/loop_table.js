@@ -23,7 +23,6 @@ import Switch from "@material-ui/core/Switch";
 import Typography from "@material-ui/core/Typography";
 import purple from "@material-ui/core/colors/purple";
 import amber from "@material-ui/core/colors/amber";
-import Collapse from "@material-ui/core/collapse";
 
 const switchTheme = createMuiTheme({
   palette: {

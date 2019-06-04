@@ -20,12 +20,12 @@ export default (state = default_state, action) => {
         ...state,
         plate_list: action.data.plate_list
       };
-    case actions.LOADPLATE:
-      return {
-        ...state,
-        plate_name: action.data.plate_name,
-        wells:
-      };
+    // case actions.LOADPLATE:
+    //   return {
+    //     ...state,
+    //     plate_name: action.data.plate_name,
+    //     wells:
+    //   };
     case actions.UPDATEWELL:
       return {
         ...state,
