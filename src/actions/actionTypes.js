@@ -7,3 +7,7 @@ export const HALT = "halt";
 export const STATUS = "status";
 export const ALARM = "status";
 export const UPDATEWELL = "update_well";
+export const SAVEPLATE = "save_plate";
+export const LOADPLATE = "load_plate";
+export const LISTPLATES = "list_plates";
+export const RUNPLATE = "run_plate";

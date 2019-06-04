@@ -59,11 +59,7 @@ class WellPlate extends Component {
     for (const [index, well] of Object.entries(this.props.wells)) {
       cards.push(
         <Grid key={index} lg={1} md={1} sm={1} xl={1} xs={1} item>
-          <WellCard
-            index={index}
-            well={well}
-            onUpdate={this.handleUpdate}
-          />
+          <WellCard index={index} well={well} onUpdate={this.handleUpdate} />
           {/* <WellCard key={index} name={element} onName={event => this.handleName(index, event)} /> */}
         </Grid>
       );

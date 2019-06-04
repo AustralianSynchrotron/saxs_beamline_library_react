@@ -39,6 +39,21 @@ export const updateWell = (index, well) => ({
   data: { index, well },
   local: true
 });
+export const savePlate = (plate_name, sample_names, positions, washes, types) => ({
+  type: actions.SAVEPLATE,
+  data: { plate_name, sample_names, positions, washes, types }
+});
+export const loadPlate = plate_name => ({
+  type: actions.LOADPLATE,
+  data: { plate_name }
+});
+export const listPlates = () => ({
+  type: actions.LISTPLATES
+});
+export const runPlate = (plate_name, sample_names, positions, washes, types) => ({
+  type: actions.RUNPLATE,
+  data: { plate_name, sample_names, positions, washes, types }
+});
 export const updateStatus = status => ({
   type: actions.STATUS,
   data: { status },

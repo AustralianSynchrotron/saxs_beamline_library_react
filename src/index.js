@@ -12,7 +12,7 @@ require("typeface-roboto");
 const store = configureStore(socket);
 
 socket.onopen = () => {
-  console.log("websocket opened")
+  console.log("websocket opened");
   store.dispatch(getServerVersion());
 };
 socket.onclose = () => {

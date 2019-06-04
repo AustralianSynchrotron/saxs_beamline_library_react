@@ -44,11 +44,20 @@ const styles = theme => ({
   },
   name: {
     padding: "10px"
+  },
+  buffer: {
+    background: "blue"
+  },
+  sample: {
+    background: "green"
+  },
+  repeatBuffer: {
+    background: "lightblue"
   }
 });
 
 const washes = ["No Wash", "Water Wash", "Detergent Wash"];
-const wellTypes = ["Buffer", "Sample", "Repeat Buffer"];
+const wellTypes = ["Empty", "Buffer", "Sample", "Repeat Buffer"];
 
 class WellCard extends PureComponent {
   constructor(props) {
@@ -62,7 +71,18 @@ class WellCard extends PureComponent {
   render() {
     const { classes } = this.props;
     return (
-      <Card className={classes.card}>
+      <Card
+        className={classNames(
+          classes.card,
+          this.props.well.wellType === "Buffer"
+            ? classes.buffer
+            : this.props.well.wellType === "Sample"
+            ? classes.sample
+            : this.props.well.wellType === "Repeat Buffer"
+            ? classes.repeatBuffer
+            : null
+        )}
+      >
         <CardContent className={classes.content}>
           <TextField
             className={classes.contentItems}

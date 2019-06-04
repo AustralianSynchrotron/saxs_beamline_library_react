@@ -2,15 +2,30 @@ import * as actions from "../actions/actionTypes";
 
 var wells = {};
 for (var i = 0; i < 96; i++) {
-  wells[i] = { name: "Well: " + i.toString(), wellType: "Sample", washType: "No Wash" };
+  wells[i] = { name: "Well: " + i.toString(), wellType: "Empty", washType: "No Wash" };
 }
+const plate_list = [];
+const plate_name = "plate";
 
 const default_state = {
-  wells
+  plate_name,
+  wells,
+  plate_list
 };
 
 export default (state = default_state, action) => {
   switch (action.type) {
+    case actions.LISTPLATES:
+      return {
+        ...state,
+        plate_list: action.data.plate_list
+      };
+    case actions.LOADPLATE:
+      return {
+        ...state,
+        plate_name: action.data.plate_name,
+        wells:
+      };
     case actions.UPDATEWELL:
       return {
         ...state,
