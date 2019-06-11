@@ -17,6 +17,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 
 import WellCard from "./well_card.js";
 
@@ -53,6 +54,14 @@ class WellPlate extends Component {
     this.props.updateWell(index, well);
   };
 
+  handleSelectAll = () => {
+    this.props.selectAllWells();
+  };
+
+  handleUnselectAll = () => {
+    this.props.unselectAllWells();
+  };
+
   render() {
     const { classes } = this.props;
     var cards = [];
@@ -67,6 +76,8 @@ class WellPlate extends Component {
 
     return (
       <React.Fragment>
+        <Button onClick={this.handleSelectAll}>Select All</Button>
+        <Button onClick={this.handleUnselectAll}>Unselect All</Button>
         <Grid container>{cards}</Grid>
       </React.Fragment>
     );

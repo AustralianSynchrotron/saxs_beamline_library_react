@@ -39,6 +39,14 @@ export const updateWell = (index, well) => ({
   data: { index, well },
   local: true
 });
+export const selectAllWells = () => ({
+  type: actions.SELECTALLWELLS,
+  local: true
+});
+export const unselectAllWells = () => ({
+  type: actions.UNSELECTALLWELLS,
+  local: true
+});
 export const savePlate = (plate_name, sample_names, positions, washes, types) => ({
   type: actions.SAVEPLATE,
   data: { plate_name, sample_names, positions, washes, types }

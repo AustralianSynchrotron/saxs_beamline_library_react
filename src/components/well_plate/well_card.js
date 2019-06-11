@@ -17,11 +17,17 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 
+import Checkbox from "@material-ui/core/Checkbox";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import blue from "@material-ui/core/colors/blue";
+import pink from "@material-ui/core/colors/pink";
+import grey from "@material-ui/core/colors/grey";
+import green from "@material-ui/core/colors/green";
 
 const switchTheme = createMuiTheme({
   palette: {}
@@ -31,6 +37,10 @@ const styles = theme => ({
   card: {
     display: "flex",
     flexGrow: 1
+  },
+  horizontal: {
+    display: "flex",
+    flexDirection: "row"
   },
   selectEmpty: {
     marginTop: theme.spacing.unit * 2
@@ -45,19 +55,31 @@ const styles = theme => ({
   name: {
     padding: "10px"
   },
+  volume: {
+    padding: "10px"
+  },
   buffer: {
-    background: "blue"
+    background: blue[900]
   },
   sample: {
-    background: "green"
+    background: green[700]
   },
   repeatBuffer: {
-    background: "lightblue"
+    background: blue[700]
+  },
+  noWash: {
+    background: grey[400]
+  },
+  waterWash: {
+    background: blue[400]
+  },
+  detergentWash: {
+    background: pink[400]
   }
 });
 
-const washes = ["No Wash", "Water Wash", "Detergent Wash"];
-const wellTypes = ["Empty", "Buffer", "Sample", "Repeat Buffer"];
+const washes = ["No Wash", "Water Wash", "Det. Wash"];
+const wellTypes = ["Empty", "Buffer", "Sample", "Rpt. Buffer"];
 
 class WellCard extends PureComponent {
   constructor(props) {
@@ -67,6 +89,9 @@ class WellCard extends PureComponent {
   handleUpdate = (key, event) => {
     this.props.onUpdate(this.props.index, { [key]: event.target.value });
   };
+  handleCheckedUpdate = (key, event) => {
+    this.props.onUpdate(this.props.index, { [key]: event.target.checked });
+  };
 
   render() {
     const { classes } = this.props;
@@ -74,28 +99,34 @@ class WellCard extends PureComponent {
       <Card
         className={classNames(
           classes.card,
-          this.props.well.wellType === "Buffer"
+          this.props.well.well_type === "Buffer"
             ? classes.buffer
-            : this.props.well.wellType === "Sample"
+            : this.props.well.well_type === "Sample"
             ? classes.sample
-            : this.props.well.wellType === "Repeat Buffer"
+            : this.props.well.well_type === "Rpt. Buffer"
             ? classes.repeatBuffer
             : null
         )}
       >
         <CardContent className={classes.content}>
-          <TextField
-            className={classes.contentItems}
-            variant="outlined"
-            value={this.props.well.name}
-            onChange={event => this.handleUpdate("name", event)}
-            InputProps={{ classes: { input: classes.name } }}
-          />
+          <div className={classes.horizontal}>
+            <TextField
+              className={classes.contentItems}
+              variant="outlined"
+              value={this.props.well.well_name}
+              onChange={event => this.handleUpdate("well_name", event)}
+              InputProps={{ classes: { input: classes.name } }}
+            />
+            <Checkbox
+              checked={this.props.well.well_selected}
+              onChange={event => this.handleCheckedUpdate("well_selected", event)}
+            />
+          </div>
           <Select
             className={classes.contentItems}
             label={"Sample Type"}
-            value={this.props.well.wellType}
-            onChange={event => this.handleUpdate("wellType", event)}
+            value={this.props.well.well_type}
+            onChange={event => this.handleUpdate("well_type", event)}
           >
             {wellTypes.map(name => (
               <MenuItem key={name} value={name}>
@@ -103,11 +134,33 @@ class WellCard extends PureComponent {
               </MenuItem>
             ))}
           </Select>
-          <Select
+          <TextField
             className={classes.contentItems}
+            variant="outlined"
+            placeholder={"Vol."}
+            type="number"
+            value={this.props.well.well_volume}
+            onChange={event => this.handleUpdate("well_volume", event)}
+            InputProps={{
+              endAdornment: <InputAdornment position="end">ul</InputAdornment>,
+              classes: { input: classes.volume }
+            }}
+          />
+          <Select
+            className={classNames(
+              classes.contentItems,
+              this.props.well.wash_type === "No Wash"
+                ? classes.noWash
+                : this.props.well.wash_type === "Water Wash"
+                ? classes.waterWash
+                : this.props.well.wash_type === "Det. Wash"
+                ? classes.detergentWash
+                : null
+            )}
+            bgcolor="primary.main"
             label={"Wash Type"}
-            value={this.props.well.washType}
-            onChange={event => this.handleUpdate("washType", event)}
+            value={this.props.well.wash_type}
+            onChange={event => this.handleUpdate("wash_type", event)}
           >
             {washes.map(name => (
               <MenuItem key={name} value={name}>

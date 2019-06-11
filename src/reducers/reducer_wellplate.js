@@ -2,7 +2,13 @@ import * as actions from "../actions/actionTypes";
 
 var wells = {};
 for (var i = 0; i < 96; i++) {
-  wells[i] = { name: "Well: " + i.toString(), wellType: "Empty", washType: "No Wash" };
+  wells[i] = {
+    well_name: "Well: " + i.toString(),
+    well_type: "Empty",
+    wash_type: "No Wash",
+    well_volume: 100,
+    well_selected: true
+  };
 }
 const plate_list = [];
 const plate_name = "plate";
@@ -33,6 +39,26 @@ export default (state = default_state, action) => {
           ...state.wells,
           [action.data.index]: { ...state.wells[action.data.index], ...action.data.well }
         }
+      };
+    case actions.SELECTALLWELLS:
+      console.log("here1");
+      var wells = { ...state.wells };
+      for (var well in state.wells) {
+        wells[well]["selected"] = true;
+      }
+      return {
+        ...state,
+        wells: { ...wells }
+      };
+    case actions.UNSELECTALLWELLS:
+      console.log("here2");
+      var wells = { ...state.wells };
+      for (var well in state.wells) {
+        wells[well]["selected"] = false;
+      }
+      return {
+        ...state,
+        wells: { ...wells }
       };
     default:
       return state;
