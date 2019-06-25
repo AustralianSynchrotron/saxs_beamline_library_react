@@ -71,3 +71,12 @@ export const listenStatus = () => ({
   type: actions.LISTENSTATUS,
   key: "status"
 });
+export const listConfigs = () => ({
+  type: actions.LIST_CONFIGS,
+  fetch: true,
+  url: "http://localhost:8086/api/v1.0/configs",
+  data: {
+    method: "GET",
+    mode: "cors"
+  }
+});

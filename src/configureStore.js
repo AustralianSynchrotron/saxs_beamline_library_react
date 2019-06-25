@@ -1,9 +1,10 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import { alarmMiddleware } from "./alarmMiddleware";
+import { fetchMiddleware } from "./fetchMiddleware";
 import rootReducer from "./reducers/";
 
 const forwardToServer = socket => store => next => action => {
-  if (!action.local && !action.fromServer) {
+  if (!action.local && !action.fromServer && !action.fetch) {
     socket.send(action.key, JSON.stringify(action));
   }
   next(action);
@@ -19,6 +20,7 @@ export default socket => {
   const middlewares = [];
   if (socket !== undefined) {
     middlewares.push(forwardToServer(socket));
+    middlewares.push(fetchMiddleware);
     middlewares.push(dropUnlessFromServer);
     middlewares.push(alarmMiddleware);
   }

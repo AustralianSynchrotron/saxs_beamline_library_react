@@ -16,7 +16,7 @@ socket.onopen = key => {
   store.dispatch(getServerVersion());
   if (key == "status") {
     store.dispatch(listenStatus());
-  };
+  }
 };
 socket.onclose = () => {
   console.log("closed");

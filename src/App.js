@@ -21,6 +21,7 @@ import ViewComfy from "@material-ui/icons/ViewComfy";
 import PlayCircleOutline from "@material-ui/icons/PlayCircleOutline";
 import Filters from "./components/filter/filter.js";
 import AcquirePage from "./components/acquire_page/acquire_page.js";
+import ConfigPage from "./components/config_page/config_page.js";
 import WellPlate from "./components/well_plate/well_plate.js";
 
 const drawerWidth = 240;
@@ -169,7 +170,8 @@ class App extends Component {
                 ["Acquisition", <PlayCircleOutline />],
                 ["Solution Autoloader", <ViewComfy />],
                 ["New Experiment", <NoteAdd />],
-                ["BL Setup", <Settings />]
+                ["BL Setup", <Settings />],
+                ["BL Config", <Settings />]
               ].map((item, index) => (
                 <ListItem button key={item[0]} onClick={() => this.handlePageChange(index)}>
                   <ListItemIcon>{item[1]}</ListItemIcon>
@@ -194,6 +196,11 @@ class App extends Component {
             {page === 3 && (
               <div>
                 <Filters size="7" />{" "}
+              </div>
+            )}
+            {page === 4 && (
+              <div>
+                <ConfigPage />
               </div>
             )}
           </main>
