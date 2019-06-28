@@ -67,6 +67,7 @@ export const updateStatus = status => ({
   data: { status },
   fromServer: true
 });
+
 export const listenStatus = () => ({
   type: actions.LISTENSTATUS,
   key: "status"
@@ -74,11 +75,34 @@ export const listenStatus = () => ({
 
 export const listenVacStatus = () => ({
   type: actions.LISTENVACSTATUS,
-  key: "vac_status"
+  key: "vacuum"
 });
 
-export const pump = (filename, exp_times, num_images, delay, description) => ({
-  type: actions.ACQUIRE,
-  data: { filename, exp_times, num_images, delay, description },
-  key: "acquire"
+export const updateVacStatus = (nosecone, chamber, beamline, vessel) => ({
+  type: actions.VACSTATUS,
+  data: { nosecone, chamber, beamline, vessel },
+  fromServer: true
+});
+
+export const listenPressures = () => ({
+  type: actions.LISTENPRESSURES,
+  key: "vacuum"
+});
+
+export const updatePressures = (nosecone, beamline, chamber, vessel) => ({
+  type: actions.PRESSURES,
+  data: { nosecone, beamline, chamber, vessel },
+  fromServer: true
+});
+
+export const pump = (id) => ({
+  type: actions.PUMP,
+  data: { id },
+  key: "vacuum"
+});
+
+export const vent = (id) => ({
+  type: actions.VENT,
+  data: { id },
+  key: "vacuum"
 });

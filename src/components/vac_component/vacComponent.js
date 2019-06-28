@@ -105,6 +105,10 @@ class VacComponent extends Component {
       this.setState({ VentOpen: false });
     }
 
+    handleConsole = event => {
+      console.log(this.state.vacstatus)
+    }
+
 render() {
     const { classes } = this.props;
     return (
@@ -122,12 +126,13 @@ render() {
           <Button className={classNames(classes.button, classes.vent)} onClick={this.handleClickVent} >
             vent
         </Button>
+          <Button onClick={this.handleConsole}>Log!</Button>
         </Grid>
         <Grid item xs={2}>
           <Typography className={classes.status}>{this.state.pressure}</Typography>
         </Grid>
         <Grid item xs={2}>
-          <Typography className={classNames(this.state.isPumped ? classes.ok : classes.bad)}>{this.state.status}</Typography>
+          <Typography className={classNames(this.state.isPumped ? classes.ok : classes.bad)}>{this.state.vacstatus}</Typography>
         </Grid>
         <PumpDialog onClose={this.handlePumpClose} open={this.state.PumpOpen} title={this.props.id} />
         <VentDialog onClose={this.handleVentClose} open={this.state.VentOpen} title={this.props.id} />
@@ -143,6 +148,8 @@ VacComponent.propTypes = {
 
 function mapStateToProps(state) {
   return {
+    vacstatus: <state className="vacuum"></state>,
+    pressures:state.vacuum.pressures
   };
 }
 
