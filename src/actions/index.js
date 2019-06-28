@@ -71,3 +71,14 @@ export const listenStatus = () => ({
   type: actions.LISTENSTATUS,
   key: "status"
 });
+
+export const listenVacStatus = () => ({
+  type: actions.LISTENVACSTATUS,
+  key: "vac_status"
+});
+
+export const pump = (filename, exp_times, num_images, delay, description) => ({
+  type: actions.ACQUIRE,
+  data: { filename, exp_times, num_images, delay, description },
+  key: "acquire"
+});

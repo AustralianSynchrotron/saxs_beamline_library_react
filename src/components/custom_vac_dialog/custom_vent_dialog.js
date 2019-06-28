@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
+import { Typography } from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
@@ -12,7 +12,7 @@ const styles = theme => ({
   }
 });
 
-class CustomVacDialog extends Component {
+class VentDialog extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,27 +30,20 @@ class CustomVacDialog extends Component {
 
   render() {
     return (
-      <Dialog onClose={this.handleClose} open={this.props.open}>
-        <DialogTitle>{this.props.title}</DialogTitle>
-        <TextField
-          value={this.state.time}
-          onChange={this.handleChange}
-          type="number"
-          variant="outlined"
-          onKeyDown={event => {
-            if (event.key === "Enter") {
-              this.handleClose();
-            }
-          }}
-        />
-        <Button onClick={this.handleClose}>Close</Button>
+      <Dialog fullWidth={true} maxwidth="xs" onClose={this.handleClose} open={this.props.open}>
+        <DialogTitle></DialogTitle>
+        <div align="center">
+        <Typography variant='body1'>Do you really want to Vent?</Typography>
+        </div>
+        <Button onClick={this.handleClose}>No</Button>
+        <Button onClick={this.handleClose}>Yes</Button>
       </Dialog>
     );
   }
 }
 
-CustomVacDialog.propTypes = {
+VentDialog.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(CustomVacDialog);
+export default withStyles(styles)(VentDialog);

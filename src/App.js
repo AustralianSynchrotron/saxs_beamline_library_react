@@ -16,12 +16,14 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import NoteAdd from "@material-ui/icons/NoteAdd";
+import Cached from "@material-ui/icons/Cached";
 import Settings from "@material-ui/icons/Settings";
 import ViewComfy from "@material-ui/icons/ViewComfy";
 import PlayCircleOutline from "@material-ui/icons/PlayCircleOutline";
 import Filters from "./components/filter/filter.js";
 import AcquirePage from "./components/acquire_page/acquire_page.js";
 import WellPlate from "./components/well_plate/well_plate.js";
+import VacuumPage from "./components/vacuum/Vacuum"
 
 const drawerWidth = 240;
 
@@ -169,6 +171,7 @@ class App extends Component {
                 ["Acquisition", <PlayCircleOutline />],
                 ["Solution Autoloader", <ViewComfy />],
                 ["New Experiment", <NoteAdd />],
+                ["Vacuum Controls", <Cached />],
                 ["BL Setup", <Settings />]
               ].map((item, index) => (
                 <ListItem button key={item[0]} onClick={() => this.handlePageChange(index)}>
@@ -191,7 +194,12 @@ class App extends Component {
                 <WellPlate />
               </div>
             )}
-            {page === 3 && (
+             {page === 3 && (
+              <div>
+                <VacuumPage size="7" />{" "}
+              </div>
+            )}
+            {page === 4 && (
               <div>
                 <Filters size="7" />{" "}
               </div>

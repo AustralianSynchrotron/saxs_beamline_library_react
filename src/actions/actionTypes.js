@@ -5,6 +5,7 @@ export const RESUME = "resume";
 export const STOP = "stop";
 export const HALT = "halt";
 export const LISTENSTATUS = "listen";
+export const LISTENVACSTATUS = "listen_vac";
 export const STATUS = "status";
 export const ALARM = "status";
 export const UPDATEWELL = "update_well";

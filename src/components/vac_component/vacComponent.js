@@ -12,7 +12,9 @@ import Chip from "@material-ui/core/Chip";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
+import Paper from'@material-ui/core/Paper'
 import CancelIcon from "@material-ui/icons/Cancel";
+
 import classNames from "classnames";
 import green from "@material-ui/core/colors/green";
 import amber from "@material-ui/core/colors/amber";
@@ -41,39 +43,27 @@ const styles = theme => ({
       color: "white"
     }
   },
-  acquire: {
+  pump: {
     backgroundColor: green["700"],
     "&:hover": {
       backgroundColor: green["A700"]
     }
   },
-  pause: {
-    backgroundColor: amber["700"],
-    "&:hover": {
-      backgroundColor: amber["A700"]
-    }
-  },
-  resume: {
-    backgroundColor: amber["700"],
-    "&:hover": {
-      backgroundColor: amber["A700"]
-    }
-  },
-  finish: {
+
+  vent: {
     backgroundColor: deepOrange["500"],
     "&:hover": {
       backgroundColor: deepOrange["A400"]
     }
   },
-  halt: {
-    backgroundColor: red["500"],
-    "&:hover": {
-      backgroundColor: red["A700"]
-    }
+
+  ok: {
+    color: 'green'
   },
-  chip: {
-    margin: "2px"
+   bad: {
+    color: 'red'
   },
+
   status: {
     color: grey["400"]
   },
@@ -82,22 +72,20 @@ const styles = theme => ({
     height: "24px"
   },
   label: {
-    color: grey["400"]
-  },
-  number: {
-    height: "8px"
+    color: grey["400"],
   }
+
 });
-
-var times = [0.1, 0.5, 1, 2, 5, 10, 20, 30, 60, 120, "Custom"];
-
 
 class VacComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
           PumpOpen: false,
-          VentOpen: false
+          VentOpen: false,
+          pressure: null,
+          status: '',
+          isPumped: true
         };
     }
 
@@ -106,35 +94,45 @@ class VacComponent extends Component {
     }
 
     handleClickPump = event => {
-      this.setState({ VentOpen: true });
+      this.setState({ PumpOpen: true });
     }
 
     handlePumpClose = event => {
-      this.setState({ customVacOpen: false });
+      this.setState({ PumpOpen: false });
     }
 
      handleVentClose = event => {
-      this.setState({ customVacOpen: false });
+      this.setState({ VentOpen: false });
     }
 
 render() {
     const { classes } = this.props;
     return (
-      <Grid container className={classes.root} spacing={2}>
-        <Grid item>
-          <Button onClick={this.handleClickPump} >
-            pump me
+      <Paper>
+      <Grid container className={classes.root} spacing={2} alignItems='baseline' justify={'center'}>
+        <Grid item xs={2}>
+          <Typography className={classes.label} >{this.props.id}</Typography>
+        </Grid>
+        <Grid item xs={2}>
+          <Button  className={classNames(classes.button, classes.pump)} onClick={this.handleClickPump} >
+            pump
         </Button>
         </Grid>
-
-        <Grid item>
-          <Button onClick={this.handleClickVent} >
-            vent me
+        <Grid item xs={2}>
+          <Button className={classNames(classes.button, classes.vent)} onClick={this.handleClickVent} >
+            vent
         </Button>
         </Grid>
-        <PumpDialog onClose={this.handlePumpClose} open={this.state.PumpOpen} title='pump me' />
-        <VentDialog onClose={this.handleVentClose} open={this.state.VentOpen} title='vent me' />
+        <Grid item xs={2}>
+          <Typography className={classes.status}>{this.state.pressure}</Typography>
+        </Grid>
+        <Grid item xs={2}>
+          <Typography className={classNames(this.state.isPumped ? classes.ok : classes.bad)}>{this.state.status}</Typography>
+        </Grid>
+        <PumpDialog onClose={this.handlePumpClose} open={this.state.PumpOpen} title={this.props.id} />
+        <VentDialog onClose={this.handleVentClose} open={this.state.VentOpen} title={this.props.id} />
       </Grid>
+      </Paper>
     );
   }
 }
