@@ -30,9 +30,11 @@ class PumpDialog extends Component {
 
   render() {
     return (
-      <Dialog onClose={this.handleClose} open={this.props.open}>
-        <DialogTitle>{this.props.title}</DialogTitle>
-        <Typography>do you really want to pump {this.props.id}?</Typography>
+     <Dialog fullWidth={true} maxwidth="xs" onClose={this.handleClose} open={this.props.open}>
+        <DialogTitle></DialogTitle>
+        <div align="center">
+        <Typography variant='body1'>Pump this section?</Typography>
+        </div>
         <Button onClick={this.handleClose}>No</Button>
         <Button onClick={this.handleClose}>Yes</Button>
       </Dialog>

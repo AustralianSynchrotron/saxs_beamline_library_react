@@ -138,13 +138,13 @@ render() {
             <ManualVacComponent valve={true} id='Valve11' />
           </Grid>
           <Grid item xs={6}>
-            <ManualVacComponent valve={true} id='IGV_6' />
+            <ManualVacComponent valve={true} id='IGV06' />
           </Grid>
           <Grid item xs={6}>
-            <ManualVacComponent valve={true} id='IGV_8' />
+            <ManualVacComponent valve={true} id='IGV08' />
           </Grid>
           <Grid item xs={6}>
-            <ManualVacComponent valve={true} id='IGV_9' />
+            <ManualVacComponent valve={true} id='IGV09' />
           </Grid>
         </Grid>
         <Grid item xs={12}>

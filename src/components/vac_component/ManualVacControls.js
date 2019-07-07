@@ -88,7 +88,48 @@ class ManualVacComponent extends Component {
         };
     }
 
+    parseID = () => {
+      switch (this.props.id) {
+        case 'Valve07':
+          this.setState({valve_status: this.props.valves_status.vlv07});
+          break;
+        case 'Valve10':
+          this.setState({valve_status: this.props.valves_status.vlv10});
+          break;
+        case 'Valve11':
+          this.setState({valve_status: this.props.valves_status.vlv11});
+          break;
+        case 'Valve12':
+          this.setState({valve_status: this.props.valves_status.vlv12});
+          break;
+        case 'IGV06':
+          this.setState({valve_status: this.props.valves_status.igv06});
+          break;
+        case 'IGV08':
+          this.setState({valve_status: this.props.valves_status.igv08});
+          break;
+        case 'IGV09':
+          this.setState({valve_status: this.props.valves_status.igv09});
+          break;
+        case 'Ebarra':
+          this.setState({pump_status: this.props.pumps_status.ebarra});
+          break;
+        case 'Turbo1':
+          this.setState({pump_status: this.props.pumps_status.turbo1});
+          break;
+        case 'Turbo2':
+          this.setState({pump_status: this.props.pumps_status.turbo2});
+          break;
+      }
+    }
 
+    handleClick = () =>{
+
+    };
+
+    componentDidMount() {
+      this.parseID()
+    }
 render() {
     const { classes } = this.props;
     return (
@@ -100,12 +141,12 @@ render() {
         </Grid>
         </div>
         <Grid item xs={2}>
-          <Button  className={classNames(classes.button, classes.pump)} onClick={console.log("start")} >
+          <Button  className={classNames(classes.button, classes.pump)} onClick={this.handleClick()} >
             {this.props.valve ? "open":"run"}
         </Button>
         </Grid>
         <Grid item xs={2}>
-          <Button className={classNames(classes.button, classes.vent)} onClick={console.log("stop")} >
+          <Button className={classNames(classes.button, classes.vent)} onClick={this.handleClick()} >
            {this.props.valve ? "close":"stop"}
         </Button>
         </Grid>
@@ -125,6 +166,8 @@ ManualVacComponent.propTypes = {
 
 function mapStateToProps(state) {
   return {
+    valves_status: state.vacuum.valves_status,
+    pumps_status: state.vacuum.pumps_status
   };
 }
 

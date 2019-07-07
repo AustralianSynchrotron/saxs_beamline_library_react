@@ -81,7 +81,7 @@ export const listenVacStatus = () => ({
 export const updateVacStatus = (nosecone, chamber, beamline, vessel) => ({
   type: actions.VACSTATUS,
   data: { nosecone, chamber, beamline, vessel },
-  fromServer: true
+  local: true
 });
 
 export const listenPressures = () => ({
@@ -92,7 +92,13 @@ export const listenPressures = () => ({
 export const updatePressures = (nosecone, beamline, chamber, vessel) => ({
   type: actions.PRESSURES,
   data: { nosecone, beamline, chamber, vessel },
-  fromServer: true
+  local: true
+});
+
+export const updateValves = (vlv07, vlv10, vlv11, vlv12, igv06, igv08, igv09) => ({
+  type: actions.VALVES,
+  data: { vlv07, vlv10, vlv11, vlv12, igv06, igv08, igv09 },
+  local: true
 });
 
 export const pump = (id) => ({

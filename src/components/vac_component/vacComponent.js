@@ -60,6 +60,7 @@ const styles = theme => ({
   ok: {
     color: 'green'
   },
+
    bad: {
     color: 'red'
   },
@@ -84,9 +85,29 @@ class VacComponent extends Component {
           PumpOpen: false,
           VentOpen: false,
           pressure: null,
-          status: '',
-          isPumped: true
+          status: ''
         };
+    }
+
+    parseID = () => {
+      switch (this.props.id) {
+        case 'Nosecone':
+          this.setState({ pressure: this.props.pressures.nosecone });
+          this.setState({ status: this.props.vacstatus.nosecone });
+          break;
+        case 'Chamber':
+          this.setState({ pressure: this.props.pressures.chamber });
+          this.setState({ status: this.props.vacstatus.chamber });
+          break;
+        case 'Beamline':
+          this.setState({ pressure: this.props.pressures.beamline });
+          this.setState({ status: this.props.vacstatus.beamline });
+          break;
+        case 'Vessel':
+          this.setState({ pressure: this.props.pressures.vessel });
+          this.setState({ status: this.props.vacstatus.vessel });
+          break;
+      }
     }
 
     handleClickVent = event => {
@@ -106,8 +127,20 @@ class VacComponent extends Component {
     }
 
     handleConsole = event => {
-      console.log(this.state.vacstatus)
+      console.log(this.props.id)
     }
+
+    componentDidMount() {
+      this.parseID()
+    }
+
+     componentDidUpdate(prevProps, prevState) {
+      if (prevProps.pressures !== this.props.pressures) {
+        this.parseID()
+      }
+    }
+
+
 
 render() {
     const { classes } = this.props;
@@ -125,14 +158,13 @@ render() {
         <Grid item xs={2}>
           <Button className={classNames(classes.button, classes.vent)} onClick={this.handleClickVent} >
             vent
-        </Button>
-          <Button onClick={this.handleConsole}>Log!</Button>
+          </Button>
         </Grid>
         <Grid item xs={2}>
-          <Typography className={classes.status}>{this.state.pressure}</Typography>
+          <Typography className={classes.status}>{this.state.pressure} mbar</Typography>
         </Grid>
         <Grid item xs={2}>
-          <Typography className={classNames(this.state.isPumped ? classes.ok : classes.bad)}>{this.state.vacstatus}</Typography>
+          <Typography className={classNames(this.state.status ==='Pumped' ? classes.ok : classes.bad)}>{this.state.status}</Typography>
         </Grid>
         <PumpDialog onClose={this.handlePumpClose} open={this.state.PumpOpen} title={this.props.id} />
         <VentDialog onClose={this.handleVentClose} open={this.state.VentOpen} title={this.props.id} />
@@ -147,8 +179,9 @@ VacComponent.propTypes = {
 };
 
 function mapStateToProps(state) {
+  console.log(state.vacuum)
   return {
-    vacstatus: <state className="vacuum"></state>,
+    vacstatus: state.vacuum.vac_Status,
     pressures:state.vacuum.pressures
   };
 }
