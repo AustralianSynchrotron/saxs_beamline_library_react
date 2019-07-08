@@ -67,6 +67,7 @@ export const updateStatus = status => ({
   data: { status },
   fromServer: true
 });
+
 export const listenStatus = () => ({
   type: actions.LISTENSTATUS,
   key: "status"
@@ -98,4 +99,44 @@ export const newConfig = config_name => ({
     mode: "cors",
     config_name: config_name
   }
+});
+
+export const listenVacStatus = () => ({
+  type: actions.LISTENVACSTATUS,
+  key: "vacuum"
+});
+
+export const updateVacStatus = (nosecone, chamber, beamline, vessel) => ({
+  type: actions.VACSTATUS,
+  data: { nosecone, chamber, beamline, vessel },
+  local: true
+});
+
+export const listenPressures = () => ({
+  type: actions.LISTENPRESSURES,
+  key: "vacuum"
+});
+
+export const updatePressures = (nosecone, beamline, chamber, vessel) => ({
+  type: actions.PRESSURES,
+  data: { nosecone, beamline, chamber, vessel },
+  local: true
+});
+
+export const updateValves = (vlv07, vlv10, vlv11, vlv12, igv06, igv08, igv09) => ({
+  type: actions.VALVES,
+  data: { vlv07, vlv10, vlv11, vlv12, igv06, igv08, igv09 },
+  local: true
+});
+
+export const pump = (id) => ({
+  type: actions.PUMP,
+  data: { id },
+  key: "vacuum"
+});
+
+export const vent = (id) => ({
+  type: actions.VENT,
+  data: { id },
+  key: "vacuum"
 });
