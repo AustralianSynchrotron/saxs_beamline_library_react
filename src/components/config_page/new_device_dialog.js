@@ -13,7 +13,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import Dialog from "@material-ui/core/Dialog";
-import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import SnackbarContent from "@material-ui/core/SnackbarContent";
 
 import red from "@material-ui/core/colors/red";
 import blue from "@material-ui/core/colors/blue";
@@ -24,7 +25,7 @@ const styles = theme => ({
     flexDirection: "column"
   },
   item: {
-    paddingTop: "15px"
+    marginTop: "15px"
   },
   blue: {
     color: theme.palette.getContrastText(blue[500]),
@@ -33,40 +34,59 @@ const styles = theme => ({
   red: {
     color: theme.palette.getContrastText(blue[500]),
     backgroundColor: red[500]
+  },
+  error: {
+    color: theme.palette.getContrastText(theme.palette.error.dark),
+    backgroundColor: theme.palette.error.dark
   }
 });
 
-class NewConfigDialog extends Component {
+class NewDeviceDialog extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      validConfigName: true,
-      invalidConfigNameText: "",
-      baseConfig: "default",
-      configName: ""
+      validDeviceName: true,
+      invalidDeviceNameText: "",
+      deviceName: "",
+      enterValidDevice: false
     };
   }
 
-  handleConfigName = event => {
-    this.setState({ configName: event.target.value });
+  handleDeviceName = event => {
+    this.setState({ deviceName: event.target.value });
 
-    const invalidCharacters = event.target.value.match(/[-!@#$%^&*()+|~=`{}\[\]:";'<>?,. \\\/]/g);
+    const invalidCharacters = event.target.value.match(/[-!@#$%^&*()+|~=`{}\[\]:";'<>?, \\\/]/g);
     if (invalidCharacters !== null) {
-      this.setState({ validConfigName: false });
+      this.setState({ validDeviceName: false });
 
       invalidCharacters.forEach((character, index) => {
         if (character === " ") {
           invalidCharacters[index] = "<space>";
         }
       });
-      this.setState({ invalidConfigNameText: "Invalid Characters: " + invalidCharacters.join("") });
+      this.setState({ invalidDeviceNameText: "Invalid Characters: " + invalidCharacters.join("") });
     } else {
-      this.setState({ validConfigName: true, invalidConfigNameText: "" });
+      this.setState({ validDeviceName: true, invalidDeviceNameText: "" });
     }
   };
 
+  handleNameWarningClose = () => {
+    this.setState({ enterValidDevice: false });
+  };
+
   handleAdd = () => {
-    this.props.onClose(this.state.configName);
+    if (this.state.deviceName.trim() === "" || this.state.invalidDeviceNameText) {
+      this.setState({ enterValidDevice: true });
+    } else {
+      const valid = this.props.onCheckDevice(this.state.deviceName);
+      valid.then(responseData => {
+        if (responseData.valid) {
+          this.props.onClose(this.state.deviceName);
+        } else {
+          this.setState({ enterValidDevice: true });
+        }
+      });
+    }
   };
 
   handleCancel = () => {
@@ -85,37 +105,22 @@ class NewConfigDialog extends Component {
     const classes = this.props.classes;
     return (
       <Dialog onClose={this.handleClose} open={this.props.open}>
-        <DialogTitle>Create New Config</DialogTitle>
+        <DialogTitle>Add Device</DialogTitle>
         <DialogContent className={classes.root}>
           <TextField
-            error={!this.state.validConfigName}
+            error={!this.state.validDeviceName}
             label="Config Name"
             variant="outlined"
-            helperText={this.state.invalidConfigNameText}
-            onChange={this.handleConfigName}
+            helperText={this.state.invalidDeviceNameText}
+            onChange={this.handleDeviceName}
             value={this.state.Config}
             onKeyDown={event => {
               if (event.key === "Enter") {
-                this.handleClose();
+                this.handleAdd();
               }
             }}
             className={classes.item}
           />
-          <InputLabel htmlFor="select-config" className={classes.item}>
-            Base Config
-          </InputLabel>
-          <Select
-            label={"Configs"}
-            value={this.state.baseConfig}
-            onChange={this.handleSelectConfig}
-            input={<Input id="select-config" />}
-          >
-            {this.props.configs.map(name => (
-              <MenuItem key={name} value={name}>
-                {name}
-              </MenuItem>
-            ))}
-          </Select>
         </DialogContent>
         <DialogActions>
           <Fab aria-label="Create" onClick={this.handleAdd} className={classes.blue}>
@@ -125,13 +130,30 @@ class NewConfigDialog extends Component {
             <Close />
           </Fab>
         </DialogActions>
+        <Snackbar
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center"
+          }}
+          open={this.state.enterValidDevice}
+          onClose={this.handleNameWarningClose}
+          autoHideDuration={2000}
+          ContentProps={{
+            "aria-describedby": "message-id"
+          }}
+        >
+          <SnackbarContent
+            message={<span id="message-id">Invalid Device. Try Again.</span>}
+            className={classes.error}
+          />
+        </Snackbar>
       </Dialog>
     );
   }
 }
 
-NewConfigDialog.propTypes = {
+NewDeviceDialog.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(NewConfigDialog);
+export default withStyles(styles)(NewDeviceDialog);

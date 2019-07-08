@@ -72,11 +72,30 @@ export const listenStatus = () => ({
   key: "status"
 });
 export const listConfigs = () => ({
-  type: actions.LIST_CONFIGS,
+  type: actions.LISTCONFIGS,
   fetch: true,
   url: "http://localhost:8086/api/v1.0/configs",
   data: {
     method: "GET",
     mode: "cors"
+  }
+});
+export const getConfig = config => ({
+  type: actions.GETCONFIG,
+  fetch: true,
+  url: "http://localhost:8086/api/v1.0/config/" + config,
+  data: {
+    method: "GET",
+    mode: "cors"
+  }
+});
+export const newConfig = config_name => ({
+  type: actions.NEWCONFIG,
+  fetch: true,
+  url: "http://localhost:8086/api/v1.0/create",
+  data: {
+    method: "PUT",
+    mode: "cors",
+    config_name: config_name
   }
 });

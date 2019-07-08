@@ -10,6 +10,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Drawer from "@material-ui/core/Drawer";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import Favorite from "@material-ui/icons/Favorite";
 import Divider from "@material-ui/core/Divider";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -171,7 +172,7 @@ class App extends Component {
                 ["Solution Autoloader", <ViewComfy />],
                 ["New Experiment", <NoteAdd />],
                 ["BL Setup", <Settings />],
-                ["BL Config", <Settings />]
+                ["BL Config", <Favorite />]
               ].map((item, index) => (
                 <ListItem button key={item[0]} onClick={() => this.handlePageChange(index)}>
                   <ListItemIcon>{item[1]}</ListItemIcon>
