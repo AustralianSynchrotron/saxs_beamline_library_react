@@ -156,6 +156,10 @@ class ConfigPage extends Component {
     this.props.reRead();
   };
 
+  handleStore = () => {
+    this.props.storeConfig(this.state.selectedConfig);
+  };
+
   handleNewDeviceClose = device => {
     this.setState({ newDeviceOpen: false });
   };
@@ -215,7 +219,12 @@ class ConfigPage extends Component {
                   <AutoRenew className={classes.extendedIcon} />
                   Reinitialise
                 </Fab>
-                <Fab variant="extended" aria-label="Update" className={classes.fab}>
+                <Fab
+                  variant="extended"
+                  aria-label="Update"
+                  className={classes.fab}
+                  onClick={this.handleStore}
+                >
                   <Save className={classes.extendedIcon} />
                   Update
                 </Fab>

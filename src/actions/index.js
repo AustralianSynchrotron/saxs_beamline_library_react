@@ -100,6 +100,26 @@ export const newConfig = config_name => ({
     config_name: config_name
   }
 });
+export const reRead = () => ({
+  type: actions.REREAD,
+  fetch: true,
+  url: "http://localhost:8086/api/v1.0/read",
+  data: {
+    method: "GET",
+    mode: "cors"
+  }
+});
+
+export const storeConfig = config_name => ({
+  type: actions.STORECONFIG,
+  fetch: true,
+  url: "http://localhost:8086/api/v1.0/store",
+  data: {
+    method: "PUT",
+    mode: "cors",
+    body: JSON.stringify({ config_name: config_name })
+  }
+});
 
 export const listenVacStatus = () => ({
   type: actions.LISTENVACSTATUS,
@@ -129,13 +149,13 @@ export const updateValves = (vlv07, vlv10, vlv11, vlv12, igv06, igv08, igv09) =>
   local: true
 });
 
-export const pump = (id) => ({
+export const pump = id => ({
   type: actions.PUMP,
   data: { id },
   key: "vacuum"
 });
 
-export const vent = (id) => ({
+export const vent = id => ({
   type: actions.VENT,
   data: { id },
   key: "vacuum"

@@ -25,7 +25,7 @@ import Filters from "./components/filter/filter.js";
 import AcquirePage from "./components/acquire_page/acquire_page.js";
 import ConfigPage from "./components/config_page/config_page.js";
 import WellPlate from "./components/well_plate/well_plate.js";
-import VacuumPage from "./components/vacuum/Vacuum"
+import VacuumPage from "./components/vacuum/Vacuum";
 
 const drawerWidth = 240;
 
@@ -174,7 +174,7 @@ class App extends Component {
                 ["Solution Autoloader", <ViewComfy />],
                 ["New Experiment", <NoteAdd />],
                 ["BL Setup", <Settings />],
-                ["BL Config", <Favorite />]
+                ["BL Config", <Favorite />],
                 ["Vacuum Controls", <Cached />]
               ].map((item, index) => (
                 <ListItem button key={item[0]} onClick={() => this.handlePageChange(index)}>
@@ -197,19 +197,19 @@ class App extends Component {
                 <WellPlate />
               </div>
             )}
-             {page === 3 && (
+            {page === 3 && (
               <div>
-                <VacuumPage size="7" />{" "}
-              </div>
-            )}
-            {page === 4 && (
-              <div>
-                <Filters size="7" />{" "}
+                <Filters size="7" />
               </div>
             )}
             {page === 4 && (
               <div>
                 <ConfigPage />
+              </div>
+            )}
+            {page === 5 && (
+              <div>
+                <VacuumPage />
               </div>
             )}
           </main>
