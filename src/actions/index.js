@@ -72,6 +72,7 @@ export const listenStatus = () => ({
   type: actions.LISTENSTATUS,
   key: "status"
 });
+
 export const listConfigs = () => ({
   type: actions.LISTCONFIGS,
   fetch: true,
@@ -123,30 +124,30 @@ export const storeConfig = config_name => ({
 
 export const listenVacStatus = () => ({
   type: actions.LISTENVACSTATUS,
-  key: "vacuum"
+  key: "vacstatus"
 });
 
 export const updateVacStatus = (nosecone, chamber, beamline, vessel) => ({
   type: actions.VACSTATUS,
   data: { nosecone, chamber, beamline, vessel },
-  local: true
+  fromServer: true
 });
 
 export const listenPressures = () => ({
   type: actions.LISTENPRESSURES,
-  key: "vacuum"
+  key: "vacstatus"
 });
 
 export const updatePressures = (nosecone, beamline, chamber, vessel) => ({
   type: actions.PRESSURES,
   data: { nosecone, beamline, chamber, vessel },
-  local: true
+  fromServer: true
 });
 
 export const updateValves = (vlv07, vlv10, vlv11, vlv12, igv06, igv08, igv09) => ({
   type: actions.VALVES,
   data: { vlv07, vlv10, vlv11, vlv12, igv06, igv08, igv09 },
-  local: true
+  fromServer: true
 });
 
 export const pump = id => ({

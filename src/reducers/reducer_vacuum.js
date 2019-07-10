@@ -1,4 +1,5 @@
 import * as actions from "../actions/actionTypes";
+import { object } from "prop-types";
 
 var pressures ={
     nosecone: 900,
@@ -26,11 +27,11 @@ const valves_status = {
 };
 
 const pumps_status ={
-  ebarra: 'Stopped',
-  turbo1: 'Stopped',
-  turbo2: 'Stopped',
-  backing1: 'Stopped',
-  backing2: 'Stopped'
+  ebarra: 'NotRunning',
+  turbo1: 'NotRunning',
+  turbo2: 'NotRunning',
+  backing1: 'NotRunning',
+  backing2: 'NotRunning'
 };
 
 
@@ -44,13 +45,17 @@ const initial_state = {
 export default(state = initial_state, action) => {
   switch(action.type) {
     case actions.PRESSURES:
-      return state;
-    case actions.VACSTATUS:
-      return state;
+        var key = Object.keys(action.data)
+        return {...state, pressures: {...state.pressures, [key]:action.data[key]}}
     case actions.VALVES:
-      return state;
+      var key = Object.keys(action.data)
+      return {...state, valves_status: {...state.valves_status, [key]:action.data[key]}}
     case actions.PUMPS:
-      return state;
+      var key = Object.keys(action.data)
+      return {...state, pumps_status: {...state.pumps_status, [key]:action.data[key]}}
+    case actions.VACSTATUS:
+        var key = Object.keys(action.data)
+        return {...state, vac_Status: {...state.vac_Status, [key]:action.data[key]}}
     default:
       return state;
   }

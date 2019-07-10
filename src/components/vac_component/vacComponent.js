@@ -166,8 +166,8 @@ render() {
         <Grid item xs={2}>
           <Typography className={classNames(this.state.status ==='Pumped' ? classes.ok : classes.bad)}>{this.state.status}</Typography>
         </Grid>
-        <PumpDialog onClose={this.handlePumpClose} open={this.state.PumpOpen} title={this.props.id} />
-        <VentDialog onClose={this.handleVentClose} open={this.state.VentOpen} title={this.props.id} />
+        <PumpDialog onClose={this.handlePumpClose} open={this.state.PumpOpen} title={this.props.id} id={this.props.id} />
+        <VentDialog onClose={this.handleVentClose} open={this.state.VentOpen} title={this.props.id} id={this.props.id}/>
       </Grid>
       </Paper>
     );

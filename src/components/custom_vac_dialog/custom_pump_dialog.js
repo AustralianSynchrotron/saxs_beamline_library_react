@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+
+import * as actionCreators from "../../actions/index";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
@@ -16,17 +19,19 @@ class PumpDialog extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      time: 1.0
+      closed: 1
     };
   }
 
   handleClose = () => {
-    this.props.onClose(this.state.time);
+    this.props.onClose(this.state.closed);
   };
 
-  handleChange = event => {
-    this.setState({ time: parseFloat(event.target.value) });
-  };
+  handlePump = () => {
+    console.log(this.props.id);
+    this.props.pump(this.props.id);
+    this.handleClose();
+  }
 
   render() {
     return (
@@ -36,7 +41,7 @@ class PumpDialog extends Component {
         <Typography variant='body1'>Pump this section?</Typography>
         </div>
         <Button onClick={this.handleClose}>No</Button>
-        <Button onClick={this.handleClose}>Yes</Button>
+        <Button onClick={this.handlePump}>Yes</Button>
       </Dialog>
     );
   }
@@ -46,4 +51,13 @@ PumpDialog.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(PumpDialog);
+function mapStateToProps(state) {
+  return {
+    
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  actionCreators
+)(withStyles(styles)(PumpDialog));

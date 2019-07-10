@@ -42,6 +42,7 @@ class ReconnectingWebSocket {
     console.log("new websocket");
     this.instance[key].onopen = (...args) => {
       console.log("websocket open");
+      console.log(key);
       this.onopen(key, ...args);
     };
     this.instance[key].onmessage = (...args) => {
@@ -67,10 +68,13 @@ class ReconnectingWebSocket {
 
 const socket = new ReconnectingWebSocket(
   {
-    acquire: `ws://${window.location.hostname}:3142`,
+    vacuum: `ws://${window.location.hostname}:3144`,
+    vacstatus: `ws://${window.location.hostname}:3145`
     status: `ws://${window.location.hostname}:3143`,
+    acquire: `ws://${window.location.hostname}:3142`,
     ophyd: `ws://${window.location.hostname}:9999`
   }
+
   // {
   //   acquire: `ws://${window.location.hostname}:${process.env.ACQUIRE_WEBSOCKET}`,
   //   control: `ws://${window.location.hostname}:${process.env.CONTROL_WEBSOCKET}`

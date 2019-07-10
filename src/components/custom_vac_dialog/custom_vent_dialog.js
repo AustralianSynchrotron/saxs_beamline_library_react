@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+
+import * as actionCreators from "../../actions/index";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
@@ -16,17 +19,21 @@ class VentDialog extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      time: 1.0
+      closed: 1
     };
   }
 
   handleClose = () => {
-    this.props.onClose(this.state.time);
+    this.props.onClose(this.state.closed);
   };
+  
+  handleVent = () => {
+    this.props.vent(this.props.id);
+    console.log(this.props.id)
+    this.props.onClose(this.state.closed)
+  }
 
-  handleChange = event => {
-    this.setState({ time: parseFloat(event.target.value) });
-  };
+
 
   render() {
     return (
@@ -36,7 +43,7 @@ class VentDialog extends Component {
         <Typography variant='body1'>Do you really want to Vent?</Typography>
         </div>
         <Button onClick={this.handleClose}>No</Button>
-        <Button onClick={this.handleClose}>Yes</Button>
+        <Button onClick={this.handleVent}>Yes</Button>
       </Dialog>
     );
   }
@@ -46,4 +53,13 @@ VentDialog.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(VentDialog);
+function mapStateToProps(state) {
+  return {
+    
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  actionCreators
+)(withStyles(styles)(VentDialog));
