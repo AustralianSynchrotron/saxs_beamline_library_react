@@ -13,7 +13,7 @@ const store = configureStore(socket);
 
 socket.onopen = key => {
   console.log("websocket " + key + " opened");
-  store.dispatch(getServerVersion());
+  // store.dispatch(getServerVersion());
   if (key == "status") {
     store.dispatch(listenStatus());
   }
@@ -22,6 +22,7 @@ socket.onclose = () => {
   console.log("closed");
 };
 socket.onmessage = event => {
+  console.log("event:" + event.data);
   store.dispatch(handleDataFromServer(event.data));
 };
 

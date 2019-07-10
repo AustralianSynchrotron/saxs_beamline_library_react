@@ -26,5 +26,6 @@ export const STORECONFIG = "store_config";
 export const REREAD = "read";
 export const NEWCONFIG = "new_config";
 export const LIBRARYUPDATE = "library_update";
+export const SUBSCRIBEDEVICE = "subscribe_device";
 export const PUMP = "pump";
 export const VENT = "vent";

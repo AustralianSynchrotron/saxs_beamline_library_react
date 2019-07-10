@@ -160,3 +160,9 @@ export const vent = id => ({
   data: { id },
   key: "vacuum"
 });
+
+export const subscribeOphyd = device => ({
+  type: actions.SUBSCRIBEDEVICE,
+  data: { device },
+  key: "ophyd"
+});

@@ -1,5 +1,9 @@
 // From Robbies MX Robot app. I think he might have gotten it from somewhere else?
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 class ReconnectingWebSocket {
   static NORMAL_CLOSURE = 1000;
 
@@ -12,9 +16,14 @@ class ReconnectingWebSocket {
     }
   }
 
-  send = (key, ...args) => {
-    this.instance[key].send(...args);
-  };
+  async send(key, ...args) {
+    try {
+      this.instance[key].send(...args);
+    } catch {
+      await sleep(3000);
+      this.instance[key].send(...args);
+    }
+  }
 
   close = (key, ...args) => {
     this.instance[key].close(...args);
@@ -59,7 +68,8 @@ class ReconnectingWebSocket {
 const socket = new ReconnectingWebSocket(
   {
     acquire: `ws://${window.location.hostname}:3142`,
-    status: `ws://${window.location.hostname}:3143`
+    status: `ws://${window.location.hostname}:3143`,
+    ophyd: `ws://${window.location.hostname}:9999`
   }
   // {
   //   acquire: `ws://${window.location.hostname}:${process.env.ACQUIRE_WEBSOCKET}`,
