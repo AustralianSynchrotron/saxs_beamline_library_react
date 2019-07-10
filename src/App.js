@@ -202,7 +202,7 @@ class App extends Component {
                 <Filters size="7" />
               </div>
             )}
-            {page === 3 && (
+            {page === 4 && (
               <div>
                 <ConfigPage />
               </div>

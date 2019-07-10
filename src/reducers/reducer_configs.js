@@ -11,6 +11,10 @@ export default (state = default_state, action) => {
       return { ...state, config_list: action.data.concat("default") };
     case actions.GETCONFIG:
       return { ...state, config: action.data };
+    case actions.DEFAULTCONFIG:
+      return { ...state, config: action.data };
+    case actions.CONFIGSETPARAM:
+      return { ...state, config: action.data };
     default:
       return state;
   }

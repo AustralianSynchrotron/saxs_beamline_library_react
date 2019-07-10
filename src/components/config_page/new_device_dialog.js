@@ -109,7 +109,7 @@ class NewDeviceDialog extends Component {
         <DialogContent className={classes.root}>
           <TextField
             error={!this.state.validDeviceName}
-            label="Config Name"
+            label="Device Address"
             variant="outlined"
             helperText={this.state.invalidDeviceNameText}
             onChange={this.handleDeviceName}

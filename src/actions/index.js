@@ -98,7 +98,20 @@ export const newConfig = config_name => ({
   data: {
     method: "PUT",
     mode: "cors",
-    config_name: config_name
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ config_name: config_name })
+  }
+});
+export const getDefaultConfig = () => ({
+  type: actions.DEFAULTCONFIG,
+  fetch: true,
+  url: "http://localhost:8086/api/v1.0/default",
+  data: {
+    method: "GET",
+    mode: "cors"
   }
 });
 export const reRead = () => ({
@@ -118,7 +131,33 @@ export const storeConfig = config_name => ({
   data: {
     method: "PUT",
     mode: "cors",
-    body: JSON.stringify({ config_name: config_name })
+    body: JSON.stringify({ config_name })
+  }
+});
+
+export const updateConfig = config_name => ({
+  type: actions.UPDATECONFIG,
+  fetch: true,
+  url: "http://localhost:8086/api/v1.0/update",
+  data: {
+    method: "PUT",
+    mode: "cors",
+    body: JSON.stringify({ config_name })
+  }
+});
+
+export const configSetParameter = (config_name, key, value) => ({
+  type: actions.CONFIGSETPARAM,
+  fetch: true,
+  url: "http://localhost:8086/api/v1.0/config/parameter",
+  data: {
+    method: "PUT",
+    mode: "cors",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ config_name, key, value })
   }
 });
 

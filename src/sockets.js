@@ -1,9 +1,5 @@
 // From Robbies MX Robot app. I think he might have gotten it from somewhere else?
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 class ReconnectingWebSocket {
   static NORMAL_CLOSURE = 1000;
 
@@ -11,6 +7,7 @@ class ReconnectingWebSocket {
     this.urls = urls;
     this.autoReconnectInterval = autoReconnectInterval;
     this.instance = {};
+    this.buffer = {};
     for (let [key, url] of Object.entries(this.urls)) {
       this._open(key, url);
     }
@@ -20,8 +17,7 @@ class ReconnectingWebSocket {
     try {
       this.instance[key].send(...args);
     } catch {
-      await sleep(3000);
-      this.instance[key].send(...args);
+      this.buffer[key].push(args);
     }
   }
 
@@ -29,16 +25,17 @@ class ReconnectingWebSocket {
     this.instance[key].close(...args);
   };
 
-  onopen = () => {};
+  onopen = () => { };
 
-  onmessage = () => {};
+  onmessage = () => { };
 
-  onerror = () => {};
+  onerror = () => { };
 
-  onclose = () => {};
+  onclose = () => { };
 
   _open = (key, url) => {
     this.instance[key] = new WebSocket(url);
+    this.buffer[key] = [];
     console.log("new websocket");
     this.instance[key].onopen = (...args) => {
       console.log("websocket open");
@@ -69,7 +66,7 @@ class ReconnectingWebSocket {
 const socket = new ReconnectingWebSocket(
   {
     vacuum: `ws://${window.location.hostname}:3144`,
-    vacstatus: `ws://${window.location.hostname}:3145`
+    vacstatus: `ws://${window.location.hostname}:3145`,
     status: `ws://${window.location.hostname}:3143`,
     acquire: `ws://${window.location.hostname}:3142`,
     ophyd: `ws://${window.location.hostname}:9999`

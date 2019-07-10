@@ -221,8 +221,6 @@ class AcquirePage extends Component {
     const { classes } = this.props;
     return (
       <Grid container className={classes.root} spacing={2}>
-        <Blah device={"simulated.sim_motors.sample_table.x"} />
-        <Blah device={"simulated.sim_motors.sample_table.y"} />
         <Grid item xs={12}>
           <Grid container justify="left" spacing={10}>
             <Grid item>

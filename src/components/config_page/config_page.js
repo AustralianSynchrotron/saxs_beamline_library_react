@@ -15,6 +15,7 @@ import Restore from "@material-ui/icons/Restore";
 import AutoRenew from "@material-ui/icons/Autorenew";
 import Save from "@material-ui/icons/Save";
 import Send from "@material-ui/icons/Send";
+import PlaylistAddCheck from "@material-ui/icons/PlaylistAddCheck";
 import PlaylistAdd from "@material-ui/icons/PlaylistAdd";
 import DeleteForever from "@material-ui/icons/DeleteForever";
 import TextField from "@material-ui/core/TextField";
@@ -46,6 +47,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
+import { red, blue } from "@material-ui/core/colors";
 
 const switchTheme = createMuiTheme({
   palette: {
@@ -81,16 +83,17 @@ const styles = theme => ({
       color: "white"
     }
   },
-  store: {
-    backgroundColor: green["700"],
-    "&:hover": {
-      backgroundColor: green["A700"]
-    }
-  },
   restore: {
     backgroundColor: amber["700"],
     "&:hover": {
-      backgroundColor: amber["A700"]
+      backgroundColor: amber["A200"]
+    }
+  },
+  addrow: {
+    color: theme.palette.getContrastText(blue["700"]),
+    backgroundColor: blue["700"],
+    "&:hover": {
+      backgroundColor: blue["A200"]
     }
   },
   chip: {
@@ -143,13 +146,16 @@ class ConfigPage extends Component {
     } else {
       this.props.newConfig(configName);
     }
-
     this.setState({ newConfigOpen: false });
   };
 
   handleSelectConfig = event => {
     this.setState({ selectedConfig: event.target.value });
-    this.props.getConfig(event.target.value);
+    if (event.target.value === "default") {
+      this.props.getDefaultConfig(event.target.value);
+    } else {
+      this.props.getConfig(event.target.value);
+    }
   };
 
   handleReReadConfigs = event => {
@@ -158,6 +164,10 @@ class ConfigPage extends Component {
 
   handleStore = () => {
     this.props.storeConfig(this.state.selectedConfig);
+  };
+
+  handleUpdate = () => {
+    this.props.updateConfig(this.state.selectedConfig);
   };
 
   handleNewDeviceClose = device => {
@@ -189,6 +199,27 @@ class ConfigPage extends Component {
     });
   };
 
+  setParameter = (event, key, value) => {
+    this.props.configSetParameter(
+      this.state.selectedConfig,
+      ["devices", event.currentTarget.dataset.device].concat(key),
+      value
+    );
+  };
+
+  handleValueChange = event => {
+    this.setParameter(event, ["value"], event.target.value);
+  };
+  handleNoUpdateChange = event => {
+    this.setParameter(event, ["update", "no_update"], event.target.checked);
+  };
+  handleRelativeDeviceChange = event => {
+    this.setParameter(event, ["update", "relative", "device"], event.target.value);
+  };
+  handleDirChange = event => {
+    this.setParameter(event, ["update", "relative", "dir"], event.target.checked);
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -199,21 +230,30 @@ class ConfigPage extends Component {
               <div>
                 <Fab
                   variant="extended"
-                  aria-label="Reread"
-                  className={classes.fab}
-                  onClick={this.handleReReadConfigs}
-                >
-                  <Restore className={classes.extendedIcon} />
-                  Re-Read from Disk
-                </Fab>
-                <Fab
-                  variant="extended"
                   aria-label="Create"
                   className={classes.fab}
                   onClick={this.handleOpenNewConfig}
                 >
                   <Create className={classes.extendedIcon} />
                   Create
+                </Fab>
+                <Fab
+                  variant="extended"
+                  aria-label="Store"
+                  className={classes.fab}
+                  onClick={this.handleStore}
+                >
+                  <Save className={classes.extendedIcon} />
+                  Store To Disk
+                </Fab>
+                <Fab
+                  variant="extended"
+                  aria-label="Reread"
+                  className={classes.fab}
+                  onClick={this.handleReReadConfigs}
+                >
+                  <Restore className={classes.extendedIcon} />
+                  Re-Read from Disk
                 </Fab>
                 <Fab variant="extended" aria-label="Create" className={classes.fab}>
                   <AutoRenew className={classes.extendedIcon} />
@@ -223,12 +263,16 @@ class ConfigPage extends Component {
                   variant="extended"
                   aria-label="Update"
                   className={classes.fab}
-                  onClick={this.handleStore}
+                  onClick={this.handleUpdate}
                 >
-                  <Save className={classes.extendedIcon} />
+                  <PlaylistAddCheck className={classes.extendedIcon} />
                   Update
                 </Fab>
-                <Fab variant="extended" aria-label="Restore" className={classes.fab}>
+                <Fab
+                  variant="extended"
+                  aria-label="Restore"
+                  className={classNames(classes.fab, classes.restore)}
+                >
                   <Send className={classes.extendedIcon} />
                   Restore
                 </Fab>
@@ -273,16 +317,22 @@ class ConfigPage extends Component {
                       <TableCell>
                         <TextField
                           variant="outlined"
+                          inputProps={{ "data-device": key }}
                           value={this.props.configs.config.devices[key]["value"]}
+                          onChange={this.handleValueChange}
                         />
                       </TableCell>
+
                       <TableCell>
                         <CheckBox
+                          inputProps={{ "data-device": key }}
                           checked={this.props.configs.config.devices[key]["update"]["no_update"]}
+                          onChange={this.handleNoUpdateChange}
                         />
                       </TableCell>
                       <TableCell>
                         <TextField
+                          inputProps={{ "data-device": key }}
                           variant="outlined"
                           value={
                             this.props.configs.config.devices[key]["update"]["relative"]
@@ -291,6 +341,7 @@ class ConfigPage extends Component {
                                 ]
                               : ""
                           }
+                          onChange={this.handleRelativeDeviceChange}
                         />
                       </TableCell>
                       <TableCell>
@@ -299,6 +350,7 @@ class ConfigPage extends Component {
                             <Typography>Neg</Typography>
                             <ThemeProvider theme={switchTheme}>
                               <ColourSwitch
+                                inputProps={{ "data-device": key }}
                                 checked={
                                   this.props.configs.config.devices[key]["update"]["relative"]
                                     ? this.props.configs.config.devices[key]["update"]["relative"][
@@ -306,7 +358,7 @@ class ConfigPage extends Component {
                                       ] === "positive"
                                     : false
                                 }
-                                onChange={this.handleSwitchChange}
+                                onChange={this.handleDirChange}
                               />
                             </ThemeProvider>
                             <Typography>Pos</Typography>
@@ -329,7 +381,7 @@ class ConfigPage extends Component {
               <Fab
                 variant="extended"
                 aria-label="Add Row"
-                className={classes.fab}
+                className={classNames(classes.fab, classes.addrow)}
                 onClick={this.handleAddRow}
               >
                 <PlaylistAdd className={classes.extendedIcon} />
