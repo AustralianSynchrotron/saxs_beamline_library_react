@@ -174,7 +174,7 @@ class App extends Component {
                 ["Solution Autoloader", <ViewComfy />],
                 ["New Experiment", <NoteAdd />],
                 ["BL Setup", <Settings />],
-                ["BL Config", <Favorite />]
+                ["BL Config", <Favorite />],
                 ["Vacuum Controls", <Cached />]
               ].map((item, index) => (
                 <ListItem button key={item[0]} onClick={() => this.handlePageChange(index)}>

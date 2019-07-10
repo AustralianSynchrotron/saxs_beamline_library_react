@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 
 import * as actionCreators from "../../actions/index";
 
+import { ophydSubscription } from "../ophydSubscription/ophyd_subscription";
+
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -27,6 +29,21 @@ import CustomTimeDialog from "../custom_time_dialog/custom_time_dialog";
 import LoopTable from "../loop_table/loop_table";
 import { Typography } from "@material-ui/core";
 import { strikethrough } from "ansi-colors";
+
+function mapDeviceToProps(state) {
+  return {
+    devices: state.ophyd.devices
+  };
+}
+
+function Hello(props) {
+  return <h1>Hello, {props.devices[props.device]}</h1>;
+}
+
+const Blah = connect(
+  mapDeviceToProps,
+  actionCreators
+)(ophydSubscription(Hello));
 
 const styles = theme => ({
   root: {
@@ -167,6 +184,7 @@ class AcquirePage extends Component {
   };
 
   handleAcquire = () => {
+    this.props.subscribeOphyd("simulated.sim_motors.sample_table.x");
     this.setState({ finishDemanded: false, pauseDemanded: false, acquiringFlag: true });
     this.props.acquire(
       this.state.filename,
@@ -203,6 +221,8 @@ class AcquirePage extends Component {
     const { classes } = this.props;
     return (
       <Grid container className={classes.root} spacing={2}>
+        <Blah device={"simulated.sim_motors.sample_table.x"} />
+        <Blah device={"simulated.sim_motors.sample_table.y"} />
         <Grid item xs={12}>
           <Grid container justify="left" spacing={10}>
             <Grid item>

@@ -129,14 +129,20 @@ export const updateValves = (vlv07, vlv10, vlv11, vlv12, igv06, igv08, igv09) =>
   local: true
 });
 
-export const pump = (id) => ({
+export const pump = id => ({
   type: actions.PUMP,
   data: { id },
   key: "vacuum"
 });
 
-export const vent = (id) => ({
+export const vent = id => ({
   type: actions.VENT,
   data: { id },
   key: "vacuum"
+});
+
+export const subscribeOphyd = device => ({
+  type: actions.SUBSCRIBEDEVICE,
+  data: { device },
+  key: "ophyd"
 });
