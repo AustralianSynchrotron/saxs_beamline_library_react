@@ -201,6 +201,28 @@ export const vent = id => ({
   key: "vacuum"
 });
 
+export const manual_pump = (id, request) => ({
+  type: actions.MANUALPUMP,
+  data: { id, request },
+  key: "vacuum"
+});
+
+export const manual_valve = (id, request) => ({
+  type: actions.MANUALVALVE,
+  data: { id, request },
+  key: "vacuum"
+});
+
+export const start_listeners = () => ({
+  type: actions.SUBSCRIBEVAC,
+  key: "vacstatus"
+});
+
+export const vac_abort = () => ({
+  type: actions.VACABORT,
+  key: "vacuum"
+});
+
 export const subscribeOphyd = device => ({
   type: actions.SUBSCRIBEDEVICE,
   data: { device },

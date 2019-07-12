@@ -7,27 +7,14 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import Select from "@material-ui/core/Select";
-import Chip from "@material-ui/core/Chip";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import CancelIcon from "@material-ui/icons/Cancel";
 import classNames from "classnames";
-import green from "@material-ui/core/colors/green";
-import amber from "@material-ui/core/colors/amber";
 import red from "@material-ui/core/colors/red";
-import deepOrange from "@material-ui/core/colors/deepOrange";
 import grey from "@material-ui/core/colors/grey";
 import Grid from "@material-ui/core/Grid";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 import VacComponent from "../vac_component/vacComponent"
 import ManualVacComponent from "../vac_component/ManualVacControls"
-import LoopTable from "../loop_table/loop_table";
 import { Typography } from "@material-ui/core";
-import { strikethrough } from "ansi-colors";
 
 const styles = theme => ({
   root: {
@@ -41,30 +28,7 @@ const styles = theme => ({
       color: "white"
     }
   },
-  acquire: {
-    backgroundColor: green["700"],
-    "&:hover": {
-      backgroundColor: green["A700"]
-    }
-  },
-  pause: {
-    backgroundColor: amber["700"],
-    "&:hover": {
-      backgroundColor: amber["A700"]
-    }
-  },
-  resume: {
-    backgroundColor: amber["700"],
-    "&:hover": {
-      backgroundColor: amber["A700"]
-    }
-  },
-  finish: {
-    backgroundColor: deepOrange["500"],
-    "&:hover": {
-      backgroundColor: deepOrange["A400"]
-    }
-  },
+ 
   halt: {
     backgroundColor: red["500"],
     "&:hover": {
@@ -89,15 +53,22 @@ const styles = theme => ({
   }
 });
 
-var times = [0.1, 0.5, 1, 2, 5, 10, 20, 30, 60, 120, "Custom"];
-
-
 class VacuumPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
           customTimeOpen: false,
+          staff: false,
+          password: ''
         };
+    }
+
+    checkPassword = (input) =>{
+      if (input === 'Legoland') {
+        this.setState({ staff: true });
+        //console.log(this.state.staff);
+        //console.log(this.props.password)
+      } else {this.setState({ staff: false })}
     }
 
     handleClickDialog = event => {
@@ -108,57 +79,119 @@ class VacuumPage extends Component {
       this.setState({ customVacOpen: false });
     }
 
+    handleStaff = event => {
+      if (event.key === 'Enter') {
+        this.setState({ password : '' });
+        //console.log(event.target.value);
+        this.checkPassword(event.target.value);
+          }
+    }
+
+    handleConnect = event =>{
+      this.props.start_listeners();
+    }
+
+    handleLock = event => {
+      this.setState({ staff: false })
+    }
+
+    handleAbort = event => {
+      this.props.vac_abort()
+    }
+
+    handleInput = event => {
+      const inputPassword = event.target.value;
+      this.setState( { password : inputPassword })
+    }
+    
+
 render() {
     const { classes } = this.props;
     return (
       <Grid container className={classes.root} spacing={5} direction='column'>
-        <Grid item xs={12}>
-          <VacComponent id='Nosecone'/>
+        <Grid container className={classes.root} spacing={5} direction='row' alignItems ='baseline' justify= 'space-evenly'>
+        <Grid item xs ={2}>
+          <Button onClick={this.handleConnect}>
+            Connect
+          </Button>
+          </Grid>
+          <Grid item xs ={2}>
+          <Button onClick= {this.handleLock} >
+            Lock
+          </Button>
+          </Grid>
+          <Grid item xs ={2}>
+          <Button onClick= {this.handleAbort} className={classNames(classes.button, classes.halt)}>
+            Abort!
+          </Button>
+        </Grid>
         </Grid>
         <Grid item xs={12}>
-          <VacComponent id='Beamline'/>
+          <VacComponent id='Chamber' staff={this.state.staff}/>
         </Grid>
         <Grid item xs={12}>
-          <VacComponent id='Chamber'/>
+          <VacComponent id='Nosecone' staff={this.state.staff}/>
         </Grid>
         <Grid item xs={12}>
-          <VacComponent id='Vessel'/>
+          <VacComponent id='Beamline' staff={this.state.staff}/>
+        </Grid>
+        <Grid container className={classes.root} spacing={5} direction='row' alignItems ='baseline' justify= 'space-evenly'>
+        <Grid item xs ={4} spacing = {2}></Grid>
+        <Grid item xs ={4} spacing = {3}>
+          <TextField type='password' 
+                     value= {this.state.password}
+                     label = 'Staff Login' 
+                     onChange ={this.handleInput}
+                     onKeyPress={this.handleStaff} />
+        </Grid>
+        <Grid item xs ={4} spacing = {3}>
+          
+        </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <VacComponent id='Vessel' staff={this.state.staff}/>
         </Grid>
         <Grid item xs={12}>
           <Typography>Valves</Typography>
         </Grid>
-        <Grid container className={classes.root} spacing={5} alignItems='baseline' direction='row'>
-          <Grid item xs={6}>
-            <ManualVacComponent valve={true} id='Valve07' />
+        <Grid container className={classes.root} spacing={5} alignItems='baseline' direction='row' justify ='space-evenly'>
+          <Grid item xs={6} padding ={20}>
+            <ManualVacComponent valve={true} id='Valve07' staff={this.state.staff} />
           </Grid>
           <Grid item xs={6}>
-            <ManualVacComponent valve={true} id='Valve10' />
+            <ManualVacComponent valve={true} id='Valve10' staff={this.state.staff} />
           </Grid>
           <Grid item xs={6}>
-            <ManualVacComponent valve={true} id='Valve11' />
+            <ManualVacComponent valve={true} id='Valve11' staff={this.state.staff} />
           </Grid>
           <Grid item xs={6}>
-            <ManualVacComponent valve={true} id='IGV06' />
+            <ManualVacComponent valve={true} id='IGV06' staff={this.state.staff} />
           </Grid>
           <Grid item xs={6}>
-            <ManualVacComponent valve={true} id='IGV08' />
+            <ManualVacComponent valve={true} id='IGV08' staff={this.state.staff} />
           </Grid>
           <Grid item xs={6}>
-            <ManualVacComponent valve={true} id='IGV09' />
+            <ManualVacComponent valve={true} id='IGV09' staff={this.state.staff} />
           </Grid>
         </Grid>
         <Grid item xs={12}>
           <Typography>Pumps</Typography>
         </Grid>
-        <Grid container className={classes.root} spacing={5} alignItems='baseline' direction='row'>
+        <Grid container className={classes.root} spacing={5} alignItems='baseline' direction='row' justify ='space-evenly'>
           <Grid item xs={6}>
-            <ManualVacComponent valve={false} id='Ebarra' />
+            <ManualVacComponent valve={false} id='Ebarra' staff={this.state.staff} />
           </Grid>
           <Grid item xs={6}>
-            <ManualVacComponent valve={false} id='Turbo1' />
+            <ManualVacComponent valve={false} id='Turbo1' staff={this.state.staff} />
           </Grid>
           <Grid item xs={6}>
-            <ManualVacComponent valve={false} id='Turbo2' />
+            <ManualVacComponent valve={false} id='Turbo2' staff={this.state.staff} />
+          </Grid>
+          <Grid item xs={6}>
+            <ManualVacComponent valve={false} id='Backing1' staff={this.state.staff} />
+          </Grid>
+          <Grid item xs={6}>
+            <ManualVacComponent valve={false} id='Backing2' staff={this.state.staff} />
           </Grid>
         </Grid>
       </Grid>

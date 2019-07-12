@@ -32,4 +32,7 @@ export const LIBRARYUPDATE = "library_update";
 export const SUBSCRIBEDEVICE = "subscribe_device";
 export const PUMP = "pump";
 export const VENT = "vent";
-export const 
+export const MANUALPUMP = "manual_pump"
+export const MANUALVALVE = "manual_valve"
+export const SUBSCRIBEVAC = "start_listeners"
+export const VACABORT = "vac_abort"
