@@ -13,9 +13,9 @@ export const getServerVersion = () => ({
   type: actions.SERVERVERSION,
   key: "acquire"
 });
-export const acquire = (filename, exp_times, num_images, delay, description) => ({
+export const acquire = (filename, exp_times, num_images, delay, use_shutter, description) => ({
   type: actions.ACQUIRE,
-  data: { filename, exp_times, num_images, delay, description },
+  data: { filename, exp_times, num_images, delay, use_shutter, description },
   key: "acquire"
 });
 export const pause = () => ({

@@ -121,7 +121,8 @@ class AcquirePage extends Component {
       delay: 0,
       finishDemanded: false,
       pauseDemanded: false,
-      adinfinitum: false
+      adinfinitum: false,
+      useShutter: false
     };
   }
 
@@ -191,6 +192,7 @@ class AcquirePage extends Component {
       this.state.expTimes,
       this.state.adinfinitum ? null : this.state.numImages,
       this.state.delay,
+      this.state.useShutter,
       this.state.description
     );
   };
@@ -215,6 +217,9 @@ class AcquirePage extends Component {
   };
   handleAdInfinitum = () => {
     this.setState({ adinfinitum: !this.state.adinfinitum });
+  };
+  handleUseShutter = () => {
+    this.setState({ useShutter: !this.state.useShutter });
   };
 
   render() {
@@ -328,14 +333,32 @@ class AcquirePage extends Component {
               </Grid>
             </Grid>
             <Grid item>
-              <TextField
-                label="Delay between Acquisitions"
-                variant="outlined"
-                type="number"
-                inputProps={{ min: "0", step: "1" }}
-                onChange={this.handleDelay}
-                value={this.state.delay}
-              />
+              <Grid container direction="column">
+                <TextField
+                  label="Delay between Acquisitions"
+                  variant="outlined"
+                  type="number"
+                  inputProps={{ min: "0", step: "1" }}
+                  onChange={this.handleDelay}
+                  value={this.state.delay}
+                  disabled={!(this.state.numImages > 1 || this.state.adinfinitum)}
+                />
+                <Grid item align="center">
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={this.state.useShutter}
+                        onChange={this.handleUseShutter}
+                        value="useShutter"
+                        className={classes.small_check}
+                      />
+                    }
+                    label="Use Shutter"
+                    className={classes.label}
+                    disabled={!(this.state.delay > 0)}
+                  />
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
           <Grid item>
