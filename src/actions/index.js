@@ -189,27 +189,27 @@ export const updateValves = (vlv07, vlv10, vlv11, vlv12, igv06, igv08, igv09) =>
   fromServer: true
 });
 
-export const pump = id => ({
+export const pump = name => ({
   type: actions.PUMP,
-  data: { id },
+  data: { name },
   key: "vacuum"
 });
 
-export const vent = id => ({
+export const vent = name => ({
   type: actions.VENT,
-  data: { id },
+  data: { name },
   key: "vacuum"
 });
 
-export const manual_pump = (id, request) => ({
+export const manual_pump = (name, request) => ({
   type: actions.MANUALPUMP,
-  data: { id, request },
+  data: { name, request },
   key: "vacuum"
 });
 
-export const manual_valve = (id, request) => ({
+export const manual_valve = (name, request) => ({
   type: actions.MANUALVALVE,
-  data: { id, request },
+  data: { name, request },
   key: "vacuum"
 });
 
