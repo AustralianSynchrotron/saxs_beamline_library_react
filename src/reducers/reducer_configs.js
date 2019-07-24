@@ -15,6 +15,10 @@ export default (state = default_state, action) => {
       return { ...state, config: action.data };
     case actions.CONFIGSETPARAM:
       return { ...state, config: action.data };
+    case actions.ADDDEVICE:
+      return { ...state, config: action.data };
+    case actions.DELETEDEVICE:
+      return { ...state, config: action.data };
     default:
       return state;
   }

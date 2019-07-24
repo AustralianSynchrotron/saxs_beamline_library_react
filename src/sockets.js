@@ -25,13 +25,13 @@ class ReconnectingWebSocket {
     this.instance[key].close(...args);
   };
 
-  onopen = () => { };
+  onopen = () => {};
 
-  onmessage = () => { };
+  onmessage = () => {};
 
-  onerror = () => { };
+  onerror = () => {};
 
-  onclose = () => { };
+  onclose = () => {};
 
   _open = (key, url) => {
     this.instance[key] = new WebSocket(url);
@@ -64,19 +64,21 @@ class ReconnectingWebSocket {
 }
 
 const socket = new ReconnectingWebSocket(
-  {
-    vacuum: `ws://${window.location.hostname}:3144`,
-    vacstatus: `ws://${window.location.hostname}:3145`,
-    status: `ws://${window.location.hostname}:3143`,
-    acquire: `ws://${window.location.hostname}:3142`,
-    ophyd: `ws://${window.location.hostname}:9999`
-  }
-
-  // {
-  //   acquire: `ws://${window.location.hostname}:${process.env.ACQUIRE_WEBSOCKET}`,
-  //   control: `ws://${window.location.hostname}:${process.env.CONTROL_WEBSOCKET}`
-  // }
-  // `wss://echo.websocket.org`
+  process.env.NODE_ENV === "production"
+    ? {
+        vacuum: `ws://10.138.11.39:3144`,
+        vacstatus: `ws://10.138.11.39:3145`,
+        status: `ws://10.138.11.39:3143`,
+        acquire: `ws://10.138.11.39:3142`,
+        ophyd: `ws://10.138.11.39:9999`
+      }
+    : {
+        vacuum: `ws://localhost:3144`,
+        vacstatus: `ws://localhost:3145`,
+        status: `ws://localhost:3143`,
+        acquire: `ws://localhost:3142`,
+        ophyd: `ws://localhost:9999`
+      }
 );
 
 export default socket;

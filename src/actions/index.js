@@ -124,6 +124,17 @@ export const reRead = () => ({
   }
 });
 
+export const reInitConfig = config_name => ({
+  type: actions.REINITCONFIG,
+  fetch: true,
+  url: "http://localhost:8086/api/v1.0/reinit",
+  data: {
+    method: "PUT",
+    mode: "cors",
+    body: JSON.stringify({ config_name })
+  }
+});
+
 export const storeConfig = config_name => ({
   type: actions.STORECONFIG,
   fetch: true,
@@ -146,6 +157,17 @@ export const updateConfig = config_name => ({
   }
 });
 
+export const restoreConfig = config_name => ({
+  type: actions.RESTORECONFIG,
+  fetch: true,
+  url: "http://localhost:8086/api/v1.0/restore",
+  data: {
+    method: "PUT",
+    mode: "cors",
+    body: JSON.stringify({ config_name })
+  }
+});
+
 export const configSetParameter = (config_name, key, value) => ({
   type: actions.CONFIGSETPARAM,
   fetch: true,
@@ -158,6 +180,36 @@ export const configSetParameter = (config_name, key, value) => ({
       "Content-Type": "application/json"
     },
     body: JSON.stringify({ config_name, key, value })
+  }
+});
+
+export const newDevice = (config_name, device) => ({
+  type: actions.ADDDEVICE,
+  fetch: true,
+  url: "http://localhost:8086/api/v1.0/config/device",
+  data: {
+    method: "PUT",
+    mode: "cors",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ config_name, device })
+  }
+});
+
+export const deleteDevice = (config_name, device) => ({
+  type: actions.DELETEDEVICE,
+  fetch: true,
+  url: "http://localhost:8086/api/v1.0/config/device",
+  data: {
+    method: "DELETE",
+    mode: "cors",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ config_name, device })
   }
 });
 

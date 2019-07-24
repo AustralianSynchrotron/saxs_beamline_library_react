@@ -339,6 +339,7 @@ class AcquirePage extends Component {
                   variant="outlined"
                   type="number"
                   inputProps={{ min: "0", step: "1" }}
+                  InputProps={{ classes: { input: classes.number } }}
                   onChange={this.handleDelay}
                   value={this.state.delay}
                   disabled={!(this.state.numImages > 1 || this.state.adinfinitum)}

@@ -170,8 +170,15 @@ class ConfigPage extends Component {
     this.props.updateConfig(this.state.selectedConfig);
   };
 
+  handleReInitConfig = () => {
+    this.props.reInitConfig(this.state.selectedConfig);
+  };
+
   handleNewDeviceClose = device => {
     this.setState({ newDeviceOpen: false });
+    if (device !== null) {
+      this.props.newDevice(this.state.selectedConfig, device);
+    }
   };
 
   handleAddRow = event => {
@@ -183,7 +190,7 @@ class ConfigPage extends Component {
   };
 
   handleDeleteRow = event => {
-    console.log(event.currentTarget.dataset.device);
+    this.props.deleteDevice(this.state.selectedConfig, event.currentTarget.dataset.device);
   };
 
   handleCheckDevice = device => {
@@ -197,6 +204,10 @@ class ConfigPage extends Component {
         return response.json();
       }
     });
+  };
+
+  handleRestoreConfig = () => {
+    this.props.restoreConfig(this.state.selectedConfig);
   };
 
   setParameter = (event, key, value) => {
@@ -255,7 +266,12 @@ class ConfigPage extends Component {
                   <Restore className={classes.extendedIcon} />
                   Re-Read from Disk
                 </Fab>
-                <Fab variant="extended" aria-label="Create" className={classes.fab}>
+                <Fab
+                  variant="extended"
+                  aria-label="Create"
+                  className={classes.fab}
+                  onClick={this.handleReInitConfig}
+                >
                   <AutoRenew className={classes.extendedIcon} />
                   Reinitialise
                 </Fab>
@@ -272,6 +288,7 @@ class ConfigPage extends Component {
                   variant="extended"
                   aria-label="Restore"
                   className={classNames(classes.fab, classes.restore)}
+                  onClick={this.handleRestoreConfig}
                 >
                   <Send className={classes.extendedIcon} />
                   Restore

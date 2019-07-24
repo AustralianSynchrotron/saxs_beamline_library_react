@@ -143,6 +143,16 @@ class ManualVacComponent extends Component {
   componentDidMount() {
     this.parseID();
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.valves_status !== this.props.valves_status ||
+      prevProps.pumps_status !== this.props.pumps_status
+    ) {
+      this.parseID();
+    }
+  }
+
   render() {
     const { classes } = this.props;
     return (
