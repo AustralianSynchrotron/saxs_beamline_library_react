@@ -194,7 +194,7 @@ class ConfigPage extends Component {
   };
 
   handleCheckDevice = device => {
-    return fetch("http://localhost:8086/api/v1.0/device/" + device, {
+    return fetch("http://10.138.11.39:8086/api/v1.0/device/" + device, {
       method: "GET",
       mode: "cors"
     }).then(response => {

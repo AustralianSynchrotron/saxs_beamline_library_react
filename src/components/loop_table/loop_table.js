@@ -24,7 +24,7 @@ import Typography from "@material-ui/core/Typography";
 import purple from "@material-ui/core/colors/purple";
 import amber from "@material-ui/core/colors/amber";
 
-import DevicSelector from "../device_selector/device_selector";
+// import DevicSelector from "../device_selector/device_selector";
 
 const switchTheme = createMuiTheme({
   palette: {
@@ -107,7 +107,7 @@ class LoopTable extends Component {
     const { classes } = this.props;
     return (
       <Paper className={classes.root}>
-        <DevicSelector />
+        {/* <DevicSelector /> */}
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
