@@ -11,6 +11,7 @@ import classNames from "classnames";
 import red from "@material-ui/core/colors/red";
 import green from "@material-ui/core/colors/green";
 import grey from "@material-ui/core/colors/grey";
+import blue from "@material-ui/core/colors/blue";
 import Grid from "@material-ui/core/Grid";
 import Select from "@material-ui/core/Select";
 import Chip from "@material-ui/core/Chip";
@@ -18,6 +19,7 @@ import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import CancelIcon from "@material-ui/icons/Cancel";
+import ColoriseIcon from "@material-ui/icons/Colorize"
 import CustomTimeDialog from "../custom_time_dialog/custom_time_dialog";
 
 import { Typography } from "@material-ui/core";
@@ -48,6 +50,14 @@ const styles = theme => ({
           backgroundColor: green["A700"]
         }
       },
+
+    hydrate: {
+        backgroundColor: blue["500"],
+        "&:hover": {
+          backgroundColor: blue["A700"]
+        }
+      },
+
     chip: {
       margin: "2px"
     },
@@ -249,6 +259,9 @@ const styles = theme => ({
         this.setState({ hydrationvol: event.target.value });
     }
 
+    handleAbort = event => {
+        this.props.tensileAbort()
+    }
 
     
     render() {
@@ -275,8 +288,9 @@ const styles = theme => ({
             </Button> 
           </Grid>
           <Grid item xs={1}>
-            <Button onClick={this.handleHydrate} className={classNames(classes.button, classes.start)}>
+            <Button onClick={this.handleHydrate} className={classNames(classes.button, classes.hydrate)}>
               Hydrate sample
+              <ColoriseIcon />
             </Button> 
           </Grid>
           <Grid item xs={1}>
