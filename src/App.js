@@ -18,6 +18,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import NoteAdd from "@material-ui/icons/NoteAdd";
 import Cached from "@material-ui/icons/Cached";
+import SwapHoriz from "@material-ui/icons/SwapHoriz"
 import Settings from "@material-ui/icons/Settings";
 import ViewComfy from "@material-ui/icons/ViewComfy";
 import PlayCircleOutline from "@material-ui/icons/PlayCircleOutline";
@@ -26,6 +27,7 @@ import AcquirePage from "./components/acquire_page/acquire_page.js";
 import ConfigPage from "./components/config_page/config_page.js";
 import WellPlate from "./components/well_plate/well_plate.js";
 import VacuumPage from "./components/vacuum/Vacuum";
+import TensilePage from "./components/tensile/Tensile";
 
 const drawerWidth = 240;
 
@@ -175,7 +177,8 @@ class App extends Component {
                 ["New Experiment", <NoteAdd />],
                 ["BL Setup", <Settings />],
                 ["BL Config", <Favorite />],
-                ["Vacuum Controls", <Cached />]
+                ["Vacuum Controls", <Cached />],
+                ["Tensile Setup", <SwapHoriz />]
               ].map((item, index) => (
                 <ListItem button key={item[0]} onClick={() => this.handlePageChange(index)}>
                   <ListItemIcon>{item[1]}</ListItemIcon>
@@ -210,6 +213,11 @@ class App extends Component {
             {page === 5 && (
               <div>
                 <VacuumPage />
+              </div>
+            )}
+            {page === 6 && (
+              <div>
+                <TensilePage />
               </div>
             )}
           </main>

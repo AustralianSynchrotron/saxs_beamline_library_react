@@ -80,27 +80,29 @@ class VacComponent extends Component {
       PumpOpen: false,
       VentOpen: false,
       pressure: null,
-      status: ""
+      status: "Nothing"
     };
   }
 
   parseID = () => {
+    //console.log(this.props.vacstatus)
     switch (this.props.id) {
       case "Nosecone":
         this.setState({ pressure: parseFloat(this.props.pressures.nosecone) });
-        //this.setState({ status: this.props.vacstatus.nosecone });
+        this.setState({ status: this.props.vacstatus.nosecone });
         break;
       case "Chamber":
         this.setState({ pressure: parseFloat(this.props.pressures.chamber) });
-        //this.setState({ status: this.props.vacstatus.chamber });
+        this.setState({ status: this.props.vacstatus.chamber });
+        //console.log(this.props.vacstatus.chamber)
         break;
       case "Beamline":
         this.setState({ pressure: parseFloat(this.props.pressures.beamline) });
-        //this.setState({ status: this.props.vacstatus.beamline });
+        this.setState({ status: this.props.vacstatus.beamline });
         break;
       case "Vessel":
         this.setState({ pressure: parseFloat(this.props.pressures.vessel) });
-        //this.setState({ status: this.props.vacstatus.vessel });
+        this.setState({ status: this.props.vacstatus.vessel });
         break;
     }
   };
@@ -130,7 +132,7 @@ class VacComponent extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.pressures !== this.props.pressures) {
+    if (prevProps.pressures !== this.props.pressures || prevProps.vacstatus !== this.props.vacstatus) {
       this.parseID();
     }
   }
@@ -179,7 +181,7 @@ class VacComponent extends Component {
             <Typography
               className={classNames(this.state.pressure < 0.01 ? classes.ok : classes.bad)}
             >
-              {this.state.pressure < 0.01 ? "Pumped" : "Vented"}
+              {this.state.status}
             </Typography>
           </Grid>
           <PumpDialog

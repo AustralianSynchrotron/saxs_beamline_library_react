@@ -9,10 +9,10 @@ var pressures = {
 };
 
 const vac_Status = {
-  nosecone: "Vented",
-  chamber: "Vented",
-  beamline: "Vented",
-  vessel: "Vented"
+  nosecone: "Not Connected",
+  chamber: "Not Connected",
+  beamline: "Not Connected",
+  vessel: "Not Connected"
 };
 
 const valves_status = {

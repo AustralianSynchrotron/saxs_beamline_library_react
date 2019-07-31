@@ -280,3 +280,93 @@ export const subscribeOphyd = device => ({
   data: { device },
   key: "ophyd"
 });
+
+export const tensileLength = (length) => ({
+  type: actions.TENSLENGTH,
+  data:{ length },
+  key:'tensile',
+});
+
+export const tensileWidth = (width) => ({
+  type: actions.TENSWIDTH,
+  data:{ width },
+  key:'tensile'
+});
+
+export const tensileThickness = (thickness) => ({
+  type: actions.TENSTHICK,
+  data:{ thickness },
+  key:'tensile'
+});
+
+export const tensileShape = (shape) => ({
+  type: actions.TENSSHAPE,
+  data:{ shape },
+  key:'tensile',
+});
+
+export const Hydrate = (volume) => ({
+  type: actions.TENSHYDRATE,
+  data: { volume },
+  key: 'tensile'
+});
+
+export const TensileAcquire = (filename, 
+  exposure_time, 
+  displacement_start, 
+  displacement_end, 
+  num_displacements, 
+  grid_start, 
+  grid_stop, 
+  grid_points, 
+  delay, hydration_vol) => ({
+  type: actions.TENSACQUIRE,
+  data: { filename, 
+    exposure_time, 
+    displacement_start, 
+    displacement_end, 
+    num_displacements, 
+    grid_start, 
+    grid_stop, 
+    grid_points, 
+    delay,
+    hydration_vol },
+  key: 'tensile'
+});
+
+export const updateTensileStatus = tensilestatus => ({
+  type: actions.TENSSTATUS,
+  data: { tensilestatus },
+  fromServer: true
+});
+
+export const updateStrain = strain => ({
+  type: actions.TENSSTRAIN,
+  data: { strain },
+  fromServer: true
+});
+
+export const updateStress = stress => ({
+  type: actions.TENSSTRESS,
+  data: { stress },
+  fromServer: true
+});
+
+export const updateForce = force => ({
+  type: actions.TENSFORCE,
+  data: { force },
+  fromServer: true
+});
+
+export const updateExtension = extension => ({
+  type: actions.TENSEXTNION,
+  data: { extension },
+  fromServer: true
+});
+
+export const tensileAbort = () =>({
+  type: actions.TENSABORT,
+  key : 'tensile'
+});
+
+
