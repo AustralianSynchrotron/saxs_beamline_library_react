@@ -213,7 +213,7 @@ class TensilePage extends Component {
   };
 
   handleDstart = event => {
-    this.setState({ dispStart: event.target.value });
+    this.setState({ dispStart:  parseFloat(event.target.value) });
   };
 
   handleDstop = event => {
@@ -225,15 +225,15 @@ class TensilePage extends Component {
   };
 
   handleXstart = event => {
-    this.setState({ sampleX_start: event.target.value });
+    this.setState({ sampleX_start: parseFloat(event.target.value) });
   };
 
   handleXstop = event => {
-    this.setState({ sampleX_end: event.target.value });
+    this.setState({ sampleX_end:  parseFloat(event.target.value) });
   };
 
   handleXstep = event => {
-    this.setState({ sampleX_points: event.target.value });
+    this.setState({ sampleX_points:  parseFloat(event.target.value) });
   };
 
   handleDelay = event => {
@@ -241,7 +241,7 @@ class TensilePage extends Component {
   };
 
   handleHydrationVol = event => {
-    this.setState({ hydrationvol: event.target.value });
+    this.setState({ hydrationvol:  parseFloat(event.target.value) });
   };
 
   handleAbort = event => {
@@ -344,6 +344,7 @@ class TensilePage extends Component {
               <TextField
                 label="Displacement Start"
                 variant="outlined"
+                type="number"
                 value={this.state.dispStart}
                 onChange={this.handleDstart}
               />
@@ -352,6 +353,7 @@ class TensilePage extends Component {
               <TextField
                 label="Displacement Stop"
                 variant="outlined"
+                type="number"
                 value={this.state.dispStop}
                 onChange={this.handleDstop}
               />
@@ -360,6 +362,7 @@ class TensilePage extends Component {
               <TextField
                 label="Displacement Steps"
                 variant="outlined"
+                type="number"
                 value={this.state.dispSteps}
                 onChange={this.handleDstep}
               />
@@ -368,6 +371,7 @@ class TensilePage extends Component {
               <TextField
                 label="Delay after move"
                 variant="outlined"
+                type="number"
                 value={this.state.delay}
                 onChange={this.handleDelay}
               />
@@ -394,6 +398,7 @@ class TensilePage extends Component {
             <Grid item xs={2}>
               <TextField
                 label="Length"
+                type="number"
                 variant="outlined"
                 value={this.state.length}
                 onChange={this.handleLengthInput}
@@ -403,6 +408,7 @@ class TensilePage extends Component {
             <Grid item xs={2}>
               <TextField
                 label="Width"
+                type="number"
                 variant="outlined"
                 value={this.state.width}
                 onChange={this.handleWidthInput}
@@ -413,19 +419,36 @@ class TensilePage extends Component {
               <TextField
                 label="Thickness"
                 variant="outlined"
+                type="number"
                 value={this.state.thickness}
                 onChange={this.handleThicknessInput}
                 onKeyPress={this.handleThicknessSend}
               />
             </Grid>
             <Grid item xs={2}>
-              <TextField label="Cross Sectional Area" variant="outlined" value={this.props.csa} />
+              <TextField
+                label="Cross Sectional Area"
+                variant="outlined"
+                type="number"
+                value={this.props.csa}
+              />
             </Grid>
             <Grid item xs={2}>
-              <TextField label="Poisson Ratio" variant="outlined" value="0.25" disabled="true" />
+              <TextField
+                label="Poisson Ratio"
+                variant="outlined"
+                type="number"
+                value="0.25"
+                disabled="true"
+                />
             </Grid>
             <Grid item xs={2}>
-              <TextField label="Shape" variant="outlined" value="Square" disabled="true" />
+              <TextField 
+                label="Shape" 
+                variant="outlined"
+                value="Square" 
+                disabled="true" 
+              />
             </Grid>
           </Grid>
           <Grid
@@ -449,6 +472,7 @@ class TensilePage extends Component {
             <Grid item xs={2}>
               <TextField
                 variant="outlined"
+                type="number"
                 label="Hydration Volume"
                 value={this.state.hydrationvol}
                 onChange={this.handleHydrationVol}
@@ -457,6 +481,7 @@ class TensilePage extends Component {
             <Grid item xs={2}>
               <TextField
                 variant="outlined"
+                type="number"
                 label="Sample X start"
                 value={this.state.sampleX_start}
                 onChange={this.handleXstart}
@@ -465,6 +490,7 @@ class TensilePage extends Component {
             <Grid item xs={2}>
               <TextField
                 variant="outlined"
+                type="number"
                 label="Sample X end"
                 value={this.state.sampleX_end}
                 onChange={this.handleXstop}
