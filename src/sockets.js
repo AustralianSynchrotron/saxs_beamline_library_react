@@ -16,7 +16,6 @@ class ReconnectingWebSocket {
   async send(key, ...args) {
     try {
       this.instance[key].send(...args);
-      console.log(key, ...args)
     } catch {
       this.buffer[key].push(args);
     }

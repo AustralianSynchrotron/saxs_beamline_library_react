@@ -22,7 +22,7 @@ socket.onclose = () => {
   console.log("closed");
 };
 socket.onmessage = event => {
-  console.log("event:" + event.data);
+  // console.log("event:" + event.data);
   store.dispatch(handleDataFromServer(event.data));
 };
 
