@@ -342,7 +342,7 @@ class TensilePage extends Component {
             />
             <Grid item xs={2}>
               <TextField
-                label="Displacement Start"
+                label="Displacement Start (mm)"
                 variant="outlined"
                 type="number"
                 value={this.state.dispStart}
@@ -351,7 +351,7 @@ class TensilePage extends Component {
             </Grid>
             <Grid item xs={2}>
               <TextField
-                label="Displacement Stop"
+                label="Displacement Stop (mm)"
                 variant="outlined"
                 type="number"
                 value={this.state.dispStop}
@@ -369,7 +369,7 @@ class TensilePage extends Component {
             </Grid>
             <Grid item xs={2}>
               <TextField
-                label="Delay after move"
+                label="Delay after move (s)"
                 variant="outlined"
                 type="number"
                 value={this.state.delay}
@@ -397,7 +397,7 @@ class TensilePage extends Component {
           >
             <Grid item xs={2}>
               <TextField
-                label="Length"
+                label="Length (mm)"
                 type="number"
                 variant="outlined"
                 value={this.state.length}
@@ -407,7 +407,7 @@ class TensilePage extends Component {
             </Grid>
             <Grid item xs={2}>
               <TextField
-                label="Width"
+                label="Width (mm)"
                 type="number"
                 variant="outlined"
                 value={this.state.width}
@@ -417,7 +417,7 @@ class TensilePage extends Component {
             </Grid>
             <Grid item xs={2}>
               <TextField
-                label="Thickness"
+                label="Thickness (mm)"
                 variant="outlined"
                 type="number"
                 value={this.state.thickness}
@@ -427,7 +427,7 @@ class TensilePage extends Component {
             </Grid>
             <Grid item xs={2}>
               <TextField
-                label="Cross Sectional Area"
+                label="Cross Sectional Area (m2)"
                 variant="outlined"
                 type="number"
                 value={this.props.csa}
@@ -443,10 +443,10 @@ class TensilePage extends Component {
                 />
             </Grid>
             <Grid item xs={2}>
-              <TextField 
+              <TextField
                 label="Shape" 
                 variant="outlined"
-                value="Square" 
+                value="Rectangle" 
                 disabled="true" 
               />
             </Grid>
@@ -482,7 +482,7 @@ class TensilePage extends Component {
               <TextField
                 variant="outlined"
                 type="number"
-                label="Sample X start"
+                label="Relative Sample X start (mm)"
                 value={this.state.sampleX_start}
                 onChange={this.handleXstart}
               />
@@ -491,7 +491,7 @@ class TensilePage extends Component {
               <TextField
                 variant="outlined"
                 type="number"
-                label="Sample X end"
+                label="Relataive Sample X end (mm)"
                 value={this.state.sampleX_end}
                 onChange={this.handleXstop}
               />{" "}
@@ -499,6 +499,7 @@ class TensilePage extends Component {
             <Grid item xs={2}>
               <TextField
                 variant="outlined"
+                type="number"
                 label="Sample X points"
                 value={this.state.sampleX_points}
                 onChange={this.handleXstep}
@@ -533,7 +534,7 @@ class TensilePage extends Component {
               <Typography> Force: {this.props.force.toPrecision(3)} Kg</Typography>
             </Grid>
             <Grid item xs={2}>
-              <Typography> Stress: {this.props.stress.toPrecision(3)} </Typography>
+              <Typography> Stress: {this.props.stress.toPrecision(3)} N/m2</Typography>
             </Grid>
             <Grid item xs={2}>
               <Typography> Strain: {this.props.strain.toPrecision(3)} </Typography>
