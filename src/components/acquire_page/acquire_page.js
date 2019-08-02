@@ -3,8 +3,6 @@ import { connect } from "react-redux";
 
 import * as actionCreators from "../../actions/index";
 
-import { ophydSubscription } from "../ophydSubscription/ophyd_subscription";
-
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -39,11 +37,6 @@ function mapDeviceToProps(state) {
 function Hello(props) {
   return <h1>Hello, {props.devices[props.device]}</h1>;
 }
-
-const Blah = connect(
-  mapDeviceToProps,
-  actionCreators
-)(ophydSubscription(Hello));
 
 const styles = theme => ({
   root: {

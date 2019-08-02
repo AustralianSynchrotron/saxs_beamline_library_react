@@ -34,6 +34,7 @@ export const DELETEDEVICE = "delete_device";
 export const CONFIGSETPARAM = "config_set_parameter";
 export const LIBRARYUPDATE = "library_update";
 export const SUBSCRIBEDEVICE = "subscribe_device";
+export const SETDEVICE = "set_device";
 export const PUMP = "pump";
 export const VENT = "vent";
 export const MANUALPUMP = "manual_pump"

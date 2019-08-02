@@ -281,57 +281,68 @@ export const subscribeOphyd = device => ({
   key: "ophyd"
 });
 
-export const tensileLength = (length) => ({
+export const setOphyd = (device, value) => ({
+  type: actions.SETDEVICE,
+  data: { device, value },
+  key: "ophyd"
+});
+
+export const tensileLength = length => ({
   type: actions.TENSLENGTH,
-  data:{ length },
-  key:'tensile',
+  data: { length },
+  key: "tensile"
 });
 
-export const tensileWidth = (width) => ({
+export const tensileWidth = width => ({
   type: actions.TENSWIDTH,
-  data:{ width },
-  key:'tensile'
+  data: { width },
+  key: "tensile"
 });
 
-export const tensileThickness = (thickness) => ({
+export const tensileThickness = thickness => ({
   type: actions.TENSTHICK,
-  data:{ thickness },
-  key:'tensile'
+  data: { thickness },
+  key: "tensile"
 });
 
-export const tensileShape = (shape) => ({
+export const tensileShape = shape => ({
   type: actions.TENSSHAPE,
-  data:{ shape },
-  key:'tensile',
+  data: { shape },
+  key: "tensile"
 });
 
-export const Hydrate = (volume) => ({
+export const Hydrate = volume => ({
   type: actions.TENSHYDRATE,
   data: { volume },
-  key: 'tensile'
+  key: "tensile"
 });
 
-export const TensileAcquire = (filename, 
-  exposure_time, 
-  displacement_start, 
-  displacement_end, 
-  num_displacements, 
-  grid_start, 
-  grid_stop, 
-  grid_points, 
-  delay, hydration_vol) => ({
+export const TensileAcquire = (
+  filename,
+  exposure_time,
+  displacement_start,
+  displacement_end,
+  num_displacements,
+  grid_start,
+  grid_stop,
+  grid_points,
+  delay,
+  hydration_vol
+) => ({
   type: actions.TENSACQUIRE,
-  data: { filename, 
-    exposure_time, 
-    displacement_start, 
-    displacement_end, 
-    num_displacements, 
-    grid_start, 
-    grid_stop, 
-    grid_points, 
+  data: {
+    filename,
+    exposure_time,
+    displacement_start,
+    displacement_end,
+    num_displacements,
+    grid_start,
+    grid_stop,
+    grid_points,
     delay,
-    hydration_vol },
-  key: 'tensile'
+    hydration_vol
+  },
+  key: "tensile"
 });
 
 export const updateTensileStatus = tensilestatus => ({
@@ -364,9 +375,7 @@ export const updateExtension = extension => ({
   fromServer: true
 });
 
-export const tensileAbort = () =>({
+export const tensileAbort = () => ({
   type: actions.TENSABORT,
-  key : 'tensile'
+  key: "tensile"
 });
-
-

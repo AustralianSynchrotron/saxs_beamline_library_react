@@ -27,30 +27,30 @@ function DeviceSelector() {
     }
   };
 
-  // useEffect(() => {
-  //   if (!deviceListRequested) {
-  //     setDeviceListRequested(true);
+  useEffect(() => {
+    if (!deviceListRequested) {
+      setDeviceListRequested(true);
 
-  //     fetch("http://localhost:8080/api/v1.0/devices", {
-  //       method: "GET",
-  //       mode: "cors"
-  //     })
-  //       .then(response => {
-  //         if (response.status !== 200) {
-  //           return { response: "error" };
-  //         } else {
-  //           return response.json();
-  //         }
-  //       })
-  //       .then(responseData => {
-  //         setDeviceList(
-  //           responseData.map(device => {
-  //             return { value: device.device, label: device.name };
-  //           })
-  //         );
-  //       });
-  //   }
-  // });
+      fetch("http://10.138.11.39:/api/v1.0/devices", {
+        method: "GET",
+        mode: "cors"
+      })
+        .then(response => {
+          if (response.status !== 200) {
+            return { response: "error" };
+          } else {
+            return response.json();
+          }
+        })
+        .then(responseData => {
+          setDeviceList(
+            responseData.map(device => {
+              return { value: device.device, label: device.name };
+            })
+          );
+        });
+    }
+  });
 
   return (
     <React.Fragment>

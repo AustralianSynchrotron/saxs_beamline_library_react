@@ -73,7 +73,7 @@ const socket = new ReconnectingWebSocket(
         ophyd: `ws://10.138.11.39:9999`
       }
     : {
-        tensile: `ws://localhost:3146`,
+        tensile: `ws://10.138.11.39:3146`,
         vacuum: `ws://localhost:3144`,
         vacstatus: `ws://localhost:3145`,
         status: `ws://localhost:3143`,

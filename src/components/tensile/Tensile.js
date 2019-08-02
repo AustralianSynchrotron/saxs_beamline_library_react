@@ -80,6 +80,14 @@ const shapes = ["Square", "Cylinder"];
 
 var times = [0.1, 0.5, 1, 2, 5, 10, 20, 30, 60, 120, "Custom"];
 
+const myParseFloat = value => {
+  var floatValue = parseFloat(value);
+  if (!isNaN(floatValue)) {
+    value = floatValue;
+  }
+  return value;
+};
+
 class TensilePage extends Component {
   constructor(props) {
     super(props);
@@ -202,7 +210,7 @@ class TensilePage extends Component {
       this.state.dispSteps,
       this.state.sampleX_start,
       this.state.sampleX_end,
-      this.sampleX_points,
+      this.state.sampleX_points,
       this.state.delay,
       this.state.hydrationvol
     );
@@ -213,35 +221,35 @@ class TensilePage extends Component {
   };
 
   handleDstart = event => {
-    this.setState({ dispStart:  parseFloat(event.target.value) });
+    this.setState({ dispStart: myParseFloat(event.target.value) });
   };
 
   handleDstop = event => {
-    this.setState({ dispStop: parseFloat(event.target.value) });
+    this.setState({ dispStop: myParseFloat(event.target.value) });
   };
 
   handleDstep = event => {
-    this.setState({ dispSteps: parseFloat(event.target.value) });
+    this.setState({ dispSteps: myParseFloat(event.target.value) });
   };
 
   handleXstart = event => {
-    this.setState({ sampleX_start: parseFloat(event.target.value) });
+    this.setState({ sampleX_start: myParseFloat(event.target.value) });
   };
 
   handleXstop = event => {
-    this.setState({ sampleX_end:  parseFloat(event.target.value) });
+    this.setState({ sampleX_end: myParseFloat(event.target.value) });
   };
 
   handleXstep = event => {
-    this.setState({ sampleX_points:  parseFloat(event.target.value) });
+    this.setState({ sampleX_points: myParseFloat(event.target.value) });
   };
 
   handleDelay = event => {
-    this.setState({ delay: parseFloat(event.target.value) });
+    this.setState({ delay: myParseFloat(event.target.value) });
   };
 
   handleHydrationVol = event => {
-    this.setState({ hydrationvol:  parseFloat(event.target.value) });
+    this.setState({ hydrationvol: myParseFloat(event.target.value) });
   };
 
   handleAbort = event => {
@@ -344,7 +352,7 @@ class TensilePage extends Component {
               <TextField
                 label="Displacement Start (mm)"
                 variant="outlined"
-                type="number"
+                // type="number"
                 value={this.state.dispStart}
                 onChange={this.handleDstart}
               />
@@ -427,7 +435,7 @@ class TensilePage extends Component {
             </Grid>
             <Grid item xs={2}>
               <TextField
-                label="Cross Sectional Area (m2)"
+                label="Cross Sectional Area (mm2)"
                 variant="outlined"
                 type="number"
                 value={this.props.csa}
@@ -440,15 +448,10 @@ class TensilePage extends Component {
                 type="number"
                 value="0.25"
                 disabled="true"
-                />
+              />
             </Grid>
             <Grid item xs={2}>
-              <TextField
-                label="Shape" 
-                variant="outlined"
-                value="Rectangle" 
-                disabled="true" 
-              />
+              <TextField label="Shape" variant="outlined" value="Oblong" disabled="true" />
             </Grid>
           </Grid>
           <Grid
@@ -534,7 +537,7 @@ class TensilePage extends Component {
               <Typography> Force: {this.props.force.toPrecision(3)} Kg</Typography>
             </Grid>
             <Grid item xs={2}>
-              <Typography> Stress: {this.props.stress.toPrecision(3)} N/m2</Typography>
+              <Typography> Stress: {this.props.stress.toPrecision(3)} N/mm2</Typography>
             </Grid>
             <Grid item xs={2}>
               <Typography> Strain: {this.props.strain.toPrecision(3)} </Typography>

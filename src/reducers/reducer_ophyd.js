@@ -1,7 +1,7 @@
 import * as actions from "../actions/actionTypes";
 
 const default_state = {
-  devices: {}
+  devices: { "saxs_motors.in_vac.x": 100, "saxs_IO.rio0.ao_0": 0 }
 };
 
 export default (state = default_state, action) => {
