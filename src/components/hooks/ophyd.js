@@ -11,7 +11,7 @@ export const useSubscribeOphyd = device => {
   try {
     return useSelector(state => state.ophyd.devices[device]);
   } catch {
-    return "null";
+    return null;
   }
 };
 

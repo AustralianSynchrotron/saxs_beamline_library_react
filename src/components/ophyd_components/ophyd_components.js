@@ -1,12 +1,11 @@
 import classNames from "classnames";
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles, getThemeProps } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import Slider from "@material-ui/core/Slider";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import ArrowBackIos from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIos from "@material-ui/icons/ArrowForwardIos";
 import DragHandle from "@material-ui/icons/DragHandle";
@@ -15,7 +14,8 @@ import { useSetOphyd } from "../hooks/ophyd";
 
 const useStyles = makeStyles({
   hidden: { display: "None" },
-  showButton: { marginTop: 0 }
+  showButton: { marginTop: 0 },
+  slider: { flexDirection: "row" }
 });
 
 export const OphydTextField = props => {
@@ -24,6 +24,9 @@ export const OphydTextField = props => {
   const [editing, setEditing] = useState(false);
 
   var value = useSubscribeOphyd(props.device);
+  if (value === undefined) {
+    value = "";
+  }
 
   const handleChange = event => {
     setTempValue(event.target.value);
@@ -48,15 +51,12 @@ export const OphydTextField = props => {
   return (
     <TextField
       value={editing ? tempValue : value}
-      label={props.label}
+      label={props.label + " (" + props.egu + ")"}
       variant="outlined"
       onChange={handleChange}
       onKeyDown={handleKeyDown}
       onFocus={handleFocus}
       onBlur={handleBlur}
-      InputProps={{
-        endAdornment: <InputAdornment position="end">{props.egu}</InputAdornment>
-      }}
     />
   );
 };
@@ -80,31 +80,34 @@ export const OphydIconButton = props => {
 };
 
 export const OphydSlider = props => {
+  const classes = useStyles(props);
   const setOphyd = useSetOphyd();
-  const [tempValue, setTempValue] = useState(0);
-  const [editing, setEditing] = useState(false);
 
   var value = useSubscribeOphyd(props.device);
-
+  if (value === undefined) {
+    value = 0;
+  }
   const handleChange = (event, value) => {
-    setEditing(true);
-    setTempValue(value);
-    setOphyd(props.device, parseFloat(tempValue));
-  };
-
-  const handleChangeCommitted = () => {
-    setEditing(false);
+    setOphyd(props.device, parseFloat(value));
   };
 
   return (
-    <Slider
-      value={editing ? tempValue : value}
-      onChange={handleChange}
-      onChangeCommitted={handleChangeCommitted}
-      step={props.step}
-      max={props.max}
-      min={props.min}
-    />
+    <React.Fragment>
+      <Grid container direction={props.orientation === "vertical" ? "column" : "row"} spacing={1}>
+        <Grid item>{props.leftIcon}</Grid>
+        <Grid item xs>
+          <Slider
+            value={value}
+            onChange={handleChange}
+            orientation={props.orientation}
+            step={props.step}
+            max={props.max}
+            min={props.min}
+          />
+        </Grid>
+        <Grid item>{props.rightIcon}</Grid>
+      </Grid>
+    </React.Fragment>
   );
 };
 
@@ -123,6 +126,7 @@ export const OphydMotorCompact = props => {
   };
 
   const handleTweak = event => {
+    console.log(event.currentTarget);
     setOphyd(props.device + ".tweak", tweak * event.currentTarget.dataset.dir);
   };
 
@@ -138,7 +142,7 @@ export const OphydMotorCompact = props => {
             <ArrowBackIos />
           </IconButton>
           <OphydTextField device={props.device} label={props.label} egu="mm" />
-          <IconButton device={props.device} data-posdir={1} onClick={handleTweak}>
+          <IconButton device={props.device} data-dir={1} onClick={handleTweak}>
             <ArrowForwardIos />
           </IconButton>
         </Grid>
