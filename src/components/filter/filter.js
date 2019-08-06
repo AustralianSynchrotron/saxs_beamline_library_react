@@ -4,7 +4,6 @@ import ToggleButton from "@material-ui/lab/ToggleButton";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { OphydTextField, OphydButton, OphydSlider } from "../ophyd_components/ophyd_components";
 
 class FilterBank extends Component {
   constructor(props) {
@@ -85,17 +84,6 @@ class FilterBank extends Component {
   render() {
     return (
       <div>
-        <OphydButton device={"saxs_IO.rio0.ao_0"} value={0} label="Light 1 Off" />
-        <OphydButton device={"saxs_IO.rio0.ao_0"} value={10} label="Light 1 On" />
-        <OphydButton device={"saxs_IO.rio0.ao_1"} value={0} label="Lights 2 Off" />
-        <OphydButton device={"saxs_IO.rio0.ao_1"} value={10} label="Lights 2 On" />
-        <OphydTextField device={"saxs_motors.in_vac.x"} />
-        <OphydSlider device="saxs_IO.rio0.ao_0" min={0} max={10} step={0.1} />
-        <TextField
-          label="Transmission"
-          value={this.state.transmission}
-          onChange={this.handleTransmissionChange}
-        />
         <Button onClick={this.handleIncrementFilter("decrease")}>
           <FontAwesomeIcon icon="caret-square-left" size="2x" />
         </Button>

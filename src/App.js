@@ -22,7 +22,7 @@ import SwapHoriz from "@material-ui/icons/SwapHoriz"
 import Settings from "@material-ui/icons/Settings";
 import ViewComfy from "@material-ui/icons/ViewComfy";
 import PlayCircleOutline from "@material-ui/icons/PlayCircleOutline";
-import Filters from "./components/filter/filter.js";
+import BeamlineControl from "./components/beamline_control/beamline_control.js";
 import AcquirePage from "./components/acquire_page/acquire_page.js";
 import ConfigPage from "./components/config_page/config_page.js";
 import WellPlate from "./components/well_plate/well_plate.js";
@@ -175,8 +175,8 @@ class App extends Component {
                 ["Acquisition", <PlayCircleOutline />],
                 ["Solution Autoloader", <ViewComfy />],
                 ["New Experiment", <NoteAdd />],
-                ["BL Setup", <Settings />],
-                ["BL Config", <Favorite />],
+                ["Beamline Control", <Settings />],
+                ["Beamline Config", <Favorite />],
                 ["Vacuum Controls", <Cached />],
                 ["Tensile Setup", <SwapHoriz />]
               ].map((item, index) => (
@@ -202,7 +202,7 @@ class App extends Component {
             )}
             {page === 3 && (
               <div>
-                <Filters size="7" />
+                <BeamlineControl />
               </div>
             )}
             {page === 4 && (
