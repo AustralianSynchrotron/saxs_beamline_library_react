@@ -18,7 +18,8 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import NoteAdd from "@material-ui/icons/NoteAdd";
 import Cached from "@material-ui/icons/Cached";
-import SwapHoriz from "@material-ui/icons/SwapHoriz"
+import SwapHoriz from "@material-ui/icons/SwapHoriz";
+import CallMissedOutgoing from "@material-ui/icons/CallMissedOutgoing";
 import Settings from "@material-ui/icons/Settings";
 import ViewComfy from "@material-ui/icons/ViewComfy";
 import PlayCircleOutline from "@material-ui/icons/PlayCircleOutline";
@@ -28,6 +29,7 @@ import ConfigPage from "./components/config_page/config_page.js";
 import WellPlate from "./components/well_plate/well_plate.js";
 import VacuumPage from "./components/vacuum/Vacuum";
 import TensilePage from "./components/tensile/Tensile";
+import GrazingPage from "./components/grazing_page/grazing_page";
 
 const drawerWidth = 240;
 
@@ -178,6 +180,7 @@ class App extends Component {
                 ["Beamline Control", <Settings />],
                 ["Beamline Config", <Favorite />],
                 ["Vacuum Controls", <Cached />],
+                ["Grazing Setup", <CallMissedOutgoing />],
                 ["Tensile Setup", <SwapHoriz />]
               ].map((item, index) => (
                 <ListItem button key={item[0]} onClick={() => this.handlePageChange(index)}>
@@ -216,6 +219,11 @@ class App extends Component {
               </div>
             )}
             {page === 6 && (
+              <div>
+                <GrazingPage />
+              </div>
+            )}
+            {page === 7 && (
               <div>
                 <TensilePage />
               </div>

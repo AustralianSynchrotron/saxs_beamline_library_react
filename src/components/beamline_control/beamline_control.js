@@ -15,7 +15,7 @@ const BeamlineControl = props => {
         rightIcon={<BrightnessHigh />}
       />
       <OphydSlider device="saxs_IO.rio0.ao_1" step={0.1} min={0} max={10} />
-      <OphydMotorCompact device="saxs_motors.sample_table.x" label="Sample Table X" />
+      <OphydMotorCompact device="saxs_motors.sample_table.x" />
       <OphydMotorCompact device="saxs_motors.sample_table.y" label="Sample Table Y" />
       <OphydMotorCompact device="saxs_motors.in_vac.x" label="In Vac X" />
       <OphydMotorCompact device="saxs_motors.in_vac.y" label="In Vac Y" />

@@ -287,6 +287,12 @@ export const setOphyd = (device, value) => ({
   key: "ophyd"
 });
 
+export const getBundleList = bundle => ({
+  type: actions.GETBUNDLELIST,
+  data: { bundle },
+  key: "ophyd"
+});
+
 export const tensileLength = length => ({
   type: actions.TENSLENGTH,
   data: { length },

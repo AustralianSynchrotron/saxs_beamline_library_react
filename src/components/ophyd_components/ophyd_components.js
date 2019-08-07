@@ -1,7 +1,9 @@
 import classNames from "classnames";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { makeStyles, getThemeProps } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
@@ -11,6 +13,9 @@ import ArrowForwardIos from "@material-ui/icons/ArrowForwardIos";
 import DragHandle from "@material-ui/icons/DragHandle";
 import { useSubscribeOphyd } from "../hooks/ophyd";
 import { useSetOphyd } from "../hooks/ophyd";
+import { useDispatch } from "react-redux";
+import { getBundleList } from "../../actions/index";
+import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles({
   hidden: { display: "None" },
@@ -23,9 +28,9 @@ export const OphydTextField = props => {
   const [tempValue, setTempValue] = useState("");
   const [editing, setEditing] = useState(false);
 
-  var value = useSubscribeOphyd(props.device);
-  if (value === undefined) {
-    value = "";
+  var deviceData = useSubscribeOphyd(props.device);
+  if (deviceData === undefined) {
+    deviceData = { value: "" };
   }
 
   const handleChange = event => {
@@ -33,15 +38,14 @@ export const OphydTextField = props => {
   };
 
   const handleKeyDown = event => {
+    if (editing === false) {
+      setTempValue(event.target.value);
+      setEditing(true);
+    }
     if (event.key === "Enter") {
       setOphyd(props.device, parseFloat(tempValue));
       setEditing(false);
     }
-  };
-
-  const handleFocus = event => {
-    setTempValue(event.target.value);
-    setEditing(true);
   };
 
   const handleBlur = () => {
@@ -50,12 +54,16 @@ export const OphydTextField = props => {
 
   return (
     <TextField
-      value={editing ? tempValue : value}
-      label={props.label + " (" + props.egu + ")"}
+      value={editing ? tempValue : deviceData.value}
+      label={(
+        (props.label === undefined ? deviceData.name : props.label) +
+        " (" +
+        deviceData.egu +
+        ")"
+      ).replace(/_/g, " ")}
       variant="outlined"
       onChange={handleChange}
       onKeyDown={handleKeyDown}
-      onFocus={handleFocus}
       onBlur={handleBlur}
     />
   );
@@ -83,10 +91,12 @@ export const OphydSlider = props => {
   const classes = useStyles(props);
   const setOphyd = useSetOphyd();
 
-  var value = useSubscribeOphyd(props.device);
-  if (value === undefined) {
-    value = 0;
+  var deviceData = useSubscribeOphyd(props.device);
+  if (deviceData === undefined) {
+    deviceData = { value: 0 };
   }
+  console.log(deviceData.upper_disp_limit);
+  console.log(deviceData.lower_disp_limit);
   const handleChange = (event, value) => {
     setOphyd(props.device, parseFloat(value));
   };
@@ -97,12 +107,12 @@ export const OphydSlider = props => {
         <Grid item>{props.leftIcon}</Grid>
         <Grid item xs>
           <Slider
-            value={value}
+            value={deviceData.value}
             onChange={handleChange}
             orientation={props.orientation}
             step={props.step}
-            max={props.max}
-            min={props.min}
+            max={deviceData.upper_disp_limit}
+            min={deviceData.lower_disp_limit}
           />
         </Grid>
         <Grid item>{props.rightIcon}</Grid>
@@ -198,4 +208,31 @@ export const OphydMotorCompact = props => {
       </Grid>
     </React.Fragment>
   );
+};
+
+export const OphydMotorBundleCompact = props => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getBundleList(props.bundle));
+  }, []);
+
+  const bundleDeviceList = useSelector(state => state.ophyd.bundles[props.bundle]) || null;
+
+  if (bundleDeviceList === null) {
+    return <h1>Oops</h1>;
+  } else {
+    return (
+      <Grid container direction="column" justify="center" spacing={1}>
+        <Grid item>
+          <Typography align="center">{bundleDeviceList.name}</Typography>
+        </Grid>
+        {bundleDeviceList.list.map(device => (
+          <Grid item>
+            <OphydMotorCompact label={device} device={props.bundle + "." + device} />
+          </Grid>
+        ))}
+      </Grid>
+    );
+  }
 };
