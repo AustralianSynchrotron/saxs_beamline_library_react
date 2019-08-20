@@ -220,7 +220,7 @@ export const OphydMotorBundleCompact = props => {
   const bundleDeviceList = useSelector(state => state.ophyd.bundles[props.bundle]) || null;
 
   if (bundleDeviceList === null) {
-    return <h1>Oops</h1>;
+    return <div />;
   } else {
     return (
       <Grid container direction="column" justify="center" spacing={1}>
