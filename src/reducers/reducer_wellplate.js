@@ -1,7 +1,7 @@
 import * as actions from "../actions/actionTypes";
 
 var wells = {};
-for (var i = 0; i < 96; i++) {
+for (var i = 0; i < 960; i++) {
   wells[i] = {
     well_name: "Well: " + i.toString(),
     well_type: "Empty",

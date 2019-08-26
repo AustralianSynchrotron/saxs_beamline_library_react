@@ -7,8 +7,15 @@ const default_state = {
 
 export default (state = default_state, action) => {
   switch (action.type) {
+    case actions.SETDEVICE:
+      return {
+        ...state,
+        devices: {
+          ...state.devices,
+          [action.data.device]: { ...state.devices[action.data.device], ...action.data }
+        }
+      };
     case actions.SUBSCRIBEDEVICE:
-      console.log(state);
       return {
         ...state,
         devices: {

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { makeStyles, getThemeProps } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
@@ -30,7 +29,11 @@ export const OphydTextField = props => {
 
   var deviceData = useSubscribeOphyd(props.device);
   if (deviceData === undefined) {
-    deviceData = { value: "" };
+    deviceData = { value: "", dtype: "string" };
+  } else {
+    if (deviceData.dtype === "number") {
+      deviceData.value = parseFloat(deviceData.value).toPrecision(deviceData.precision);
+    }
   }
 
   const handleChange = event => {
@@ -43,7 +46,7 @@ export const OphydTextField = props => {
       setEditing(true);
     }
     if (event.key === "Enter") {
-      setOphyd(props.device, parseFloat(tempValue));
+      setOphyd(props.device, deviceData.dtype === "number" ? parseFloat(tempValue) : tempValue);
       setEditing(false);
     }
   };
@@ -75,7 +78,11 @@ export const OphydButton = props => {
   const handleClick = () => {
     setOphyd(props.device, props.value);
   };
-  return <Button onClick={handleClick}>{props.label}</Button>;
+  return (
+    <Button onClick={handleClick} className={props.classes}>
+      {props.label}
+    </Button>
+  );
 };
 
 export const OphydIconButton = props => {
@@ -95,8 +102,6 @@ export const OphydSlider = props => {
   if (deviceData === undefined) {
     deviceData = { value: 0 };
   }
-  console.log(deviceData.upper_disp_limit);
-  console.log(deviceData.lower_disp_limit);
   const handleChange = (event, value) => {
     setOphyd(props.device, parseFloat(value));
   };

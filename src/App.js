@@ -18,6 +18,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import NoteAdd from "@material-ui/icons/NoteAdd";
 import Cached from "@material-ui/icons/Cached";
+import Videocam from "@material-ui/icons/Videocam";
 import SwapHoriz from "@material-ui/icons/SwapHoriz";
 import CallMissedOutgoing from "@material-ui/icons/CallMissedOutgoing";
 import Settings from "@material-ui/icons/Settings";
@@ -30,6 +31,7 @@ import WellPlate from "./components/well_plate/well_plate.js";
 import VacuumPage from "./components/vacuum/Vacuum";
 import TensilePage from "./components/tensile/Tensile";
 import GrazingPage from "./components/grazing_page/grazing_page";
+import VideoPage from "./components/video_page/video_page";
 
 const drawerWidth = 240;
 
@@ -180,6 +182,7 @@ class App extends Component {
                 ["Beamline Control", <Settings />],
                 ["Beamline Config", <Favorite />],
                 ["Vacuum Controls", <Cached />],
+                ["Video Cameras", <Videocam />],
                 ["Grazing Setup", <CallMissedOutgoing />],
                 ["Tensile Setup", <SwapHoriz />]
               ].map((item, index) => (
@@ -220,10 +223,15 @@ class App extends Component {
             )}
             {page === 6 && (
               <div>
-                <GrazingPage />
+                <VideoPage />
               </div>
             )}
             {page === 7 && (
+              <div>
+                <GrazingPage />
+              </div>
+            )}
+            {page === 8 && (
               <div>
                 <TensilePage />
               </div>
