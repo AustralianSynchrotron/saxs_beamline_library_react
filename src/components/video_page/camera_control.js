@@ -1,8 +1,15 @@
-import React, { Component } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/styles";
 import BrightnessLow from "@material-ui/icons/BrightnessLow";
 import BrightnessHigh from "@material-ui/icons/BrightnessHigh";
-import { OphydButton, OphydSlider } from "../ophyd_components/ophyd_components";
+import ShutterSpeed from "@material-ui/icons/ShutterSpeed";
+import ShutterSpeedTwoTone from "@material-ui/icons/ShutterSpeedTwoTone";
+import {
+  OphydButton,
+  OphydSlider,
+  OphydTextField,
+  OphydStatusField
+} from "../ophyd_components/ophyd_components";
 
 const useStyles = makeStyles({
   start: {
@@ -27,8 +34,18 @@ const CameraControl = props => {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <OphydButton label="Start" device={props.cam + ".cam.acquire"} value={1} classes={classes.start} />
-      <OphydButton label="Stop" device={props.cam + ".cam.acquire"} value={0} classes={classes.stop} />
+      <OphydButton
+        label="Start"
+        device={props.cam + ".cam.acquire"}
+        value={1}
+        classes={classes.start}
+      />
+      <OphydButton
+        label="Stop"
+        device={props.cam + ".cam.acquire"}
+        value={0}
+        classes={classes.stop}
+      />
       <OphydSlider
         device={props.cam + ".cam.gain"}
         step={0.1}
@@ -42,9 +59,11 @@ const CameraControl = props => {
         step={0.1}
         min={0}
         max={10}
-        leftIcon={<BrightnessLow />}
-        rightIcon={<BrightnessHigh />}
+        leftIcon={<ShutterSpeed />}
+        rightIcon={<ShutterSpeedTwoTone />}
       />
+      <OphydButton label="Restart Server" />
+      <OphydStatusField label="Server Status" />
     </React.Fragment>
   );
 };

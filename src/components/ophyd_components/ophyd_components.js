@@ -22,6 +22,27 @@ const useStyles = makeStyles({
   slider: { flexDirection: "row" }
 });
 
+export const OphydStatusField = props => {
+  var deviceData = useSubscribeOphyd(props.device);
+  if (deviceData === undefined) {
+    deviceData = { value: "", dtype: "string" };
+  } else {
+    if (deviceData.dtype === "number") {
+      deviceData.value = parseFloat(deviceData.value).toPrecision(deviceData.precision);
+    }
+  }
+  return (
+    <TextField
+      value={deviceData.value}
+      label={(
+        (props.label === undefined ? deviceData.name : props.label) +
+        (deviceData.egu === undefined ? "" : " (" + deviceData.egu + ")")
+      ).replace(/_/g, " ")}
+      variant="outlined"
+    />
+  );
+};
+
 export const OphydTextField = props => {
   const setOphyd = useSetOphyd();
   const [tempValue, setTempValue] = useState("");
