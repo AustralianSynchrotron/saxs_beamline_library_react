@@ -62,6 +62,8 @@ const CameraControl = props => {
         leftIcon={<ShutterSpeed />}
         rightIcon={<ShutterSpeedTwoTone />}
       />
+      <OphydTextField label="X Size" device={props.cam + ".cam.size.size_x"} />
+      <OphydTextField label="Y Size" device={props.cam + ".cam.size.size_y"} />
       <OphydButton label="Restart Server" />
       <OphydStatusField label="Server Status" />
     </React.Fragment>

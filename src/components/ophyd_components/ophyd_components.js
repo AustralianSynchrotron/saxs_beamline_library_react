@@ -36,7 +36,7 @@ export const OphydStatusField = props => {
       value={deviceData.value}
       label={(
         (props.label === undefined ? deviceData.name : props.label) +
-        (deviceData.egu === undefined ? "" : " (" + deviceData.egu + ")")
+        (deviceData.egu === undefined || deviceData.equ === "" ? "" : " (" + deviceData.egu + ")")
       ).replace(/_/g, " ")}
       variant="outlined"
     />
