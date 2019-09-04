@@ -16,8 +16,8 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-// import Grid from "@material-ui/core/Grid";
-import { AutoSizer, Grid } from "react-virtualized";
+import Grid from "@material-ui/core/Grid";
+// import { AutoSizer, Grid } from "react-virtualized";
 import Button from "@material-ui/core/Button";
 
 import WellCard from "./well_card.js";
@@ -85,40 +85,40 @@ class WellPlate extends Component {
 
   render() {
     const { classes } = this.props;
-    // var cards = [];
-    // for (const [index, well] of Object.entries(this.props.wells)) {
-    //   cards.push(
-    //     <Grid key={index} lg={1} md={1} sm={1} xl={1} xs={1} item>
-    //       <WellCard index={index} well={well} onUpdate={this.handleUpdate} />
-    //       {/* <WellCard key={index} name={element} onName={event => this.handleName(index, event)} /> */}
-    //     </Grid>
-    //   );
-    // }
-
-    // return (
-    //   <React.Fragment>
-    //     <Button onClick={this.handleSelectAll}>Select All</Button>
-    //     <Button onClick={this.handleUnselectAll}>Unselect All</Button>
-    //     <Grid container>{cards}</Grid>
-    //   </React.Fragment>
-    // );
+    var cards = [];
+    for (const [index, well] of Object.entries(this.props.wells)) {
+      cards.push(
+        <Grid key={index} lg={1} md={1} sm={1} xl={1} xs={1} item>
+          <WellCard index={index} well={well} onUpdate={this.handleUpdate} />
+          {/* <WellCard key={index} name={element} onName={event => this.handleName(index, event)} /> */}
+        </Grid>
+      );
+    }
 
     return (
-      <AutoSizer disableHeight>
-        {({ width }) => (
-          <Grid
-            cellRenderer={this.cellRenderer}
-            // className={styles.BodyGrid}
-            columnWidth={this.state.columnWidth}
-            columnCount={this.state.columnCount}
-            height={this.state.height}
-            rowHeight={this.state.rowHeight}
-            rowCount={this.state.rowCount}
-            width={width}
-          />
-        )}
-      </AutoSizer>
+      <React.Fragment>
+        <Button onClick={this.handleSelectAll}>Select All</Button>
+        <Button onClick={this.handleUnselectAll}>Unselect All</Button>
+        <Grid container>{cards}</Grid>
+      </React.Fragment>
     );
+
+    // return (
+    //   <AutoSizer disableHeight>
+    //     {({ width }) => (
+    //       <Grid
+    //         cellRenderer={this.cellRenderer}
+    //         // className={styles.BodyGrid}
+    //         columnWidth={this.state.columnWidth}
+    //         columnCount={this.state.columnCount}
+    //         height={this.state.height}
+    //         rowHeight={this.state.rowHeight}
+    //         rowCount={this.state.rowCount}
+    //         width={width}
+    //       />
+    //     )}
+    //   </AutoSizer>
+    // );
   }
 }
 WellPlate.propTypes = {

@@ -32,6 +32,9 @@ export default (state = default_state, action) => {
         }
       };
     case actions.LIBRARYUPDATE:
+      console.log(actions.LIBRARYUPDATE);
+      console.log(action.data.device);
+      console.log(action.data.value);
       return {
         ...state,
         devices: {

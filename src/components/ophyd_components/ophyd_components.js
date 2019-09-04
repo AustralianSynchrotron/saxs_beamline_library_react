@@ -67,7 +67,14 @@ export const OphydTextField = props => {
       setEditing(true);
     }
     if (event.key === "Enter") {
-      setOphyd(props.device, deviceData.dtype === "number" ? parseFloat(tempValue) : tempValue);
+      setOphyd(
+        props.device,
+        deviceData.dtype === "number"
+          ? parseFloat(tempValue)
+          : deviceData.dtype === "integer"
+          ? parseInt(tempValue)
+          : tempValue
+      );
       setEditing(false);
     }
   };
@@ -81,9 +88,7 @@ export const OphydTextField = props => {
       value={editing ? tempValue : deviceData.value}
       label={(
         (props.label === undefined ? deviceData.name : props.label) +
-        " (" +
-        deviceData.egu +
-        ")"
+        (deviceData.egu === undefined || deviceData.equ === "" ? "" : " (" + deviceData.egu + ")")
       ).replace(/_/g, " ")}
       variant="outlined"
       onChange={handleChange}
@@ -124,12 +129,14 @@ export const OphydSlider = props => {
     deviceData = { value: 0 };
   }
   const handleChange = (event, value) => {
-    setOphyd(props.device, parseFloat(value));
+    console.log(props.setTimeout);
+    setOphyd(props.device, parseFloat(value), props.setTimeout);
   };
 
   return (
     <React.Fragment>
       <Grid container direction={props.orientation === "vertical" ? "column" : "row"} spacing={1}>
+        <Grid item>{props.label}</Grid>
         <Grid item>{props.leftIcon}</Grid>
         <Grid item xs>
           <Slider
@@ -137,8 +144,8 @@ export const OphydSlider = props => {
             onChange={handleChange}
             orientation={props.orientation}
             step={props.step}
-            max={deviceData.upper_disp_limit}
-            min={deviceData.lower_disp_limit}
+            max={props.max === "undefined" ? deviceData.upper_disp_limit : props.max}
+            min={props.min === "undefined" ? deviceData.lower_disp_limit : props.min}
           />
         </Grid>
         <Grid item>{props.rightIcon}</Grid>

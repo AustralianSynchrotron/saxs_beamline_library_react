@@ -15,7 +15,7 @@ export const useSubscribeOphyd = device => {
   }
 };
 
-export const useSetOphyd = (device, value) => {
+export const useSetOphyd = (device, value, timeout = null) => {
   const dispatch = useDispatch();
-  return (device, value) => dispatch(setOphyd(device, value));
+  return (device, value, timeout) => dispatch(setOphyd(device, value, timeout));
 };

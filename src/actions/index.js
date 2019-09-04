@@ -281,15 +281,15 @@ export const subscribeOphyd = device => ({
   key: "ophyd"
 });
 
-export const setOphyd = (device, value) => ({
+export const setOphyd = (device, value, timeout = null) => ({
   type: actions.SETDEVICE,
-  data: { device, value },
+  data: { device, value, timeout },
   key: "ophyd"
 });
 
-export const getBundleList = bundle => ({
+export const getBundleList = (bundle, connected = false) => ({
   type: actions.GETBUNDLELIST,
-  data: { bundle },
+  data: { bundle, connected },
   key: "ophyd"
 });
 
