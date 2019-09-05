@@ -8,6 +8,7 @@ import green from "@material-ui/core/colors/green";
 import red from "@material-ui/core/colors/red";
 import {
   OphydButton,
+  OphydToggleButton,
   OphydSlider,
   OphydTextField,
   OphydStatusField
@@ -58,17 +59,13 @@ const CameraControl = props => {
         <h1>{props.label.replace(/_/g, " ")}</h1>
         <div className={classes.camera}>
           <div className={classes.buttons}>
-            <OphydButton
-              label="Start"
+            <OphydToggleButton
+              labelFirst="Start"
+              labelSecond="Stop"
+              valueFirst={0}
+              valueSecond={1}
               device={props.cam + ".cam.acquire"}
-              value={1}
               classes={classes.start}
-            />
-            <OphydButton
-              label="Stop"
-              device={props.cam + ".cam.acquire"}
-              value={0}
-              classes={classes.stop}
             />
           </div>
           <div className={classes.sliders}>
@@ -97,8 +94,13 @@ const CameraControl = props => {
               setTimeout={1}
             />
           </div>
+          <OphydTextField label="Start X" device={props.cam + ".cam.min_x"} />
           <OphydTextField label="X Size" device={props.cam + ".cam.size.size_x"} />
+          <OphydTextField label="Start Y" device={props.cam + ".cam.min_y"} />
           <OphydTextField label="Y Size" device={props.cam + ".cam.size.size_y"} />
+          <OphydTextField label="JPEG Path" device={props.cam + ".jpeg_plugin.file_path"} />
+          <OphydTextField label="JPEG Name" device={props.cam + ".jpeg_plugin.file_name"} />
+          <OphydButton label="Save JPEG" value={1} device={props.cam + ".jpeg_plugin.write_file"} />
           {/* <OphydButton label="Restart Server" /> */}
           {/* <OphydStatusField label="Server Status" /> */}
         </div>

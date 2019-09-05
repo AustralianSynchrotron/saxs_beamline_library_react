@@ -5,6 +5,7 @@ import { makeStyles, getThemeProps } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import ToggleButton from "@material-ui/lab/ToggleButton";
 import IconButton from "@material-ui/core/IconButton";
 import Slider from "@material-ui/core/Slider";
 import ArrowBackIos from "@material-ui/icons/ArrowBackIos";
@@ -72,8 +73,8 @@ export const OphydTextField = props => {
         deviceData.dtype === "number"
           ? parseFloat(tempValue)
           : deviceData.dtype === "integer"
-          ? parseInt(tempValue)
-          : tempValue
+            ? parseInt(tempValue)
+            : tempValue
       );
       setEditing(false);
     }
@@ -108,6 +109,33 @@ export const OphydButton = props => {
     <Button onClick={handleClick} className={props.classes}>
       {props.label}
     </Button>
+  );
+};
+
+export const OphydToggleButton = props => {
+  const setOphyd = useSetOphyd();
+  var status = 0;
+  var label = "Not Connected";
+  var deviceValue = useSubscribeOphyd(props.device);
+  if (deviceValue == props.valueFirst) {
+    status = 1;
+    label = props.labelFirst;
+  }
+  if (deviceValue == props.valueSecond) {
+    status = 2;
+    label = props.labelSecond;
+  }
+
+  const handleChange = () => {
+    if (status == 0) {
+      return;
+    }
+    setOphyd(props.device, status == 1 ? props.valueFirst : props.valueSecond);
+  };
+  return (
+    <ToggleButton onChange={handleChange} className={props.classes}>
+      {label}
+    </ToggleButton>
   );
 };
 
