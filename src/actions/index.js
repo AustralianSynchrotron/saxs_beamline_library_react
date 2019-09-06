@@ -73,6 +73,12 @@ export const listenStatus = () => ({
   key: "status"
 });
 
+export const ophydConnected = connected => ({
+  type: actions.OPHYDCONNECTED,
+  data: { connected },
+  local: true
+});
+
 export const listConfigs = () => ({
   type: actions.LISTCONFIGS,
   fetch: true,
@@ -384,4 +390,9 @@ export const updateExtension = extension => ({
 export const tensileAbort = () => ({
   type: actions.TENSABORT,
   key: "tensile"
+});
+
+export const clearSetError = () => ({
+  type: actions.CLEARSETERROR,
+  local: true
 });

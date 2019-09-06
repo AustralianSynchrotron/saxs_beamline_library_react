@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import configureStore from "./configureStore";
-import { handleDataFromServer, getServerVersion, listenStatus } from "./actions";
+import { handleDataFromServer, getServerVersion, listenStatus, ophydConnected } from "./actions";
 import * as serviceWorker from "./serviceWorker";
 require("typeface-roboto");
 
@@ -14,12 +14,18 @@ const store = configureStore(socket);
 socket.onopen = key => {
   console.log("websocket " + key + " opened");
   // store.dispatch(getServerVersion());
-  if (key == "status") {
+  if (key === "status") {
     store.dispatch(listenStatus());
   }
+  if (key === "ophyd") {
+    store.dispatch(ophydConnected(true));
+  }
 };
-socket.onclose = () => {
+socket.onclose = key => {
   console.log("closed");
+  if (key === "ophyd") {
+    store.dispatch(ophydConnected(false));
+  }
 };
 socket.onmessage = event => {
   // console.log("event:" + event.data);

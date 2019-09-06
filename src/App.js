@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { withStyles, createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
@@ -32,6 +33,8 @@ import VacuumPage from "./components/vacuum/Vacuum";
 import TensilePage from "./components/tensile/Tensile";
 import GrazingPage from "./components/grazing_page/grazing_page";
 import VideoPage from "./components/video_page/video_page";
+import SnackBar from "@material-ui/core/SnackBar";
+import * as actionCreators from "./actions/index";
 
 const drawerWidth = 240;
 
@@ -124,6 +127,10 @@ class App extends Component {
     this.setState({ page });
   };
 
+  handleErrorClose = () => {
+    this.props.clearSetError();
+  };
+
   render() {
     const { classes } = this.props;
     const { drawerOpen, page } = this.state;
@@ -132,6 +139,7 @@ class App extends Component {
         <div className={classes.root}>
           <CssBaseline />
           <AppBar
+            color={this.props.connected ? "primary" : "secondary"}
             position="absolute"
             className={classNames(classes.appBar, {
               [classes.appBarShift]: drawerOpen
@@ -236,6 +244,11 @@ class App extends Component {
                 <TensilePage />
               </div>
             )}
+            <SnackBar
+              open={this.props.error !== null}
+              message={this.props.error}
+              onClose={this.handleErrorClose}
+            />
           </main>
         </div>
       </MuiThemeProvider>
@@ -247,4 +260,14 @@ App.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(App);
+function mapStateToProps(state) {
+  return {
+    error: state.ophyd.setError,
+    connected: state.ophyd.connected
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  actionCreators
+)(withStyles(styles)(App));

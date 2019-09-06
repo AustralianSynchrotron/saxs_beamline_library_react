@@ -49,7 +49,7 @@ class ReconnectingWebSocket {
       if (event.code !== ReconnectingWebSocket.NORMAL_CLOSURE) {
         this._reconnect(key, url);
       }
-      this.onclose(event, ...args);
+      this.onclose(key, ...args);
     };
     this.instance[key].onerror = (...args) => {
       this.onerror(...args);

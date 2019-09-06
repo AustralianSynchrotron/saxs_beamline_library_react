@@ -15,20 +15,18 @@ import {
 } from "../ophyd_components/ophyd_components";
 
 const useStyles = makeStyles({
-  start: {
+  second: {
     background: green[500],
     color: "white",
-    height: 24,
-    padding: "0 30px",
+    height: 48,
     "&:hover": {
       backgroundColor: green[700]
     }
   },
-  stop: {
+  first: {
     background: red[500],
     color: "white",
-    height: 24,
-    padding: "0 30px",
+    height: 48,
     "&:hover": {
       backgroundColor: red["A700"]
     }
@@ -60,12 +58,12 @@ const CameraControl = props => {
         <div className={classes.camera}>
           <div className={classes.buttons}>
             <OphydToggleButton
-              labelFirst="Start"
-              labelSecond="Stop"
+              labelFirst="Stop"
+              labelSecond="Start"
               valueFirst={0}
               valueSecond={1}
               device={props.cam + ".cam.acquire"}
-              classes={classes.start}
+              classes={classes}
             />
           </div>
           <div className={classes.sliders}>

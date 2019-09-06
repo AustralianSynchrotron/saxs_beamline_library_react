@@ -20,7 +20,15 @@ import { Typography } from "@material-ui/core";
 const useStyles = makeStyles({
   hidden: { display: "None" },
   showButton: { marginTop: 0 },
-  slider: { flexDirection: "row" }
+  slider: { flexDirection: "row" },
+  cssOutlinedInput: {
+    "&:not(hover):not($disabled):not($cssFocused):not($error) $notchedOutline": {
+      borderColor: "red" //default
+    }
+  },
+  notchedOutline: {},
+  error: {},
+  disabled: {}
 });
 
 export const OphydStatusField = props => {
@@ -45,6 +53,7 @@ export const OphydStatusField = props => {
 };
 
 export const OphydTextField = props => {
+  const classes = useStyles(props);
   const setOphyd = useSetOphyd();
   const [tempValue, setTempValue] = useState("");
   const [editing, setEditing] = useState(false);
@@ -55,6 +64,7 @@ export const OphydTextField = props => {
   } else {
     if (deviceData.dtype === "number") {
       deviceData.value = parseFloat(deviceData.value).toPrecision(deviceData.precision);
+      console.log(deviceData);
     }
   }
 
@@ -73,8 +83,8 @@ export const OphydTextField = props => {
         deviceData.dtype === "number"
           ? parseFloat(tempValue)
           : deviceData.dtype === "integer"
-            ? parseInt(tempValue)
-            : tempValue
+          ? parseInt(tempValue)
+          : tempValue
       );
       setEditing(false);
     }
@@ -95,6 +105,18 @@ export const OphydTextField = props => {
       onChange={handleChange}
       onKeyDown={handleKeyDown}
       onBlur={handleBlur}
+      InputProps={
+        deviceData.set_success === undefined
+          ? null
+          : deviceData.set_success
+          ? null
+          : {
+              classes: {
+                root: classes.cssOutlinedInput,
+                notchedOutline: classes.notchedOutline
+              }
+            }
+      }
     />
   );
 };
@@ -116,24 +138,31 @@ export const OphydToggleButton = props => {
   const setOphyd = useSetOphyd();
   var status = 0;
   var label = "Not Connected";
-  var deviceValue = useSubscribeOphyd(props.device);
-  if (deviceValue == props.valueFirst) {
-    status = 1;
-    label = props.labelFirst;
+  var deviceData = useSubscribeOphyd(props.device);
+  if (deviceData === undefined) {
+    deviceData = { value: 0, dtype: "integer" };
   }
-  if (deviceValue == props.valueSecond) {
-    status = 2;
+  if (deviceData.value === props.valueFirst) {
+    status = 1;
     label = props.labelSecond;
+  }
+  if (deviceData.value === props.valueSecond) {
+    status = 2;
+    label = props.labelFirst;
   }
 
   const handleChange = () => {
-    if (status == 0) {
+    console.log(status);
+    if (status === 0) {
       return;
     }
-    setOphyd(props.device, status == 1 ? props.valueFirst : props.valueSecond);
+    setOphyd(props.device, status === 1 ? props.valueSecond : props.valueFirst);
   };
   return (
-    <ToggleButton onChange={handleChange} className={props.classes}>
+    <ToggleButton
+      onChange={handleChange}
+      className={classNames(status === 1 ? props.classes.second : props.classes.first)}
+    >
       {label}
     </ToggleButton>
   );
@@ -198,7 +227,7 @@ export const OphydMotorCompact = props => {
 
   const handleTweak = event => {
     console.log(event.currentTarget);
-    setOphyd(props.device + ".tweak", tweak * event.currentTarget.dataset.dir);
+    setOphyd(props.device + "._tweak", tweak * event.currentTarget.dataset.dir);
   };
 
   const handleShowTweak = () => {

@@ -2,18 +2,35 @@ import * as actions from "../actions/actionTypes";
 
 const default_state = {
   devices: {},
-  bundles: {}
+  bundles: {},
+  setError: null,
+  connected: false
 };
 
 export default (state = default_state, action) => {
   switch (action.type) {
+    case actions.OPHYDCONNECTED:
+      return {
+        ...state,
+        connected: action.data.connected
+      };
+    case actions.CLEARSETERROR:
+      return {
+        ...state,
+        setError: null
+      };
     case actions.SETDEVICE:
+      var errorMessage = null;
+      if (!action.data.set_success) {
+        errorMessage = action.data.set_message;
+      }
       return {
         ...state,
         devices: {
           ...state.devices,
           [action.data.device]: { ...state.devices[action.data.device], ...action.data }
-        }
+        },
+        setError: errorMessage
       };
     case actions.SUBSCRIBEDEVICE:
       return {
@@ -32,9 +49,6 @@ export default (state = default_state, action) => {
         }
       };
     case actions.LIBRARYUPDATE:
-      console.log(actions.LIBRARYUPDATE);
-      console.log(action.data.device);
-      console.log(action.data.value);
       return {
         ...state,
         devices: {
