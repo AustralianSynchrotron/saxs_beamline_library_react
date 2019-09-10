@@ -133,14 +133,15 @@ class VacuumPage extends Component {
           </Grid>
         </Grid>
         <Grid item xs={12}>
+          <VacComponent id="Beamline" staff={this.state.staff} gauge="saxs_vac_gauges.gauge_1" />
+        </Grid>
+        <Grid item xs={12}>
           <VacComponent id="Chamber" staff={this.state.staff} gauge="saxs_vac_gauges.gauge_2" />
         </Grid>
         <Grid item xs={12}>
           <VacComponent id="Nosecone" staff={this.state.staff} gauge="saxs_vac_gauges.gauge_2" />
         </Grid>
-        <Grid item xs={12}>
-          <VacComponent id="Beamline" staff={this.state.staff} gauge="saxs_vac_gauges.gauge_1" />
-        </Grid>
+
         <Grid
           container
           className={classes.root}
@@ -169,7 +170,7 @@ class VacuumPage extends Component {
         <Grid />
 
         <Grid item xs={12}>
-          <Typography>Pumping Valves</Typography>
+          <Typography>Roughing Valves</Typography>
         </Grid>
 
         <Grid

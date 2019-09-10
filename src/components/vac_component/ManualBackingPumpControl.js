@@ -61,7 +61,7 @@ const ManualBackingPumpControl = props => {
               label="Start"
               value={1}
               device={props.pump + ".backing_start"}
-              classes={classes.first}
+              classes={classes.second}
               disable={props.disable}
             />
           </div>
@@ -70,7 +70,7 @@ const ManualBackingPumpControl = props => {
               label="Stop"
               value={1}
               device={props.pump + ".backing_stop"}
-              classes={classes.second}
+              classes={classes.first}
               disable={props.disable}
             />
           </div>
