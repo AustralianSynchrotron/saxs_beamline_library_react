@@ -171,7 +171,11 @@ export const OphydButton = props => {
   return (
     <React.Fragment>
       <div className={classes.padding}>
-        <Button onClick={handleClick} className={props.classes}>
+        <Button
+          onClick={handleClick}
+          className={props.classes}
+          disabled={props.disable !== undefined ? props.disable : false}
+        >
           {props.label}
         </Button>
       </div>
@@ -231,6 +235,7 @@ export const OphydToggleButton = props => {
           <ToggleButton
             onChange={handleChange}
             className={classNames(status === 1 ? props.classes.second : props.classes.first)}
+            disabled={props.disable !== undefined ? props.disable : false}
           >
             {status === 1 ? props.labelSecond : status === 2 ? props.labelFirst : "Not Connected"}
           </ToggleButton>

@@ -53,7 +53,7 @@ const ManualValveControl = props => {
     <React.Fragment>
       <Paper background={grey["900"]}>
         <div className={classes.root}>
-          <div clasname={classes.horizontal}>
+          <div className={classes.horizontal}>
             <Typography variant="body1">{props.description}</Typography>
           </div>
           <OphydToggleButton
@@ -67,6 +67,7 @@ const ManualValveControl = props => {
             readSecond={1}
             device={props.valve + ".open_close_withrbv"}
             classes={classes}
+            disable={props.disable}
           />
           <OphydStatusField
             device={props.valve + ".open_state"}

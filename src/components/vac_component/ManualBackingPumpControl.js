@@ -53,29 +53,31 @@ const ManualBackingPumpControl = props => {
     <React.Fragment>
       <Paper background={grey["900"]}>
         <div className={classes.root}>
-          <div clasname={classes.horizontal}>
+          <div className={classes.horizontal}>
             <Typography variant="body1">{props.description}</Typography>
           </div>
-          <div classname={classes.horizontal}>
+          <div className={classes.horizontal}>
             <OphydButton
               label="Start"
               value={1}
               device={props.pump + ".backing_start"}
               classes={classes.first}
+              disable={props.disable}
             />
           </div>
-          <div classname={classes.horizontal}>
+          <div className={classes.horizontal}>
             <OphydButton
               label="Stop"
               value={1}
               device={props.pump + ".backing_stop"}
               classes={classes.second}
+              disable={props.disable}
             />
           </div>
-          <div classname={classes.horizontal}>
+          <div className={classes.horizontal}>
             <OphydStatusField label="Pressure" device={props.pump + ".pressure"} />
           </div>
-          <div classname={classes.horizontal} margin="10px">
+          <div className={classes.horizontal} margin="10px">
             <OphydStatusField label="Speed" device={props.pump + ".speed"} />
           </div>
         </div>

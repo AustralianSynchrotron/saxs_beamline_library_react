@@ -185,6 +185,7 @@ class VacuumPage extends Component {
               valve="saxs_vac_valves.valve07"
               description="Beamline:"
               label="VLV07"
+              disable={!this.state.staff}
             />
           </Grid>
           <Grid item xs={4}>
@@ -192,6 +193,7 @@ class VacuumPage extends Component {
               valve="saxs_vac_valves.valve11"
               description="Nosecone:"
               label="VLV11"
+              disable={!this.state.staff}
             />
           </Grid>
           <Grid item xs={4}>
@@ -199,6 +201,7 @@ class VacuumPage extends Component {
               valve="saxs_vac_valves.valve10"
               description="Vessel:"
               label="VLV10"
+              disable={!this.state.staff}
             />
           </Grid>
         </Grid>
@@ -218,17 +221,24 @@ class VacuumPage extends Component {
               valve="saxs_vac_valves.igv06"
               description="Beamline:"
               label="IGV06"
+              disable={!this.state.staff}
             />
           </Grid>
           <Grid item xs={4}>
             <ManualValveControl
               valve="saxs_vac_valves.igv08"
-              description="250 Vessel:"
+              description="Vessel:"
               label="IGV08"
+              disable={!this.state.staff}
             />
           </Grid>
           <Grid item xs={4}>
-            <ManualValveControl valve="saxs_vac_valves.igv09" description="Sample:" label="IGV09" />
+            <ManualValveControl
+              valve="saxs_vac_valves.igv09"
+              description="Sample:"
+              label="IGV09"
+              disable={!this.state.staff}
+            />
           </Grid>
         </Grid>
         <Grid item xs={12}>
@@ -247,6 +257,7 @@ class VacuumPage extends Component {
               pump="saxs_vac_pumps.roughing"
               description="Roughing:"
               label="Ebarra"
+              disable={!this.state.staff}
             />
           </Grid>
           <Grid item xs={4}>
@@ -254,6 +265,7 @@ class VacuumPage extends Component {
               pump="saxs_vac_pumps.chamber_turbo"
               description="Sample Turbo:"
               label="Turbo 3"
+              disable={!this.state.staff}
             />
           </Grid>
           <Grid item xs={4}>
@@ -261,6 +273,7 @@ class VacuumPage extends Component {
               pump="saxs_vac_pumps.vessel_turbo"
               description="Vessel Turbo:"
               label="Turbo 4"
+              disable={!this.state.staff}
             />
           </Grid>
         </Grid>
@@ -280,6 +293,7 @@ class VacuumPage extends Component {
               pump="saxs_vac_pumps.backing_pump03"
               description="Sample"
               label="Backing 3"
+              disable={!this.state.staff}
             />
           </Grid>
           <Grid item xs={6}>
@@ -287,6 +301,7 @@ class VacuumPage extends Component {
               pump="saxs_vac_pumps.backing_pump04"
               description="Vessel"
               label="Backing 4"
+              disable={!this.state.staff}
             />
           </Grid>
         </Grid>

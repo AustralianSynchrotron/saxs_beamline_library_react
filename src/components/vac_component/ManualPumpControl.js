@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles, getThemeProps } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import green from "@material-ui/core/colors/green";
 import grey from "@material-ui/core/colors/grey";
@@ -67,6 +67,7 @@ const ManualPumpControl = props => {
             readSecond={1}
             device={props.pump + ".start_stop_with_rbv"}
             classes={classes}
+            disable={props.disable}
           />
           <OphydStatusField
             device={props.pump + ".run_state"}
