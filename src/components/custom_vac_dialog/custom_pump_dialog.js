@@ -31,14 +31,14 @@ class PumpDialog extends Component {
     console.log(this.props.id);
     this.props.pump(this.props.id);
     this.handleClose();
-  }
+  };
 
   render() {
     return (
-     <Dialog fullWidth={true} maxwidth="xs" onClose={this.handleClose} open={this.props.open}>
-        <DialogTitle></DialogTitle>
+      <Dialog fullWidth={true} maxwidth="xs" onClose={this.handleClose} open={this.props.open}>
+        <DialogTitle />
         <div align="center">
-        <Typography variant='body1'>Pump this section?</Typography>
+          <Typography variant="body1">Pump this section?</Typography>
         </div>
         <Button onClick={this.handleClose}>No</Button>
         <Button onClick={this.handlePump}>Yes</Button>
@@ -52,9 +52,7 @@ PumpDialog.propTypes = {
 };
 
 function mapStateToProps(state) {
-  return {
-    
-  };
+  return {};
 }
 
 export default connect(

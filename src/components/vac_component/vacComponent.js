@@ -19,6 +19,14 @@ import Grid from "@material-ui/core/Grid";
 import VentDialog from "../custom_vac_dialog/custom_vent_dialog";
 import PumpDialog from "../custom_vac_dialog/custom_pump_dialog";
 
+import {
+  OphydButton,
+  OphydToggleButton,
+  OphydSlider,
+  OphydTextField,
+  OphydStatusField
+} from "../ophyd_components/ophyd_components";
+
 import { Typography } from "@material-ui/core";
 
 const styles = theme => ({
@@ -124,7 +132,7 @@ class VacComponent extends Component {
   };
 
   handleConsole = event => {
-    console.log(this.props.id);
+    console.log(this.props);
   };
 
   componentDidMount() {
@@ -132,7 +140,10 @@ class VacComponent extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.pressures !== this.props.pressures || prevProps.vacstatus !== this.props.vacstatus) {
+    if (
+      prevProps.pressures !== this.props.pressures ||
+      prevProps.vacstatus !== this.props.vacstatus
+    ) {
       this.parseID();
     }
   }
@@ -169,13 +180,14 @@ class VacComponent extends Component {
               vent
             </Button>
           </Grid>
-          <Grid item xs={2}>
-            <Typography className={classes.status}>
-              {this.state.pressure != null
-                ? this.state.pressure.toExponential(2)
-                : this.state.pressure}{" "}
-              mbar
-            </Typography>
+          <Grid item xs={3}>
+            <OphydStatusField
+              label="Pressure"
+              device={this.props.gauge + ".pressure_4"}
+              toNumber={true}
+              toExp={true}
+              suffix="mbar"
+            />
           </Grid>
           <Grid item xs={2}>
             <Typography

@@ -16,6 +16,8 @@ import { useSetOphyd } from "../hooks/ophyd";
 import { useDispatch } from "react-redux";
 import { getBundleList } from "../../actions/index";
 import { Typography } from "@material-ui/core";
+import grey from "@material-ui/core/colors/grey";
+import red from "@material-ui/core/colors/red";
 
 const useStyles = makeStyles({
   hidden: { display: "None" },
@@ -28,27 +30,66 @@ const useStyles = makeStyles({
   },
   notchedOutline: {},
   error: {},
-  disabled: {}
+  disabled: {},
+  horizontal: {
+    display: "flex",
+    flexDireciton: "row",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  vertical: {
+    display: "flex",
+    flexDireciton: "column",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  statusfield: {
+    padding: "2px",
+    background: grey["900"]
+  },
+
+  padding: {
+    padding: "3px"
+  }
 });
 
 export const OphydStatusField = props => {
+  const classes = useStyles(props);
   var deviceData = useSubscribeOphyd(props.device);
+  console.log(deviceData);
   if (deviceData === undefined) {
     deviceData = { value: "", dtype: "string" };
   } else {
     if (deviceData.dtype === "number") {
-      deviceData.value = parseFloat(deviceData.value).toPrecision(deviceData.precision);
+      deviceData.value = parseFloat(deviceData.value).toPrecision(
+        props.precision !== undefined ? props.precision : deviceData.precision
+      );
     }
   }
+
   return (
-    <TextField
-      value={deviceData.value}
-      label={(
-        (props.label === undefined ? deviceData.name : props.label) +
-        (deviceData.egu === undefined || deviceData.equ === "" ? "" : " (" + deviceData.egu + ")")
-      ).replace(/_/g, " ")}
-      variant="outlined"
-    />
+    <Typography
+      className={classes.statusfield}
+      color={
+        props.good_status !== undefined
+          ? deviceData.value === props.good_status
+            ? "primary"
+            : "secondary"
+          : "default"
+      }
+    >
+      {props.label !== undefined ? props.label + ": " : null}
+      {props.good_status !== undefined
+        ? deviceData.value === props.good_status
+          ? props.goodStatusText
+          : props.badStatusText
+        : props.toNumber === true
+        ? props.toExp === true
+          ? parseFloat(deviceData.value).toExponential()
+          : parseFloat(deviceData.value)
+        : deviceData.value}
+      {props.suffix !== undefined ? " " + props.suffix : null}
+    </Typography>
   );
 };
 
@@ -123,32 +164,49 @@ export const OphydTextField = props => {
 
 export const OphydButton = props => {
   const setOphyd = useSetOphyd();
-
+  const classes = useStyles(props);
   const handleClick = () => {
     setOphyd(props.device, props.value);
   };
   return (
-    <Button onClick={handleClick} className={props.classes}>
-      {props.label}
-    </Button>
+    <React.Fragment>
+      <div className={classes.padding}>
+        <Button onClick={handleClick} className={props.classes}>
+          {props.label}
+        </Button>
+      </div>
+    </React.Fragment>
   );
 };
 
 export const OphydToggleButton = props => {
+  const classes = useStyles(props);
   const setOphyd = useSetOphyd();
   var status = 0;
-  var label = "Not Connected";
   var deviceData = useSubscribeOphyd(props.device);
   if (deviceData === undefined) {
     deviceData = { value: 0, dtype: "integer" };
   }
-  if (deviceData.value === props.valueFirst) {
-    status = 1;
-    label = props.labelSecond;
+
+  var readValue = null;
+
+  if (props.readFirst === undefined) {
+    readValue = props.valueFirst;
+  } else {
+    readValue = props.readFirst;
   }
-  if (deviceData.value === props.valueSecond) {
-    status = 2;
-    label = props.labelFirst;
+
+  if (deviceData.value === readValue) {
+    status = 1;
+  } else {
+    if (props.readSecond === undefined) {
+      readValue = props.valueSecond;
+    } else {
+      readValue = props.readSecond;
+    }
+    if (deviceData.value === readValue) {
+      status = 2;
+    }
   }
 
   const handleChange = () => {
@@ -158,13 +216,27 @@ export const OphydToggleButton = props => {
     }
     setOphyd(props.device, status === 1 ? props.valueSecond : props.valueFirst);
   };
+
   return (
-    <ToggleButton
-      onChange={handleChange}
-      className={classNames(status === 1 ? props.classes.second : props.classes.first)}
-    >
-      {label}
-    </ToggleButton>
+    <React.Fragment>
+      <div
+        className={classNames(
+          props.labelPosition === "left" ? classes.horizontal : classes.vertical
+        )}
+      >
+        {!props.noShowLabel ? (
+          <Typography>{props.label !== undefined ? props.label : deviceData.name}</Typography>
+        ) : null}
+        <div className={classes.padding}>
+          <ToggleButton
+            onChange={handleChange}
+            className={classNames(status === 1 ? props.classes.second : props.classes.first)}
+          >
+            {status === 1 ? props.labelSecond : status === 2 ? props.labelFirst : "Not Connected"}
+          </ToggleButton>
+        </div>
+      </div>
+    </React.Fragment>
   );
 };
 

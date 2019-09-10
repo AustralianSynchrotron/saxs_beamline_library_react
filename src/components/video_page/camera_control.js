@@ -62,6 +62,7 @@ const CameraControl = props => {
               labelSecond="Start"
               valueFirst={0}
               valueSecond={1}
+              noShowLabel={true}
               device={props.cam + ".cam.acquire"}
               classes={classes}
             />

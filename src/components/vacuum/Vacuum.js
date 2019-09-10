@@ -13,7 +13,9 @@ import grey from "@material-ui/core/colors/grey";
 import Grid from "@material-ui/core/Grid";
 
 import VacComponent from "../vac_component/vacComponent";
-import ManualVacComponent from "../vac_component/ManualVacControls";
+import ManualPumpControl from "../vac_component/ManualPumpControl";
+import ManualBackingPumpControl from "../vac_component/ManualBackingPumpControl";
+import ManualValveControl from "../vac_component/ManualValveControl";
 import { Typography } from "@material-ui/core";
 
 const styles = theme => ({
@@ -131,13 +133,13 @@ class VacuumPage extends Component {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <VacComponent id="Chamber" staff={this.state.staff} />
+          <VacComponent id="Chamber" staff={this.state.staff} gauge="saxs_vac_gauges.gauge_2" />
         </Grid>
         <Grid item xs={12}>
-          <VacComponent id="Nosecone" staff={this.state.staff} />
+          <VacComponent id="Nosecone" staff={this.state.staff} gauge="saxs_vac_gauges.gauge_2" />
         </Grid>
         <Grid item xs={12}>
-          <VacComponent id="Beamline" staff={this.state.staff} />
+          <VacComponent id="Beamline" staff={this.state.staff} gauge="saxs_vac_gauges.gauge_1" />
         </Grid>
         <Grid
           container
@@ -159,11 +161,49 @@ class VacuumPage extends Component {
           </Grid>
           <Grid item xs={4} spacing={3} />
         </Grid>
+
         <Grid item xs={12}>
-          <VacComponent id="Vessel" staff={this.state.staff} />
+          <VacComponent id="Vessel" staff={this.state.staff} gauge="saxs_vac_gauges.gauge_3" />
+        </Grid>
+
+        <Grid />
+
+        <Grid item xs={12}>
+          <Typography>Pumping Valves</Typography>
+        </Grid>
+
+        <Grid
+          container
+          className={classes.root}
+          spacing={5}
+          alignItems="baseline"
+          direction="row"
+          justify="space-evenly"
+        >
+          <Grid item xs={4} padding={10}>
+            <ManualValveControl
+              valve="saxs_vac_valves.valve07"
+              description="Beamline:"
+              label="VLV07"
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <ManualValveControl
+              valve="saxs_vac_valves.valve11"
+              description="Nosecone:"
+              label="VLV11"
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <ManualValveControl
+              valve="saxs_vac_valves.valve10"
+              description="Vessel:"
+              label="VLV10"
+            />
+          </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Typography>Valves</Typography>
+          <Typography>Beamline Gate Valves</Typography>
         </Grid>
         <Grid
           container
@@ -173,50 +213,81 @@ class VacuumPage extends Component {
           direction="row"
           justify="space-evenly"
         >
-          <Grid item xs={6} padding={20}>
-            <ManualVacComponent valve={true} id="Valve07" staff={this.state.staff} />
+          <Grid item xs={4} padding={10}>
+            <ManualValveControl
+              valve="saxs_vac_valves.igv06"
+              description="Beamline:"
+              label="IGV06"
+            />
           </Grid>
-          <Grid item xs={6}>
-            <ManualVacComponent valve={true} id="Valve10" staff={this.state.staff} />
+          <Grid item xs={4}>
+            <ManualValveControl
+              valve="saxs_vac_valves.igv08"
+              description="250 Vessel:"
+              label="IGV08"
+            />
           </Grid>
-          <Grid item xs={6}>
-            <ManualVacComponent valve={true} id="Valve11" staff={this.state.staff} />
-          </Grid>
-          <Grid item xs={6}>
-            <ManualVacComponent valve={true} id="IGV06" staff={this.state.staff} />
-          </Grid>
-          <Grid item xs={6}>
-            <ManualVacComponent valve={true} id="IGV08" staff={this.state.staff} />
-          </Grid>
-          <Grid item xs={6}>
-            <ManualVacComponent valve={true} id="IGV09" staff={this.state.staff} />
+          <Grid item xs={4}>
+            <ManualValveControl valve="saxs_vac_valves.igv09" description="Sample:" label="IGV09" />
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Typography>Pumps</Typography>
+          <Typography>Roughing and Turbo Pumps</Typography>
+        </Grid>
+        <Grid
+          container
+          className={classes.root}
+          spacing={3}
+          alignItems="baseline"
+          direction="row"
+          justify="space-evenly"
+        >
+          <Grid item xs={4} padding={10}>
+            <ManualPumpControl
+              pump="saxs_vac_pumps.roughing"
+              description="Roughing:"
+              label="Ebarra"
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <ManualPumpControl
+              pump="saxs_vac_pumps.chamber_turbo"
+              description="Sample Turbo:"
+              label="Turbo 3"
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <ManualPumpControl
+              pump="saxs_vac_pumps.vessel_turbo"
+              description="Vessel Turbo:"
+              label="Turbo 4"
+            />
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography>Backing Pumps</Typography>
         </Grid>
         <Grid
           container
           className={classes.root}
           spacing={5}
-          alignItems="baseline"
+          alignContent="center"
           direction="row"
-          justify="space-evenly"
+          justifyContent="center"
         >
-          <Grid item xs={6}>
-            <ManualVacComponent valve={false} id="Ebarra" staff={this.state.staff} />
+          <Grid item xs={6} padding={10}>
+            <ManualBackingPumpControl
+              pump="saxs_vac_pumps.backing_pump03"
+              description="Sample"
+              label="Backing 3"
+            />
           </Grid>
           <Grid item xs={6}>
-            <ManualVacComponent valve={false} id="Turbo1" staff={this.state.staff} />
-          </Grid>
-          <Grid item xs={6}>
-            <ManualVacComponent valve={false} id="Turbo2" staff={this.state.staff} />
-          </Grid>
-          <Grid item xs={6}>
-            <ManualVacComponent valve={false} id="Backing1" staff={this.state.staff} />
-          </Grid>
-          <Grid item xs={6}>
-            <ManualVacComponent valve={false} id="Backing2" staff={this.state.staff} />
+            <ManualBackingPumpControl
+              pump="saxs_vac_pumps.backing_pump04"
+              description="Vessel"
+              label="Backing 4"
+            />
           </Grid>
         </Grid>
       </Grid>
