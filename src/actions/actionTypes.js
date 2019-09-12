@@ -58,3 +58,5 @@ export const TENSHYDRATE = "tensile_hydrate";
 export const TENSSTATUS = "tensile_status";
 export const TENSABORT = "tensile_abort";
 export const CLEARSETERROR = "clear_set_error";
+export const SUBSCRIBEDOCKER = "subscribe_docker";
+export const SETDOCKER = "set_docker";

@@ -396,3 +396,14 @@ export const clearSetError = () => ({
   type: actions.CLEARSETERROR,
   local: true
 });
+
+export const subscribeDocker = () => ({
+  type: actions.SUBSCRIBEDOCKER,
+  key: "docker"
+});
+
+export const setDocker = cmd => ({
+  type: actions.SETDOCKER,
+  data: { cmd },
+  key: "docker"
+});

@@ -25,6 +25,7 @@ import CallMissedOutgoing from "@material-ui/icons/CallMissedOutgoing";
 import Settings from "@material-ui/icons/Settings";
 import ViewComfy from "@material-ui/icons/ViewComfy";
 import PlayCircleOutline from "@material-ui/icons/PlayCircleOutline";
+import Docker from "mdi-material-ui/Docker";
 import BeamlineControl from "./components/beamline_control/beamline_control.js";
 import AcquirePage from "./components/acquire_page/acquire_page.js";
 import ConfigPage from "./components/config_page/config_page.js";
@@ -33,6 +34,7 @@ import VacuumPage from "./components/vacuum/Vacuum";
 import TensilePage from "./components/tensile/Tensile";
 import GrazingPage from "./components/grazing_page/grazing_page";
 import VideoPage from "./components/video_page/video_page";
+import DockerPage from "./components/docker_page/docker_page";
 import SnackBar from "@material-ui/core/SnackBar";
 import * as actionCreators from "./actions/index";
 
@@ -192,7 +194,8 @@ class App extends Component {
                 ["Vacuum Controls", <Cached />],
                 ["Video Cameras", <Videocam />],
                 ["Grazing Setup", <CallMissedOutgoing />],
-                ["Tensile Setup", <SwapHoriz />]
+                ["Tensile Setup", <SwapHoriz />],
+                ["Docker", <Docker />]
               ].map((item, index) => (
                 <ListItem button key={item[0]} onClick={() => this.handlePageChange(index)}>
                   <ListItemIcon>{item[1]}</ListItemIcon>
@@ -242,6 +245,11 @@ class App extends Component {
             {page === 8 && (
               <div>
                 <TensilePage />
+              </div>
+            )}
+            {page === 9 && (
+              <div>
+                <DockerPage />
               </div>
             )}
             <SnackBar
