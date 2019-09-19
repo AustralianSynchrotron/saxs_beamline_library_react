@@ -7,12 +7,10 @@ const default_state = {
 export default (state = default_state, action) => {
   switch (action.type) {
     case actions.LISTENLOGGER:
-      console.log(action.data.messages);
       return { ...state, logData: action.data.messages };
     case actions.LOGGERUPDATE:
-      console.log(state.logData)
       var lines = state.logData;
-      if (lines.length > 50) {
+      if (lines.length > 500) {
         lines.pop();
       }
       return { ...state, logData: [action.data, ...lines] };

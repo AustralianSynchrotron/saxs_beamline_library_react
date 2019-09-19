@@ -197,8 +197,8 @@ class App extends Component {
                 ["Video Cameras", <Videocam />],
                 ["Grazing Setup", <CallMissedOutgoing />],
                 ["Tensile Setup", <SwapHoriz />],
-                ["Docker", <Docker />],
-                ["Python Logger", <Warning />]
+                ["Python Logger", <Warning />],
+                ["Docker", <Docker />]
               ].map((item, index) => (
                 <ListItem button key={item[0]} onClick={() => this.handlePageChange(index)}>
                   <ListItemIcon>{item[1]}</ListItemIcon>
