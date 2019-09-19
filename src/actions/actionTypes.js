@@ -60,3 +60,5 @@ export const TENSABORT = "tensile_abort";
 export const CLEARSETERROR = "clear_set_error";
 export const SUBSCRIBEDOCKER = "subscribe_docker";
 export const SETDOCKER = "set_docker";
+export const LISTENLOGGER = "listen";
+export const LOGGERUPDATE = "logger";

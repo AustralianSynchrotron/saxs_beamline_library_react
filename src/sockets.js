@@ -71,7 +71,8 @@ const socket = new ReconnectingWebSocket(
         status: `ws://10.138.11.39:3143`,
         acquire: `ws://10.138.11.39:3142`,
         ophyd: `ws://10.138.11.39:9999`,
-        docker: `ws://10.138.11.39:9991`
+        docker: `ws://10.138.11.39:9991`,
+        logger: `ws://10.138.11.39:3001`
       }
     : {
         tensile: `ws://10.138.11.39:3146`,
@@ -80,7 +81,8 @@ const socket = new ReconnectingWebSocket(
         status: `ws://localhost:3143`,
         acquire: `ws://localhost:3142`,
         ophyd: `ws://localhost:9999`,
-        docker: `ws://localhost:9991`
+        docker: `ws://localhost:9991`,
+        logger: `ws://localhost:3001`
       }
 );
 

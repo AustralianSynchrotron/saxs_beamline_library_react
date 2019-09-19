@@ -6,6 +6,7 @@ import OphydReducer from "./reducer_ophyd";
 import VacuumReducer from "./reducer_vacuum";
 import TensileReducer from "./reducer_tensile";
 import DockerReducer from "./reducer_docker";
+import LoggerReducer from "./reducer_logger";
 
 const rootReducer = combineReducers({
   acquire: AcquireReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   ophyd: OphydReducer,
   vacuum: VacuumReducer,
   tensile: TensileReducer,
-  docker: DockerReducer
+  docker: DockerReducer,
+  logger: LoggerReducer
 });
 
 export default rootReducer;

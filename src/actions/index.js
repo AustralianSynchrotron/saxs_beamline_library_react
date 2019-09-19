@@ -397,6 +397,11 @@ export const clearSetError = () => ({
   local: true
 });
 
+export const listenLogger = () => ({
+  type: actions.LISTENLOGGER,
+  key: "logger"
+});
+
 export const subscribeDocker = () => ({
   type: actions.SUBSCRIBEDOCKER,
   key: "docker"

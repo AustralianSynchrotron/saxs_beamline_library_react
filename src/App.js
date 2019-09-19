@@ -20,6 +20,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import NoteAdd from "@material-ui/icons/NoteAdd";
 import Cached from "@material-ui/icons/Cached";
 import Videocam from "@material-ui/icons/Videocam";
+import Warning from "@material-ui/icons/Warning";
 import SwapHoriz from "@material-ui/icons/SwapHoriz";
 import CallMissedOutgoing from "@material-ui/icons/CallMissedOutgoing";
 import Settings from "@material-ui/icons/Settings";
@@ -35,6 +36,7 @@ import TensilePage from "./components/tensile/Tensile";
 import GrazingPage from "./components/grazing_page/grazing_page";
 import VideoPage from "./components/video_page/video_page";
 import DockerPage from "./components/docker_page/docker_page";
+import LoggerPage from "./components/logger_page/logger_page";
 import SnackBar from "@material-ui/core/SnackBar";
 import * as actionCreators from "./actions/index";
 
@@ -195,7 +197,8 @@ class App extends Component {
                 ["Video Cameras", <Videocam />],
                 ["Grazing Setup", <CallMissedOutgoing />],
                 ["Tensile Setup", <SwapHoriz />],
-                ["Docker", <Docker />]
+                ["Docker", <Docker />],
+                ["Python Logger", <Warning />]
               ].map((item, index) => (
                 <ListItem button key={item[0]} onClick={() => this.handlePageChange(index)}>
                   <ListItemIcon>{item[1]}</ListItemIcon>
@@ -248,6 +251,11 @@ class App extends Component {
               </div>
             )}
             {page === 9 && (
+              <div>
+                <LoggerPage />
+              </div>
+            )}
+            {page === 10 && (
               <div>
                 <DockerPage />
               </div>
