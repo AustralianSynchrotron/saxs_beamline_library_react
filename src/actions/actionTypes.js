@@ -62,3 +62,4 @@ export const SUBSCRIBEDOCKER = "subscribe_docker";
 export const SETDOCKER = "set_docker";
 export const LISTENLOGGER = "listen";
 export const LOGGERUPDATE = "logger";
+export const POSITIONERS = "positioners";

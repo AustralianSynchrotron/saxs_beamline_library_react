@@ -24,9 +24,9 @@ import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 import CustomTimeDialog from "../custom_time_dialog/custom_time_dialog";
-import LoopTable from "../loop_table/loop_table";
 import { Typography } from "@material-ui/core";
 import { strikethrough } from "ansi-colors";
+import GenericScan from "../generic_scan/generic_scan";
 
 function mapDeviceToProps(state) {
   return {
@@ -372,14 +372,7 @@ class AcquirePage extends Component {
         </Grid>
         <Grid container justify="center">
           <Grid item>
-            <Button size="large" className={classNames(classes.acquire, classes.button)}>
-              Start Scan
-            </Button>
-          </Grid>
-        </Grid>
-        <Grid container justify="center">
-          <Grid item>
-            <LoopTable />
+            <GenericScan />
           </Grid>
         </Grid>
         <CustomTimeDialog onClose={this.handleCustomTime} open={this.state.customTimeOpen} />

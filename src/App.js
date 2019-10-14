@@ -30,7 +30,6 @@ import Docker from "mdi-material-ui/Docker";
 import BeamlineControl from "./components/beamline_control/beamline_control.js";
 import AcquirePage from "./components/acquire_page/acquire_page.js";
 import ConfigPage from "./components/config_page/config_page.js";
-import WellPlate from "./components/well_plate/well_plate.js";
 import VacuumPage from "./components/vacuum/Vacuum";
 import TensilePage from "./components/tensile/Tensile";
 import GrazingPage from "./components/grazing_page/grazing_page";
@@ -189,16 +188,15 @@ class App extends Component {
             <List>
               {[
                 ["Acquisition", <PlayCircleOutline />],
-                ["Solution Autoloader", <ViewComfy />],
-                ["New Experiment", <NoteAdd />],
+                // ["New Experiment", <NoteAdd />],
                 ["Beamline Control", <Settings />],
                 ["Beamline Config", <Favorite />],
                 ["Vacuum Controls", <Cached />],
                 ["Video Cameras", <Videocam />],
                 ["Grazing Setup", <CallMissedOutgoing />],
                 ["Tensile Setup", <SwapHoriz />],
-                ["Docker", <Docker />],
-                ["Python Logger", <Warning />]
+                ["Python Logger", <Warning />],
+                ["Docker", <Docker />]
               ].map((item, index) => (
                 <ListItem button key={item[0]} onClick={() => this.handlePageChange(index)}>
                   <ListItemIcon>{item[1]}</ListItemIcon>
@@ -217,45 +215,40 @@ class App extends Component {
             )}
             {page === 1 && (
               <div>
-                <WellPlate />
-              </div>
-            )}
-            {page === 3 && (
-              <div>
                 <BeamlineControl />
               </div>
             )}
-            {page === 4 && (
+            {page === 2 && (
               <div>
                 <ConfigPage />
               </div>
             )}
-            {page === 5 && (
+            {page === 3 && (
               <div>
                 <VacuumPage />
               </div>
             )}
-            {page === 6 && (
+            {page === 4 && (
               <div>
                 <VideoPage />
               </div>
             )}
-            {page === 7 && (
+            {page === 5 && (
               <div>
                 <GrazingPage />
               </div>
             )}
-            {page === 8 && (
+            {page === 6 && (
               <div>
                 <TensilePage />
               </div>
             )}
-            {page === 9 && (
+            {page === 7 && (
               <div>
                 <LoggerPage />
               </div>
             )}
-            {page === 10 && (
+            {page === 8 && (
               <div>
                 <DockerPage />
               </div>

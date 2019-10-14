@@ -4,9 +4,9 @@ import { makeStyles } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
-// import SortAlphabeticalAscending from "mdi-material-ui/SortAlphabeticalAscending";
-// import SortAlphabeticalDescending from "mdi-material-ui/SortAlphabeticalDescending";
-import SortByAlpha from "@material-ui/icons/SortByAlpha";
+import SortAlphabeticalAscending from "mdi-material-ui/SortAlphabeticalAscending";
+import SortAlphabeticalDescending from "mdi-material-ui/SortAlphabeticalDescending";
+// import SortByAlpha from "@material-ui/icons/SortByAlpha";
 import PriorityHigh from "mdi-material-ui/PriorityHigh";
 import PriorityLow from "mdi-material-ui/PriorityLow";
 import Typography from "@material-ui/core/Typography";
@@ -65,10 +65,10 @@ const DockerPage = props => {
           <Grid item xs={1}>
             <ToggleButtonGroup exclusive value={sort} onChange={handleSort}>
               <ToggleButton value="ascending" aria-label="ascending">
-                <SortByAlpha />
+                <SortAlphabeticalAscending />
               </ToggleButton>
               <ToggleButton value="descending" aria-label="descending">
-                <SortByAlpha />
+                <SortAlphabeticalDescending />
               </ToggleButton>
               <ToggleButton value="high" aria-label="high">
                 <PriorityHigh />
