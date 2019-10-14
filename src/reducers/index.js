@@ -7,6 +7,7 @@ import VacuumReducer from "./reducer_vacuum";
 import TensileReducer from "./reducer_tensile";
 import DockerReducer from "./reducer_docker";
 import LoggerReducer from "./reducer_logger";
+import LibraryReducer from "./reducer_saxs_library";
 
 const rootReducer = combineReducers({
   acquire: AcquireReducer,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   vacuum: VacuumReducer,
   tensile: TensileReducer,
   docker: DockerReducer,
-  logger: LoggerReducer
+  logger: LoggerReducer,
+  library: LibraryReducer
 });
 
 export default rootReducer;
