@@ -8,7 +8,8 @@ import {
   OphydTextField,
   OphydToggleButton,
   OphydButton,
-  OphydDropdown
+  OphydDropdown,
+  OphydStateIcon
 } from "../ophyd_components/ophyd_components";
 
 import BrightnessLow from "@material-ui/icons/BrightnessLow";
@@ -87,8 +88,27 @@ export const Energy = props => {
           <Typography variant="h5">Energy</Typography>
           <div className={classes.horizontal}>
             <OphydTextField device="saxs_optics.dcm.set_energy" />
-            <OphydStatusField device="saxs_optics.dcm.energy" suffix="keV" />
-            <OphydStatusField device="saxs_optics.dcm.wavelength" suffix="nm" />
+            <OphydStatusField device="saxs_optics.dcm.energy" label="keV" toNumber={true} />
+            <OphydStatusField device="saxs_optics.dcm.wavelength" label="nm" toNumber={true} />
+            <OphydStateIcon device="saxs_optics.dcm.echange_ivu_dcm_complete" good_value={1} />
+            <OphydStateIcon device="saxs_optics.dcm.dcm_fine_scan_state" good_value={0} />
+            <OphydStatusField
+              device="saxs_optics.dcm.scan_pt"
+              label="DCM Tune pt"
+              toNumber={true}
+              undef_val={0}
+            />
+            <OphydStatusField
+              device="saxs_optics.dcm.scan_pts"
+              label="of"
+              toNumber={true}
+              undef_val={30}
+            />
+            <OphydStateIcon device="saxs_optics.dcm.echange_fb_image_tune" good_value={0} />
+            <OphydStatusField
+              device="EPICS_status_devices.epics_status.energy_change_message"
+              label="Energy Change Status"
+            />
           </div>
         </div>
       </Paper>
@@ -173,7 +193,7 @@ export const CameraControls = props => {
     <React.Fragment>
       <Paper>
         <div className={classes.padding}>
-          <Typography variant="h5" >Camera Exposure and Gain</Typography>
+          <Typography variant="h5">Camera Exposure and Gain</Typography>
         </div>
         <div className={classes.horizontal}>
           <OphydSlider
