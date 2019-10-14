@@ -38,6 +38,11 @@ import DockerPage from "./components/docker_page/docker_page";
 import LoggerPage from "./components/logger_page/logger_page";
 import SnackBar from "@material-ui/core/SnackBar";
 import * as actionCreators from "./actions/index";
+import { OphydStatusField, OphydButton } from "./components/ophyd_components/ophyd_components.js";
+import green from "@material-ui/core/colors/green";
+import grey from "@material-ui/core/colors/grey";
+import red from "@material-ui/core/colors/red";
+import { mergeClasses } from "@material-ui/styles";
 
 const drawerWidth = 240;
 
@@ -106,6 +111,34 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3
+  },
+  red_button: {
+    background: red[500],
+    color: "white",
+    height: 48,
+    "&:hover": {
+      backgroundColor: red["A700"]
+    }
+  },
+  green_button: {
+    background: green[500],
+    color: "white",
+    height: 48,
+    "&:hover": {
+      backgroundColor: green["A700"]
+    }
+  },
+  horizontal: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "left",
+    alignItems: "center",
+    padding: "2px",
+    marginLeft: "20px"
+  },
+  spacing: {
+    marginLeft: "10px",
+    marginRight: "10px"
   }
 });
 
@@ -162,6 +195,29 @@ class App extends Component {
               <Typography variant="h6" color="inherit">
                 SAXS
               </Typography>
+              <div className={classes.horizontal}>
+                <OphydStatusField
+                  label="Beamline Status"
+                  device="EPICS_status_devices.epics_status.beam_on_sample"
+                />
+                <div className={classes.horizontal}>
+                  <Typography variant="h6" color="inherit">
+                    Mono Shutter:
+                  </Typography>
+                  <OphydButton
+                    label="Close"
+                    value={1}
+                    device="saxs_pss.pss.mono_shutter_close"
+                    classes={classes.red_button}
+                  />
+                  <OphydButton
+                    label="Open"
+                    value={1}
+                    device="saxs_pss.pss.mono_shutter_open"
+                    classes={classes.green_button}
+                  />
+                </div>
+              </div>
             </Toolbar>
           </AppBar>
           <Drawer

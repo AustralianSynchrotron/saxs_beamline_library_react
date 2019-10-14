@@ -8,6 +8,10 @@ import Button from "@material-ui/core/Button";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import IconButton from "@material-ui/core/IconButton";
 import Slider from "@material-ui/core/Slider";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import InputLabel from "@material-ui/core/InputLabel";
 import ArrowBackIos from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIos from "@material-ui/icons/ArrowForwardIos";
 import DragHandle from "@material-ui/icons/DragHandle";
@@ -50,6 +54,10 @@ const useStyles = makeStyles({
 
   padding: {
     padding: "3px"
+  },
+  formControl: {
+    margin: "5px",
+    minWidth: 130
   }
 });
 
@@ -80,7 +88,9 @@ export const OphydStatusField = props => {
     >
       {props.label !== undefined ? props.label + ": " : null}
       {props.good_status !== undefined
-        ? deviceData.value === props.good_status
+        ? props.printVal !== undefined
+          ? deviceData.value
+          : deviceData.value === props.good_status
           ? props.goodStatusText
           : props.badStatusText
         : props.toNumber === true
@@ -402,4 +412,36 @@ export const OphydMotorBundleCompact = props => {
       </Grid>
     );
   }
+};
+
+export const OphydDropdown = props => {
+  const setOphyd = useSetOphyd();
+  const classes = useStyles();
+  const [values, setValues] = React.useState({
+    input_value: ""
+  });
+
+  const handleChange = event => {
+    console.log(event.target.value);
+    setValues(oldValues => ({
+      ...oldValues,
+      input_value: event.target.value
+    }));
+    setOphyd(props.device, event.target.value);
+  };
+
+  return (
+    <form className={classes.root} autoComplete="off">
+      <FormControl className={classes.formControl}>
+        <InputLabel>{props.label}</InputLabel>
+        <Select value={values.input_value} onChange={handleChange}>
+          <MenuItem value={0}>600 or less</MenuItem>
+          <MenuItem value={1}>900</MenuItem>
+          <MenuItem value={2}>1575</MenuItem>
+          <MenuItem value={3}>3300</MenuItem>
+          <MenuItem value={4}>7200</MenuItem>
+        </Select>
+      </FormControl>
+    </form>
+  );
 };
