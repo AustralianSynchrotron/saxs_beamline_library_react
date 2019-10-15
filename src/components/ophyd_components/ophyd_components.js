@@ -15,7 +15,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import ArrowBackIos from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIos from "@material-ui/icons/ArrowForwardIos";
 import CheckAll from "mdi-material-ui/CheckAll";
-import TimerSand from "mdi-material-ui/TimerSand";
+import CloseOutline from "mdi-material-ui/CloseOutline";
 import Help from "mdi-material-ui/Help";
 import DragHandle from "@material-ui/icons/DragHandle";
 import { useSubscribeOphyd } from "../hooks/ophyd";
@@ -477,7 +477,7 @@ export const OphydStateIcon = props => {
         <div className={classes.padding}>
           {deviceData.name !== undefined ? (
             deviceData.value !== props.good_value ? (
-              <TimerSand color="secondary" />
+              <CloseOutline color="secondary" />
             ) : (
               <CheckAll color="primary" />
             )
