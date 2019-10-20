@@ -327,6 +327,7 @@ export const OphydMotorCompact = props => {
 
   const handleTweak = event => {
     console.log(event.currentTarget);
+    console.log(tweak * event.currentTarget.dataset.dir);
     setOphyd(props.device + "._tweak", tweak * event.currentTarget.dataset.dir);
   };
 
@@ -434,6 +435,12 @@ export const OphydDropdown = props => {
     input_value: ""
   });
 
+  var deviceData = useSubscribeOphyd(props.device);
+  if (deviceData === undefined) {
+    deviceData = { value: 0 };
+  }
+  console.log(deviceData);
+
   const handleChange = event => {
     console.log(event.target.value);
     setValues(oldValues => ({
@@ -446,7 +453,7 @@ export const OphydDropdown = props => {
   return (
     <form className={classes.root} autoComplete="off">
       <FormControl className={classes.formControl}>
-        <InputLabel>{props.label}</InputLabel>
+        <InputLabel>{deviceData.name}</InputLabel>
         <Select value={values.input_value} onChange={handleChange}>
           <MenuItem value={0}>600 or less</MenuItem>
           <MenuItem value={1}>900</MenuItem>
