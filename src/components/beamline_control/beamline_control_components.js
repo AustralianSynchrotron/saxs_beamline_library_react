@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { makeStyles, getThemeProps } from "@material-ui/styles";
 import {
   OphydMotorCompact,
@@ -19,7 +19,7 @@ import grey from "@material-ui/core/colors/grey";
 import red from "@material-ui/core/colors/red";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-
+import TextField from "@material-ui/core/TextField";
 const useStyles = makeStyles({
   hidden: { display: "None" },
   showButton: { marginTop: 0 },
@@ -234,6 +234,63 @@ export const CameraControls = props => {
             leftIcon={<BrightnessLow />}
             rightIcon={<BrightnessHigh />}
           />
+        </div>
+      </Paper>
+    </React.Fragment>
+  );
+};
+
+export const WindowControls = props => {
+  const classes = useStyles(props);
+  const [TweakYValue, setTweakYValue] = useState("0.1");
+  const handleChangeY = event => {
+    setTweakYValue(event.target.value);
+  };
+  const [TweakXValue, setTweakXValue] = useState("0.1");
+  const handleChangeX = event => {
+    setTweakXValue(event.target.value);
+  };
+  return (
+    <React.Fragment>
+      <Paper>
+        <div className={classes.padding}>
+          <Typography variant="h5">Move Window</Typography>
+          <Typography variant="body">Only moves relative by the tweak value</Typography>
+        </div>
+        <div className={classes.horizontal}>
+          <div className={classes.horizontal}>
+            <OphydButton label="Move Window UP" device="move_window.wy.move" value={TweakYValue} />
+
+            <TextField
+              label="Tweak Value"
+              variant="outlined"
+              value={TweakYValue}
+              onChange={handleChangeY}
+            />
+            <OphydButton
+              label="Move Window Down"
+              device="move_window.wy.move"
+              value={-1 * TweakYValue}
+            />
+          </div>
+          <div className={classes.horizontal}>
+            <OphydButton
+              label="Move Window outboard"
+              device="move_window.wx.move"
+              value={TweakXValue}
+            />
+            <TextField
+              label="Tweak Value"
+              variant="outlined"
+              value={TweakXValue}
+              onChange={handleChangeX}
+            />
+            <OphydButton
+              label="Move Window inboard"
+              device="move_window.wx.move"
+              value={-1 * TweakXValue}
+            />
+          </div>
         </div>
       </Paper>
     </React.Fragment>

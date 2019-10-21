@@ -96,20 +96,16 @@ class VacComponent extends Component {
     //console.log(this.props.vacstatus)
     switch (this.props.id) {
       case "Nosecone":
-        this.setState({ pressure: parseFloat(this.props.pressures.nosecone) });
         this.setState({ status: this.props.vacstatus.nosecone });
         break;
       case "Chamber":
-        this.setState({ pressure: parseFloat(this.props.pressures.chamber) });
         this.setState({ status: this.props.vacstatus.chamber });
         //console.log(this.props.vacstatus.chamber)
         break;
       case "Beamline":
-        this.setState({ pressure: parseFloat(this.props.pressures.beamline) });
         this.setState({ status: this.props.vacstatus.beamline });
         break;
       case "Vessel":
-        this.setState({ pressure: parseFloat(this.props.pressures.vessel) });
         this.setState({ status: this.props.vacstatus.vessel });
         break;
     }

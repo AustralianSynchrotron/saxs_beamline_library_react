@@ -9,7 +9,13 @@ import {
   OphydStatusField
 } from "../ophyd_components/ophyd_components";
 import Grid from "@material-ui/core/Grid";
-import { Energy, Flux, SampleLights, CameraControls } from "./beamline_control_components";
+import {
+  Energy,
+  Flux,
+  SampleLights,
+  CameraControls,
+  WindowControls
+} from "./beamline_control_components";
 
 import Typography from "@material-ui/core/Typography";
 
@@ -88,7 +94,7 @@ const BeamlineControl = props => {
           spacing={5}
           direction="row"
           alignItems="baseline"
-          justify="left"
+          justify="center"
         >
           <Grid item xs={4}>
             <Typography variant="h5">Beamline Status</Typography>
@@ -180,7 +186,7 @@ const BeamlineControl = props => {
               good_status="TAPER OK"
             />
           </Grid>
-          <Grid item xs={2} />
+
           <Grid item xs={4}>
             <Typography variant="h5">Beamline Detectors and Diagnostics</Typography>
             <OphydStatusField
@@ -220,6 +226,7 @@ const BeamlineControl = props => {
               toNumber={true}
             />
           </Grid>
+          <Grid item xs={2} />
         </Grid>
         <Grid item />
         <Grid
@@ -273,6 +280,20 @@ const BeamlineControl = props => {
           <Grid item xs={10}>
             <CameraControls />
           </Grid>
+        </Grid>
+        <Grid item />
+        <Grid
+          container
+          className={classes.root}
+          spacing={5}
+          direction="row"
+          alignItems="baseline"
+          justify="center"
+        >
+          <Grid item xs={7}>
+            <WindowControls />
+          </Grid>
+          <Grid item xs={3} />
         </Grid>
       </Grid>
     </React.Fragment>
