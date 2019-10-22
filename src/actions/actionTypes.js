@@ -63,3 +63,6 @@ export const SETDOCKER = "set_docker";
 export const LISTENLOGGER = "listen";
 export const LOGGERUPDATE = "logger";
 export const POSITIONERS = "positioners";
+export const HEIGHTSCAN = "height_scan";
+export const OMEGASCAN = "omega_scan";
+export const LISTENGRAZING = "listen";

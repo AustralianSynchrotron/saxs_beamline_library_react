@@ -66,7 +66,7 @@ class ChartElement extends Component {
           >
             {this.props.type === "Bar" ? <ArgumentScale factory={scaleBand} /> : null}
             <ArgumentAxis />
-            <ArgumentAxis.Label text="Y Axis" />
+            <ArgumentAxis.Label text={this.props.yTitle !== undefined ? this.props.yTitle : "Y Axis"} />
 
             <ValueAxis />
             {this.props.type === "Scatter"

@@ -8,6 +8,7 @@ import TensileReducer from "./reducer_tensile";
 import DockerReducer from "./reducer_docker";
 import LoggerReducer from "./reducer_logger";
 import LibraryReducer from "./reducer_saxs_library";
+import GrazingReducer from "./reducer_grazing";
 
 const rootReducer = combineReducers({
   acquire: AcquireReducer,
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   tensile: TensileReducer,
   docker: DockerReducer,
   logger: LoggerReducer,
-  library: LibraryReducer
+  library: LibraryReducer,
+  grazing: GrazingReducer
 });
 
 export default rootReducer;

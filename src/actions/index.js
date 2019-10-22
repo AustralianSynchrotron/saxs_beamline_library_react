@@ -412,3 +412,8 @@ export const setDocker = cmd => ({
   data: { cmd },
   key: "docker"
 });
+
+export const listenGrazing = () => ({
+  type: actions.LISTENGRAZING,
+  key: "grazing"
+});
