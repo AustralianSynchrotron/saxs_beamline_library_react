@@ -848,48 +848,10 @@
   dependencies:
     "@date-io/core" "^1.3.11"
 
-"@devexpress/dx-chart-core@2.0.4":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@devexpress/dx-chart-core/-/dx-chart-core-2.0.4.tgz#ed8cd65895e29834573eb639a7d0eebb5c54b497"
-  integrity sha512-+J7Ifpl7GZlKxCv2A6q8dAvB68jLWiU2kQWIZjZ1uSLWvvc8rGNp77rFOzU3J/wvE4F1sbyGqaHh5wHtEfSa5w==
-  dependencies:
-    d3-array "^2.3.1"
-    d3-scale "^3.0.1"
-    d3-shape "^1.3.5"
-
-"@devexpress/dx-core@2.0.4":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@devexpress/dx-core/-/dx-core-2.0.4.tgz#fbfc77e004b7bf898f6cd601c69ac051cdf5920b"
-  integrity sha512-dn3BUV0wrvYBPEO2wPprh6/SHUCASfyPXTBqlWOlrZGiKVXUlORmrw4uddkPCGCeayxLJG45W9MfIOopg/nKrw==
-
-"@devexpress/dx-react-chart-material-ui@^2.0.4":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@devexpress/dx-react-chart-material-ui/-/dx-react-chart-material-ui-2.0.4.tgz#d71c3e17aefea6f3089e99c7eeb3631366560049"
-  integrity sha512-z8H930LAf+gUm3eRooEBGgh0RT5P3PBycLx9bKzOecGeH3d4pjbkF01TraM+rKTSF3kIJmE0QhFUVVHmRpTg4A==
-  dependencies:
-    classnames "^2.2.6"
-    prop-types "^15.7.2"
-
-"@devexpress/dx-react-chart@^2.0.4":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@devexpress/dx-react-chart/-/dx-react-chart-2.0.4.tgz#edff4b010b5684262d0c0fd3f3e1ff6f92365d2a"
-  integrity sha512-RzPZja9ExJvjX/bRSfdKggFf2UjvaMlBx68RDqzKlgrhtmSE0i24VZWR0AwJsAg3zE2/e1tksQ2nbU6AMrQTRg==
-  dependencies:
-    "@devexpress/dx-chart-core" "2.0.4"
-    d3-scale "^3.0.1"
-    d3-shape "^1.3.5"
-
-"@devexpress/dx-react-core@^2.0.4":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@devexpress/dx-react-core/-/dx-react-core-2.0.4.tgz#cf4d17170a4cfc6c412a5b2d656f84f03fa609b4"
-  integrity sha512-W5kdUI9LlOmxQWz6NFt0GzTsUza5L877B9fYpOakUSh5vdLoFjMKd7ePrrUPQzJym+WNHg58ZjsPfKmPvD2P3g==
-  dependencies:
-    "@devexpress/dx-core" "2.0.4"
-    prop-types "^15.7.2"
-
-"@emotion/cache@^10.0.15", "@emotion/cache@^10.0.9":
-  version "10.0.15"
-  resolved "https://registry.yarnpkg.com/@emotion/cache/-/cache-10.0.15.tgz#b81767b48015aae2689c60373992145c67b8de02"
+"@devexpress/dx-chart-core@2.1.2":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@devexpress/dx-chart-core/-/dx-chart-core-2.1.2.tgz#c27dc7835a08758fea19fc6c8aaf924049fb797d"
+  integrity sha512-jrQ4zrBlkQLwSytUqhJAR3bUSgwo8xQ9BZocN0QtVZSGR2ALfNFq7GJm8RXGFt/FvbFMOXPMfieqY1hlYjycZg==
   dependencies:
     d3-array "^2.3.2"
     d3-scale "^3.1.0"
@@ -2891,32 +2853,14 @@ cyclist@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-1.0.1.tgz#596e9698fd0c80e12038c2b82d6eb1b35b6224d9"
 
-"d3-array@1.2.0 - 2", d3-array@^2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/d3-array/-/d3-array-2.3.2.tgz#4a943835e5f35ad00ef0a90e79d2c7a990be9d71"
-
-d3-color@1:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/d3-color/-/d3-color-1.4.0.tgz#89c45a995ed773b13314f06460df26d60ba0ecaf"
-
-d3-format@1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/d3-format/-/d3-format-1.4.1.tgz#c45f74b17c5a290c072a4ba7039dd19662cd5ce6"
-
-d3-interpolate@1:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/d3-interpolate/-/d3-interpolate-1.3.2.tgz#417d3ebdeb4bc4efcc8fd4361c55e4040211fd68"
-  dependencies:
-    d3-color "1"
-
-d3-path@1:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/d3-path/-/d3-path-1.0.8.tgz#4a0606a794d104513ec4a8af43525f374b278719"
-
-"d3-array@1.2.0 - 2", d3-array@^2.3.1:
+"d3-array@1.2.0 - 2":
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/d3-array/-/d3-array-2.3.1.tgz#145cb03967578e675db8c62e41f3c406fa7acc73"
   integrity sha512-YlOh8kwqIz0pDECEdCeqVNelaLQXznD0g6yidhhklMgKxKqbNDrYfoudLMkk9THlqvFll+pXMmXYAyN49yWsmg==
+
+d3-array@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/d3-array/-/d3-array-2.3.2.tgz#4a943835e5f35ad00ef0a90e79d2c7a990be9d71"
 
 d3-color@1:
   version "1.3.0"
@@ -2940,7 +2884,7 @@ d3-path@1:
   resolved "https://registry.yarnpkg.com/d3-path/-/d3-path-1.0.8.tgz#4a0606a794d104513ec4a8af43525f374b278719"
   integrity sha512-J6EfUNwcMQ+aM5YPOB8ZbgAZu6wc82f/0WFxrxwV6Ll8wBwLaHLKCqQ5Imub02JriCVVdPjgI+6P3a4EWJCxAg==
 
-d3-scale@^3.0.1:
+d3-scale@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/d3-scale/-/d3-scale-3.1.0.tgz#e8af005101502dbf26c505d9f40cf88bcb75b2e1"
   integrity sha512-3edyEBwbwQG400VbgaepQC9ZYFX3h92flLHIUa1+nvZp/mqCYdxNM9zGTjKtPcSAuBCyPePdMQOapsD0qNALrg==

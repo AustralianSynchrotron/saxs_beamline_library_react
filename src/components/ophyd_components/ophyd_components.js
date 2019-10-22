@@ -52,11 +52,12 @@ const useStyles = makeStyles({
   },
   statusfield: {
     padding: "2px",
+    margin: "5px",
     background: grey["900"]
   },
 
   padding: {
-    padding: "3px"
+    padding: "2px"
   },
   formControl: {
     margin: "5px",
@@ -67,20 +68,21 @@ const useStyles = makeStyles({
 export const OphydStatusField = props => {
   const classes = useStyles(props);
   var deviceData = useSubscribeOphyd(props.device);
-  console.log(deviceData);
   if (deviceData === undefined) {
-    deviceData = { value: "", dtype: "string", name: undefined };
+    deviceData = { value: "", dtype: "string", name: undefined, obj_value: "" };
   } else {
     if (deviceData.dtype === "number") {
       deviceData.value = parseFloat(deviceData.value).toPrecision(
         props.precision !== undefined ? props.precision : deviceData.precision
       );
+    } else {
+      console.log(deviceData);
     }
   }
 
   return (
     <Typography
-      className={classes.statusfield}
+      className={classNames(classes.statusfield, classes.padding)}
       color={
         props.good_status !== undefined
           ? deviceData.value === props.good_status
@@ -93,7 +95,9 @@ export const OphydStatusField = props => {
       {deviceData.name !== undefined
         ? props.good_status !== undefined
           ? props.printVal !== undefined
-            ? deviceData.value
+            ? props.asString !== undefined
+              ? deviceData.obj_value
+              : deviceData.value
             : deviceData.value === props.good_status
             ? props.goodStatusText !== undefined
               ? props.goodStatusText
@@ -127,7 +131,9 @@ export const OphydTextField = props => {
     deviceData = { value: "", dtype: "string" };
   } else {
     if (deviceData.dtype === "number") {
-      deviceData.value = parseFloat(deviceData.value).toPrecision(deviceData.precision);
+      deviceData.value = parseFloat(deviceData.value).toPrecision(6);
+      console.log(deviceData);
+    } else {
       console.log(deviceData);
     }
   }

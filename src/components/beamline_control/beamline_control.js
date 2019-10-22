@@ -100,6 +100,7 @@ const BeamlineControl = props => {
             <Typography variant="h5">Beamline Status</Typography>
             <OphydStatusField
               printVal={true}
+              asString={true}
               label="Status of IOCs"
               device="EPICS_status_devices.epics_status.ioc_status"
               good_status="IOCs OK"
@@ -193,24 +194,28 @@ const BeamlineControl = props => {
               label="Beamstop Counts"
               device="saxs_scaler.saxs_scaler.beamstop"
               toNumber={true}
+              precision={6}
             />
 
             <OphydStatusField
               label="Transmission Counts"
               device="saxs_scaler.saxs_scaler.transmission"
               toNumber={true}
+              precision={6}
             />
 
             <OphydStatusField
               label="I0 (QBPM2)"
               device="saxs_scaler.saxs_scaler.io"
               toNumber={true}
+              precision={6}
             />
 
             <OphydStatusField
               label="Alt I0 (QBPM3)"
               device="saxs_scaler.saxs_scaler.alt_io"
               toNumber={true}
+              precision={6}
             />
 
             <OphydStatusField
@@ -218,12 +223,14 @@ const BeamlineControl = props => {
               device="saxs_optics.dcm.dcm_qbpm"
               toNumber={true}
               suffix="uA"
+              precision={6}
             />
 
             <OphydStatusField
               label="Time (s)"
               device="saxs_scaler.saxs_scaler.transmission"
               toNumber={true}
+              precision={6}
             />
           </Grid>
           <Grid item xs={2} />
@@ -237,7 +244,7 @@ const BeamlineControl = props => {
           alignItems="baseline"
           justify="center"
         >
-          <Grid item xs={10}>
+          <Grid item xs={12}>
             <Energy />
           </Grid>
         </Grid>
@@ -251,7 +258,7 @@ const BeamlineControl = props => {
           justify="center"
           xs={12}
         >
-          <Grid item xs={10}>
+          <Grid item xs={12}>
             <Flux />
           </Grid>
         </Grid>
@@ -264,7 +271,7 @@ const BeamlineControl = props => {
           alignItems="baseline"
           justify="center"
         >
-          <Grid item xs={10}>
+          <Grid item xs={12}>
             <SampleLights />
           </Grid>
         </Grid>
@@ -277,7 +284,7 @@ const BeamlineControl = props => {
           alignItems="baseline"
           justify="center"
         >
-          <Grid item xs={10}>
+          <Grid item xs={12}>
             <CameraControls />
           </Grid>
         </Grid>
