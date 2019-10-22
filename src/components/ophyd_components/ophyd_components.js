@@ -14,6 +14,9 @@ import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import ArrowBackIos from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIos from "@material-ui/icons/ArrowForwardIos";
+import CheckAll from "mdi-material-ui/CheckAll";
+import CloseOutline from "mdi-material-ui/CloseOutline";
+import Help from "mdi-material-ui/Help";
 import DragHandle from "@material-ui/icons/DragHandle";
 import { useSubscribeOphyd } from "../hooks/ophyd";
 import { useSetOphyd } from "../hooks/ophyd";
@@ -66,7 +69,7 @@ export const OphydStatusField = props => {
   var deviceData = useSubscribeOphyd(props.device);
   console.log(deviceData);
   if (deviceData === undefined) {
-    deviceData = { value: "", dtype: "string" };
+    deviceData = { value: "", dtype: "string", name: undefined };
   } else {
     if (deviceData.dtype === "number") {
       deviceData.value = parseFloat(deviceData.value).toPrecision(
@@ -87,18 +90,28 @@ export const OphydStatusField = props => {
       }
     >
       {props.label !== undefined ? props.label + ": " : null}
-      {props.good_status !== undefined
-        ? props.printVal !== undefined
-          ? deviceData.value
-          : deviceData.value === props.good_status
-          ? props.goodStatusText
-          : props.badStatusText
-        : props.toNumber === true
-        ? props.toExp === true
-          ? parseFloat(deviceData.value).toExponential()
-          : parseFloat(deviceData.value)
-        : deviceData.value}
-      {props.suffix !== undefined ? " " + props.suffix : null}
+      {deviceData.name !== undefined
+        ? props.good_status !== undefined
+          ? props.printVal !== undefined
+            ? deviceData.value
+            : deviceData.value === props.good_status
+            ? props.goodStatusText !== undefined
+              ? props.goodStatusText
+              : deviceData.value
+            : props.badStatusText
+          : props.toNumber === true
+          ? props.toExp === true
+            ? parseFloat(deviceData.value).toExponential()
+            : parseFloat(deviceData.value)
+          : deviceData.value
+        : props.undef_val !== undefined
+        ? props.undef_val
+        : "Not Available"}
+      {deviceData.name !== undefined
+        ? props.suffix !== undefined
+          ? " " + props.suffix
+          : null
+        : null}
     </Typography>
   );
 };
@@ -314,6 +327,7 @@ export const OphydMotorCompact = props => {
 
   const handleTweak = event => {
     console.log(event.currentTarget);
+    console.log(tweak * event.currentTarget.dataset.dir);
     setOphyd(props.device + "._tweak", tweak * event.currentTarget.dataset.dir);
   };
 
@@ -421,6 +435,12 @@ export const OphydDropdown = props => {
     input_value: ""
   });
 
+  var deviceData = useSubscribeOphyd(props.device);
+  if (deviceData === undefined) {
+    deviceData = { value: 0 };
+  }
+  console.log(deviceData);
+
   const handleChange = event => {
     console.log(event.target.value);
     setValues(oldValues => ({
@@ -433,7 +453,7 @@ export const OphydDropdown = props => {
   return (
     <form className={classes.root} autoComplete="off">
       <FormControl className={classes.formControl}>
-        <InputLabel>{props.label}</InputLabel>
+        <InputLabel>{deviceData.name}</InputLabel>
         <Select value={values.input_value} onChange={handleChange}>
           <MenuItem value={0}>600 or less</MenuItem>
           <MenuItem value={1}>900</MenuItem>
@@ -443,5 +463,36 @@ export const OphydDropdown = props => {
         </Select>
       </FormControl>
     </form>
+  );
+};
+
+export const OphydStateIcon = props => {
+  const classes = useStyles(props);
+  var deviceData = useSubscribeOphyd(props.device);
+  if (deviceData === undefined) {
+    deviceData = { value: 0, dtype: "integer", name: undefined };
+  }
+
+  var readValue = null;
+
+  return (
+    <React.Fragment>
+      <div className={classes.horizontal}>
+        {!props.noShowLabel ? (
+          <Typography>{props.label !== undefined ? props.label : deviceData.name}</Typography>
+        ) : null}
+        <div className={classes.padding}>
+          {deviceData.name !== undefined ? (
+            deviceData.value !== props.good_value ? (
+              <CloseOutline color="secondary" />
+            ) : (
+              <CheckAll color="primary" />
+            )
+          ) : (
+            <Help color="default" />
+          )}
+        </div>
+      </div>
+    </React.Fragment>
   );
 };

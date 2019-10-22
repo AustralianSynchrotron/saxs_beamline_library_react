@@ -53,7 +53,7 @@ const LogHeader = () => {
         <Typography variant="h6">Logger Name</Typography>
       </Grid>
       <Grid item xs={1}>
-        <Typography variant="h6">Level Number</Typography>
+        <Typography variant="h6">Error Level</Typography>
       </Grid>
       <Grid item xs={4}>
         <Typography variant="h6">Code Path</Typography>

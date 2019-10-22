@@ -9,7 +9,13 @@ import {
   OphydStatusField
 } from "../ophyd_components/ophyd_components";
 import Grid from "@material-ui/core/Grid";
-import { Energy, Flux, SampleLights, CameraControls } from "./beamline_control_components";
+import {
+  Energy,
+  Flux,
+  SampleLights,
+  CameraControls,
+  WindowControls
+} from "./beamline_control_components";
 
 import Typography from "@material-ui/core/Typography";
 
@@ -88,7 +94,7 @@ const BeamlineControl = props => {
           spacing={5}
           direction="row"
           alignItems="baseline"
-          justify="left"
+          justify="center"
         >
           <Grid item xs={4}>
             <Typography variant="h5">Beamline Status</Typography>
@@ -96,42 +102,56 @@ const BeamlineControl = props => {
               printVal={true}
               label="Status of IOCs"
               device="EPICS_status_devices.epics_status.ioc_status"
+              good_status="IOCs OK"
             />
             <OphydStatusField
               printVal={true}
               label="Shutter Enable"
               device="EPICS_status_devices.epics_status.master_shutter_enable"
+              good_status="On"
             />
             <OphydStatusField
               label="White Beam"
               device="EPICS_status_devices.epics_status.white_beam"
               printVal={true}
+              good_status="On"
             />
             <OphydStatusField
               label="Mono Beam"
               device="EPICS_status_devices.epics_status.mono_beam"
               printVal={true}
+              good_status="On"
             />
             <OphydStatusField
               printVal={true}
               label="Sample Shutter"
               device="EPICS_status_devices.epics_status.sample_shutter"
+              good_status="OK"
             />
             <OphydStatusField
               printVal={true}
               label="Beam on Sample?"
               device="EPICS_status_devices.epics_status.beam_on_sample"
+              good_status="No"
             />
             <OphydStatusField
               printVal={true}
               label="Beam on Feedback?"
               device="EPICS_status_devices.epics_status.beam_on_fdbk"
+              good_status="No"
+            />
+            <OphydStatusField
+              printVal={true}
+              label="Beam position Status"
+              device="EPICS_status_devices.epics_status.beam_position"
+              good_status="In Position"
             />
 
             <OphydStatusField
               printVal={true}
               label="Feedback Status"
               device="EPICS_status_devices.epics_status.feedback"
+              good_status="ON"
             />
 
             <OphydStatusField
@@ -149,21 +169,24 @@ const BeamlineControl = props => {
               printVal={true}
               label="Attenuators"
               device="EPICS_status_devices.epics_status.attenuators"
+              good_status="OK"
             />
 
             <OphydStatusField
               printVal={true}
               label="Undulator Gap"
               device="EPICS_status_devices.epics_status.undulator_gap"
+              good_status="GAP OK"
             />
 
             <OphydStatusField
               printVal={true}
               label="Undulator Taper"
               device="EPICS_status_devices.epics_status.undulator_taper"
+              good_status="TAPER OK"
             />
           </Grid>
-          <Grid item xs={2} />
+
           <Grid item xs={4}>
             <Typography variant="h5">Beamline Detectors and Diagnostics</Typography>
             <OphydStatusField
@@ -203,6 +226,7 @@ const BeamlineControl = props => {
               toNumber={true}
             />
           </Grid>
+          <Grid item xs={2} />
         </Grid>
         <Grid item />
         <Grid
@@ -257,11 +281,20 @@ const BeamlineControl = props => {
             <CameraControls />
           </Grid>
         </Grid>
-
-        <OphydMotorBundleCompact bundle="saxs_motors.sample_table" />
-        <OphydMotorBundleCompact bundle="saxs_motors.in_vac" />
-        <OphydMotorCompact device="saxs_motors.mc7.syringe_pump1" label="Syringe 1" />
-        <OphydMotorCompact device="saxs_motors.mc7.syringe_pump2" label="Syringe 2" />
+        <Grid item />
+        <Grid
+          container
+          className={classes.root}
+          spacing={5}
+          direction="row"
+          alignItems="baseline"
+          justify="center"
+        >
+          <Grid item xs={7}>
+            <WindowControls />
+          </Grid>
+          <Grid item xs={3} />
+        </Grid>
       </Grid>
     </React.Fragment>
   );

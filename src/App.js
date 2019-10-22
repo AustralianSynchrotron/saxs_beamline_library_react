@@ -131,7 +131,7 @@ const styles = theme => ({
   horizontal: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "left",
+    justifyContent: "Right",
     alignItems: "center",
     padding: "2px",
     marginLeft: "20px"
