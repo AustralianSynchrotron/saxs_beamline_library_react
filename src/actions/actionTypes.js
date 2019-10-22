@@ -66,3 +66,5 @@ export const POSITIONERS = "positioners";
 export const HEIGHTSCAN = "height_scan";
 export const OMEGASCAN = "omega_scan";
 export const LISTENGRAZING = "listen";
+export const UPDATE_GS_POSITIONER = "update_scan_positioner";
+export const ADD_GS_POSITIONER = "add_scan_positioner";

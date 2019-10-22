@@ -9,6 +9,7 @@ import DockerReducer from "./reducer_docker";
 import LoggerReducer from "./reducer_logger";
 import LibraryReducer from "./reducer_saxs_library";
 import GrazingReducer from "./reducer_grazing";
+import GenericScanReducer from "./reducer_generic_scan";
 
 const rootReducer = combineReducers({
   acquire: AcquireReducer,
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
   docker: DockerReducer,
   logger: LoggerReducer,
   library: LibraryReducer,
-  grazing: GrazingReducer
+  grazing: GrazingReducer,
+  genericScan: GenericScanReducer
 });
 
 export default rootReducer;

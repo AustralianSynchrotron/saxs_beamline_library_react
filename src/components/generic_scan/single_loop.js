@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/styles";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -32,6 +32,8 @@ import {
 
 import SinglePositioner from "./single_positioner";
 
+import { addGSPositioner } from "../../actions";
+
 const useStyles = makeStyles({
   buttons: {
     display: "flex",
@@ -60,6 +62,7 @@ const useStyles = makeStyles({
 
 const SingleLoop = props => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const [numPositions, setNumPositions] = useState(20);
   const [delay, setDelay] = useState(0);
@@ -79,6 +82,7 @@ const SingleLoop = props => {
   };
 
   const handleAddPositioner = () => {
+    dispatch(addGSPositioner(0));
     setNumPositioners(numPositioners + 1);
   };
   const handleRemovePositioner = () => {
@@ -134,7 +138,7 @@ const SingleLoop = props => {
                   <IconButton onClick={handleRemovePositioner} data-index={i}>
                     <DeleteOutline className={classes.delete} />
                   </IconButton>
-                  <SinglePositioner number={numPositions} />
+                  <SinglePositioner loopNum={0} posNum={i} number={numPositions} />
                 </Grid>
               ))}
               <Grid item>

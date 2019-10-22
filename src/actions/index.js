@@ -417,3 +417,15 @@ export const listenGrazing = () => ({
   type: actions.LISTENGRAZING,
   key: "grazing"
 });
+
+export const updateGSParam = (loopNum, posNum, param, value) => ({
+  type: actions.UPDATE_GS_POSITIONER,
+  data: { loopNum, posNum, param, value },
+  fromServer: true
+});
+
+export const addGSPositioner = loopNum => ({
+  type: actions.ADD_GS_POSITIONER,
+  data: { loopNum },
+  fromServer: true
+});

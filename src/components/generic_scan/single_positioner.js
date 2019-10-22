@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/styles";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -13,18 +13,7 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 
-import classNames from "classnames";
-
-import green from "@material-ui/core/colors/green";
-import red from "@material-ui/core/colors/red";
-import {
-  OphydButton,
-  OphydToggleButton,
-  OphydSlider,
-  OphydTextField,
-  OphydStatusField
-} from "../ophyd_components/ophyd_components";
-import { number } from "prop-types";
+import { updateGSParam } from "../../actions";
 
 const useStyles = makeStyles({
   buttons: {
@@ -40,17 +29,27 @@ const useStyles = makeStyles({
 
 const SinglePositioner = props => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
-  const [positioner, setPositioner] = useState("");
-  const [mode, setMode] = useState("Linear");
-  const [absRel, setAbsRel] = useState("Absolute");
-  const [start, setStart] = useState(0);
-  const [end, setEnd] = useState(1);
-  const [positions, setPositions] = useState(
-    Array.apply(null, { length: props.number }).map(function() {
-      return null;
-    })
+  const positioner = useSelector(
+    state => state.genericScan.scan.loops[props.loopNum].positioners[props.posNum].positioner
   );
+  const mode = useSelector(
+    state => state.genericScan.scan.loops[props.loopNum].positioners[props.posNum].mode
+  );
+  const absRel = useSelector(
+    state => state.genericScan.scan.loops[props.loopNum].positioners[props.posNum].absRel
+  );
+  const start = useSelector(
+    state => state.genericScan.scan.loops[props.loopNum].positioners[props.posNum].start
+  );
+  const end = useSelector(
+    state => state.genericScan.scan.loops[props.loopNum].positioners[props.posNum].end
+  );
+  const positions = useSelector(
+    state => state.genericScan.scan.loops[props.loopNum].positioners[props.posNum].positions
+  );
+
   const [cellRefs, setCellRefs] = useState(
     Array.apply(null, { length: props.number }).map(function() {
       return React.createRef();
@@ -60,20 +59,34 @@ const SinglePositioner = props => {
   const modes = ["Linear", "Table"];
 
   const handlePositionerChange = event => {
-    setPositioner(event.target.value);
+    dispatch(updateGSParam(props.loopNum, props.posNum, "positioner", event.target.value));
   };
 
   const handleModeChange = event => {
-    setMode(event.target.value);
+    dispatch(updateGSParam(props.loopNum, props.posNum, "mode", event.target.value));
   };
 
   const handleAbsRelChange = event => {
-    setAbsRel(event.target.value);
+    dispatch(updateGSParam(props.loopNum, props.posNum, "absRel", event.target.value));
+  };
+
+  const handleStartChange = event => {
+    dispatch(updateGSParam(props.loopNum, props.posNum, "start", parseFloat(event.target.value)));
+  };
+
+  const handleEndChange = event => {
+    dispatch(updateGSParam(props.loopNum, props.posNum, "end", parseFloat(event.target.value)));
   };
 
   const handlePositionChange = event => {
     const i = parseInt(event.currentTarget.dataset.index);
-    setPositions([...positions.slice(0, i), event.target.value, ...positions.slice(i + 1)]);
+    dispatch(
+      updateGSParam(props.loopNum, props.posNum, "positions", [
+        ...positions.slice(0, i),
+        event.target.value,
+        ...positions.slice(i + 1)
+      ])
+    );
   };
 
   const handleKeyDown = event => {
@@ -87,33 +100,34 @@ const SinglePositioner = props => {
     }
   };
 
-  const handleStartChange = event => {
-    setStart(parseFloat(event.target.value));
-  };
-
-  const handleEndChange = event => {
-    setEnd(parseFloat(event.target.value));
-  };
-
   useEffect(() => {
     if (props.number < positions.length) {
-      setPositions(positions.slice(0, props.number));
+      dispatch(
+        updateGSParam(props.loopNum, props.posNum, "positions", positions.slice(0, props.number))
+      );
     } else if (props.number > positions.length) {
-      setPositions([
-        ...positions.slice(),
-        ...Array.apply(null, { length: props.number - positions.length }).map(function() {
-          return null;
-        })
-      ]);
+      dispatch(
+        updateGSParam(props.loopNum, props.posNum, "positions", [
+          ...positions.slice(),
+          ...Array.apply(null, { length: props.number - positions.length }).map(function() {
+            return null;
+          })
+        ])
+      );
     }
   }, [props.number]);
 
   useEffect(() => {
     if (mode === "Linear") {
-      setPositions(
-        [...Array(props.number)].map((e, index) => {
-          return start + (index * (end - start)) / (props.number - 1);
-        })
+      dispatch(
+        updateGSParam(
+          props.loopNum,
+          props.posNum,
+          "positions",
+          [...Array(props.number)].map((e, index) => {
+            return start + (index * (end - start)) / (props.number - 1);
+          })
+        )
       );
     }
   }, [start, end, mode, props.number]);
@@ -148,6 +162,7 @@ const SinglePositioner = props => {
                 variant="outlined"
                 label="Start"
                 disabled={mode === "Table" ? true : false}
+                type="number"
                 value={start}
                 onChange={handleStartChange}
                 margin="dense"
@@ -159,6 +174,7 @@ const SinglePositioner = props => {
                 variant="outlined"
                 label="End"
                 disabled={mode === "Table" ? true : false}
+                type="number"
                 value={end}
                 onChange={handleEndChange}
                 margin="dense"
