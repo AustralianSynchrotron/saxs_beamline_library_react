@@ -1,6 +1,10 @@
 import { bindActionCreators } from "redux";
 import * as actions from "./actionTypes";
 
+const url = () => {
+  return process.env.NODE_ENV === "production" ? "http://10.138.11.39" : "http://localhost";
+};
+
 export const handleDataFromServer = raw_data => {
   var data = {};
   if (typeof raw_data === "string") {
@@ -428,4 +432,72 @@ export const addGSPositioner = loopNum => ({
   type: actions.ADD_GS_POSITIONER,
   data: { loopNum },
   fromServer: true
+});
+
+export const removeGSPositioner = (loopNum, posNum) => ({
+  type: actions.REMOVE_GS_POSITIONER,
+  data: { loopNum, posNum },
+  fromServer: true
+});
+
+export const addGSLoop = () => ({
+  type: actions.ADD_GS_LOOP,
+  fromServer: true
+});
+
+export const removeGSLoop = loopNum => ({
+  type: actions.REMOVE_GS_LOOP,
+  data: { loopNum },
+  fromServer: true
+});
+
+export const runGSScan = () => ({
+  type: actions.RUN_GS_SCAN,
+  fetch: true,
+  url: url() + ":4040/api/v1.0/scan",
+  store: { generic_scan: ["genericScan"] },
+  data: {
+    method: "PUT",
+    mode: "cors",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    }
+  }
+});
+
+export const saveGSScan = name => ({
+  type: actions.SAVE_GS_SCAN,
+  fetch: true,
+  url: url() + ":4040/api/v1.0/store",
+  store: { generic_scan: ["genericScan"] },
+  data: {
+    method: "PUT",
+    mode: "cors",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ name })
+  }
+});
+
+export const loadGSScan = name => ({
+  type: actions.LOAD_GS_SCAN,
+  fetch: true,
+  url: url() + ":4040/api/v1.0/load/" + name,
+  data: {
+    method: "GET",
+    mode: "cors"
+  }
+});
+
+export const listGSScan = () => ({
+  type: actions.LIST_GS_SCAN,
+  fetch: true,
+  url: url() + ":4040/api/v1.0/list",
+  data: {
+    method: "GET",
+    mode: "cors"
+  }
 });

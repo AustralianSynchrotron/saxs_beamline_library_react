@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/styles";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -30,6 +30,15 @@ import red from "@material-ui/core/colors/red";
 import SingleLoop from "./single_loop";
 import LoadScanDialog from "./load_scan_dialog";
 import SaveScanDialog from "./save_scan_dialog";
+
+import {
+  addGSLoop,
+  removeGSLoop,
+  runGSScan,
+  saveGSScan,
+  loadGSScan,
+  listGSScan
+} from "../../actions";
 
 const useStyles = makeStyles({
   buttons: {
@@ -93,16 +102,20 @@ const useStyles = makeStyles({
 
 const GenericScan = props => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
-  const [numLoops, setNumLoops] = useState(1);
   const [saveDialogOpen, setSaveDialogOpen] = useState(false);
   const [loadDialogOpen, setLoadDialogOpen] = useState(false);
 
+  const numLoops = useSelector(state => state.genericScan.scan.numLoops);
+  const scans = useSelector(state => state.genericScan.scan_list);
+
   const handleAddLoop = () => {
-    setNumLoops(numLoops + 1);
+    dispatch(addGSLoop());
   };
-  const handleRemoveLoop = () => {
-    setNumLoops(numLoops - 1);
+  const handleRemoveLoop = event => {
+    const loopNum = event.currentTarget.dataset.index;
+    dispatch(removeGSLoop(loopNum));
   };
 
   const handleSaveScan = () => {
@@ -110,7 +123,7 @@ const GenericScan = props => {
   };
 
   const handleSave = scanName => {
-    alert(scanName);
+    dispatch(saveGSScan(scanName));
     setSaveDialogOpen(false);
   };
 
@@ -119,11 +132,12 @@ const GenericScan = props => {
   };
 
   const handleLoadScan = () => {
+    dispatch(listGSScan());
     setLoadDialogOpen(true);
   };
 
   const handleLoad = scanName => {
-    alert(scanName);
+    dispatch(loadGSScan(scanName));
     setLoadDialogOpen(false);
   };
 
@@ -131,6 +145,9 @@ const GenericScan = props => {
     setLoadDialogOpen(false);
   };
 
+  const handleRunScan = () => {
+    dispatch(runGSScan());
+  };
   return (
     <React.Fragment>
       <Grid container direction="column">
@@ -157,6 +174,7 @@ const GenericScan = props => {
             size="large"
             startIcon={<PlayArrow />}
             className={classNames(classes.play, classes.button)}
+            onClick={handleRunScan}
           >
             Run Scan
           </Button>
@@ -190,7 +208,12 @@ const GenericScan = props => {
           </Grid>
         </Grid>
       </Grid>
-      <LoadScanDialog open={loadDialogOpen} onCancel={handleLoadCancel} onLoad={handleLoad} />
+      <LoadScanDialog
+        open={loadDialogOpen}
+        onCancel={handleLoadCancel}
+        onLoad={handleLoad}
+        scans={scans}
+      />
       <SaveScanDialog open={saveDialogOpen} onCancel={handleSaveCancel} onSave={handleSave} />
     </React.Fragment>
   );

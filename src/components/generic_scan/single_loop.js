@@ -32,7 +32,7 @@ import {
 
 import SinglePositioner from "./single_positioner";
 
-import { addGSPositioner } from "../../actions";
+import { addGSPositioner, removeGSPositioner } from "../../actions";
 
 const useStyles = makeStyles({
   buttons: {
@@ -66,7 +66,10 @@ const SingleLoop = props => {
 
   const [numPositions, setNumPositions] = useState(20);
   const [delay, setDelay] = useState(0);
-  const [numPositioners, setNumPositioners] = useState(1);
+
+  const numPositioners = useSelector(
+    state => state.genericScan.scan.loops[props.loopNum].numPositioners
+  );
 
   const handleNumberPositionsChange = event => {
     if (event.type == "blur" || event.key === "Enter") {
@@ -82,11 +85,10 @@ const SingleLoop = props => {
   };
 
   const handleAddPositioner = () => {
-    dispatch(addGSPositioner(0));
-    setNumPositioners(numPositioners + 1);
+    dispatch(addGSPositioner(props.loopNum));
   };
-  const handleRemovePositioner = () => {
-    setNumPositioners(numPositioners - 1);
+  const handleRemovePositioner = event => {
+    dispatch(removeGSPositioner(props.loopNum, event.currentTarget.dataset.index));
   };
 
   return (
@@ -102,8 +104,8 @@ const SingleLoop = props => {
             <CardHeader
               title={"Loop " + props.loopNum}
               action={
-                <IconButton>
-                  <DeleteOutline className={classes.delete} onClick={props.onDelete} />
+                <IconButton onClick={props.onDelete}>
+                  <DeleteOutline className={classes.delete} />
                 </IconButton>
               }
             />
@@ -138,7 +140,7 @@ const SingleLoop = props => {
                   <IconButton onClick={handleRemovePositioner} data-index={i}>
                     <DeleteOutline className={classes.delete} />
                   </IconButton>
-                  <SinglePositioner loopNum={0} posNum={i} number={numPositions} />
+                  <SinglePositioner loopNum={props.loopNum} posNum={i} number={numPositions} />
                 </Grid>
               ))}
               <Grid item>

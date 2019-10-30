@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/styles";
 import { useSelector, useDispatch } from "react-redux";
 
 import Select from "@material-ui/core/Select";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
@@ -21,9 +22,18 @@ const useStyles = makeStyles({
     flexDirection: "column",
     width: "200px"
   },
+  horizontal: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "baseline",
+    whiteSpace: "pre"
+  },
   text: {
     width: "100px",
     marginTop: "0px"
+  },
+  paper: {
+    width: "300px"
   }
 });
 
@@ -31,6 +41,9 @@ const SinglePositioner = props => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const name = useSelector(
+    state => state.genericScan.scan.loops[props.loopNum].positioners[props.posNum].name
+  );
   const positioner = useSelector(
     state => state.genericScan.scan.loops[props.loopNum].positioners[props.posNum].positioner
   );
@@ -56,10 +69,15 @@ const SinglePositioner = props => {
     })
   );
   const positioners = useSelector(state => state.library.positioners) || null;
+  const positionersLookup = useSelector(state => state.library.positionersLookup) || null;
   const modes = ["Linear", "Table"];
 
   const handlePositionerChange = event => {
-    dispatch(updateGSParam(props.loopNum, props.posNum, "positioner", event.target.value));
+    try {
+      let dataset = event.currentTarget.children[0].dataset;
+      dispatch(updateGSParam(props.loopNum, props.posNum, "positioner", dataset.device));
+      dispatch(updateGSParam(props.loopNum, props.posNum, "name", dataset.name));
+    } catch {}
   };
 
   const handleModeChange = event => {
@@ -136,16 +154,44 @@ const SinglePositioner = props => {
     <React.Fragment>
       <Grid container direction="column" spacing={2}>
         <Grid item>
-          <Select value={positioner} onChange={handlePositionerChange}>
-            {positioners.map(positioner => (
-              <MenuItem value={positioner.name}>{positioner.name}</MenuItem>
-            ))}
-          </Select>
+          <Autocomplete
+            disableClearable
+            clearOnEscape
+            options={positioners}
+            getOptionLabel={option => option.name}
+            style={{ width: 150 }}
+            value={{ name: name } || ""}
+            renderOption={option => (
+              <span
+                className={classes.horizontal}
+                data-name={option.name}
+                data-device={option.device}
+              >
+                <Typography variant="body1">{option.name} : </Typography>
+                <Typography variant="caption">{option.device}</Typography>
+              </span>
+            )}
+            renderInput={params => (
+              <TextField
+                {...params}
+                label="Positioner"
+                variant="outlined"
+                InputProps={{ ...params["InputProps"], style: { fontSize: "small" } }}
+                fullWidth
+              />
+            )}
+            onClose={handlePositionerChange}
+            classes={{
+              paper: classes.paper
+            }}
+          />
         </Grid>
         <Grid item>
           <Select value={mode} onChange={handleModeChange}>
             {modes.map(mode => (
-              <MenuItem value={mode}>{mode}</MenuItem>
+              <MenuItem key={mode} value={mode}>
+                {mode}
+              </MenuItem>
             ))}
           </Select>
         </Grid>
@@ -195,6 +241,7 @@ const SinglePositioner = props => {
                     onChange={handlePositionChange}
                     inputProps={{ "data-index": index, onKeyDown: handleKeyDown }}
                     inputRef={cellRefs[index]}
+                    disabled={mode === "Table" ? false : true}
                     margin="dense"
                     className={classes.text}
                   />

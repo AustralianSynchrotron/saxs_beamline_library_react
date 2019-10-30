@@ -361,9 +361,9 @@ class ConfigPage extends Component {
                           onChange={this.handleRelativeDeviceChange}
                         />
                       </TableCell>
-                      <TableCell>
-                        <div className={classes.horizontal}>
-                          <div className={classes.horizontal}>
+                      <TableCell className={classes.horizontal}>
+                        {/* <div className={classes.horizontal}> */}
+                          {/* <div className={classes.horizontal}> */}
                             <Typography>Neg</Typography>
                             <ThemeProvider theme={switchTheme}>
                               <ColourSwitch
@@ -379,8 +379,8 @@ class ConfigPage extends Component {
                               />
                             </ThemeProvider>
                             <Typography>Pos</Typography>
-                          </div>
-                        </div>
+                          {/* </div> */}
+                        {/* </div> */}
                       </TableCell>
                       <TableCell>
                         <IconButton
