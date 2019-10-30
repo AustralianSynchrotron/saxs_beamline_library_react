@@ -132,7 +132,6 @@ export const OphydTextField = props => {
   } else {
     if (deviceData.dtype === "number") {
       deviceData.value = parseFloat(deviceData.value).toPrecision(6);
-      console.log(deviceData);
     } else {
       console.log(deviceData);
     }
@@ -243,7 +242,6 @@ export const OphydToggleButton = props => {
   }
 
   const handleChange = () => {
-    console.log(status);
     if (status === 0) {
       return;
     }
@@ -292,7 +290,6 @@ export const OphydSlider = props => {
     deviceData = { value: 0 };
   }
   const handleChange = (event, value) => {
-    console.log(props.setTimeout);
     setOphyd(props.device, parseFloat(value), props.setTimeout);
   };
 
@@ -443,12 +440,20 @@ export const OphydDropdown = props => {
 
   var deviceData = useSubscribeOphyd(props.device);
   if (deviceData === undefined) {
-    deviceData = { value: 0 };
+    deviceData = { value: 0, enum_strs: [0, 1, 2] };
   }
-  console.log(deviceData);
+
+  const renderMenuItems = () => {
+    var enum_strs = deviceData.enum_strs;
+    if (enum_strs === undefined) {
+      enum_strs = [0, 1, 2];
+    }
+    return enum_strs.map((el, i) => {
+      return <MenuItem value={i}> {el}</MenuItem>;
+    });
+  };
 
   const handleChange = event => {
-    console.log(event.target.value);
     setValues(oldValues => ({
       ...oldValues,
       input_value: event.target.value
@@ -459,13 +464,9 @@ export const OphydDropdown = props => {
   return (
     <form className={classes.root} autoComplete="off">
       <FormControl className={classes.formControl}>
-        <InputLabel>{deviceData.name}</InputLabel>
+        <InputLabel>{props.label !== undefined ? props.label : deviceData.name}</InputLabel>
         <Select value={values.input_value} onChange={handleChange}>
-          <MenuItem value={0}>600 or less</MenuItem>
-          <MenuItem value={1}>900</MenuItem>
-          <MenuItem value={2}>1575</MenuItem>
-          <MenuItem value={3}>3300</MenuItem>
-          <MenuItem value={4}>7200</MenuItem>
+          {renderMenuItems()}
         </Select>
       </FormControl>
     </form>

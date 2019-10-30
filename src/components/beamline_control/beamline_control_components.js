@@ -68,7 +68,7 @@ const useStyles = makeStyles({
   },
 
   padding: {
-    padding: "3px"
+    padding: "1px"
   },
 
   horizontal: {
@@ -98,7 +98,7 @@ export const Energy = props => {
             />
             <OphydStatusField
               device="saxs_optics.dcm.wavelength"
-              label=" / "
+              label="Wavelength"
               toNumber={true}
               precision={3}
               suffix="nm"
@@ -108,7 +108,11 @@ export const Energy = props => {
               label=" DCM moved?"
               good_value={1}
             />
-            <OphydStateIcon device="saxs_optics.dcm.dcm_fine_scan_state" good_value={0} label="Scan Done?" />
+            <OphydStateIcon
+              device="saxs_optics.dcm.dcm_fine_scan_state"
+              good_value={0}
+              label="Scan Done?"
+            />
             <OphydStatusField
               device="saxs_optics.dcm.scan_pt"
               label="DCM Tune pt"
@@ -125,7 +129,7 @@ export const Energy = props => {
             />
             <OphydStateIcon
               device="saxs_optics.dcm.echange_fb_image_tune"
-              good_value={0}
+              good_value={1}
               label="Feedback?"
             />
             <OphydStatusField
