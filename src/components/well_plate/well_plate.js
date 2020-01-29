@@ -32,7 +32,7 @@ const styles = theme => ({
     flexGrow: 1
   },
   selectEmpty: {
-    marginTop: theme.spacing.unit * 2
+    marginTop: theme.spacing(2)
   },
   horizontal: {
     display: "flex",

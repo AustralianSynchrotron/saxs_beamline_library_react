@@ -88,7 +88,7 @@ export const OphydStatusField = props => {
           ? deviceData.value === props.good_status
             ? "primary"
             : "secondary"
-          : "default"
+          : "initial"
       }
     >
       {props.label !== undefined ? props.label + ": " : null}

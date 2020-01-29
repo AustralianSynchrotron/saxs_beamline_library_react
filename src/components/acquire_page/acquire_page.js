@@ -26,7 +26,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import CustomTimeDialog from "../custom_time_dialog/custom_time_dialog";
 import { Typography } from "@material-ui/core";
 import { strikethrough } from "ansi-colors";
-import GenericScan from "../generic_scan/generic_scan";
+// import GenericScan from "../generic_scan/generic_scan";
 
 function mapDeviceToProps(state) {
   return {
@@ -220,7 +220,7 @@ class AcquirePage extends Component {
     return (
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={12}>
-          <Grid container justify="left" spacing={10}>
+          <Grid container justify="flex-start" spacing={10}>
             <Grid item>
               <div>
                 <Button
@@ -361,7 +361,6 @@ class AcquirePage extends Component {
               multiline
               rows="4"
               fullWidth
-              defaultValue=""
               className={classes.textField}
               margin="normal"
               variant="outlined"
@@ -372,7 +371,7 @@ class AcquirePage extends Component {
         </Grid>
         <Grid container justify="center">
           <Grid item>
-            <GenericScan />
+            {/* <GenericScan /> */}
           </Grid>
         </Grid>
         <CustomTimeDialog onClose={this.handleCustomTime} open={this.state.customTimeOpen} />

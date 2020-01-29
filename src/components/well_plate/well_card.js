@@ -43,7 +43,7 @@ const styles = theme => ({
     flexDirection: "row"
   },
   selectEmpty: {
-    marginTop: theme.spacing.unit * 2
+    marginTop: theme.spacing(2)
   },
   content: {
     display: "flex",

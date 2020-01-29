@@ -34,7 +34,6 @@ import ConfigPage from "./components/config_page/config_page.js";
 import VacuumPage from "./components/vacuum/Vacuum";
 import TensilePage from "./components/tensile/Tensile";
 import GrazingPage from "./components/grazing_page/grazing_page";
-import ChanhPage from "./components/chanh_page/ChanhPage";
 import VideoPage from "./components/video_page/video_page";
 import DockerPage from "./components/docker_page/docker_page";
 import LoggerPage from "./components/logger_page/logger_page";
@@ -98,9 +97,9 @@ const styles = theme => ({
       duration: theme.transitions.duration.leavingScreen
     }),
     overflowX: "hidden",
-    width: theme.spacing.unit * 7 + 1,
+    width: theme.spacing(7) + 1,
     [theme.breakpoints.up("sm")]: {
-      width: theme.spacing.unit * 9 + 1
+      width: theme.spacing(9) + 1
     }
   },
   toolbar: {
@@ -112,9 +111,9 @@ const styles = theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 3
+    padding: theme.spacing(3)
   },
-  red_button: {
+  redButton: {
     background: red[500],
     color: "white",
     height: 48,
@@ -122,7 +121,7 @@ const styles = theme => ({
       backgroundColor: red["A700"]
     }
   },
-  green_button: {
+  greenButton: {
     background: green[500],
     color: "white",
     height: 48,
@@ -210,13 +209,13 @@ class App extends Component {
                     label="Close"
                     value={1}
                     device="saxs_pss.pss.mono_shutter_close"
-                    classes={classes.red_button}
+                    classes={classes.redButton}
                   />
                   <OphydButton
                     label="Open"
                     value={1}
                     device="saxs_pss.pss.mono_shutter_open"
-                    classes={classes.green_button}
+                    classes={classes.greenButton}
                   />
                 </div>
               </div>
@@ -254,8 +253,7 @@ class App extends Component {
                 ["Grazing Setup", <CallMissedOutgoing />],
                 ["Tensile Setup", <SwapHoriz />],
                 ["Python Logger", <Warning />],
-                ["Docker", <Docker />],
-                ["Chanh Experiment!", <ImageSearch />]
+                ["Docker", <Docker />]
               ].map((item, index) => (
                 <ListItem button key={item[0]} onClick={() => this.handlePageChange(index)}>
                   <ListItemIcon>{item[1]}</ListItemIcon>
@@ -310,11 +308,6 @@ class App extends Component {
             {page === 8 && (
               <div>
                 <DockerPage />
-              </div>
-            )}
-            {page === 9 && (
-              <div>
-                <ChanhPage />
               </div>
             )}
             <SnackBar

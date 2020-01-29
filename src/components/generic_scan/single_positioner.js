@@ -13,6 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
 
 import { updateGSParam } from "../../actions";
 
@@ -235,16 +236,18 @@ const SinglePositioner = props => {
             <TableBody>
               {positions.map((position, index) => (
                 <TableRow key={index}>
-                  <TextField
-                    variant="outlined"
-                    value={position}
-                    onChange={handlePositionChange}
-                    inputProps={{ "data-index": index, onKeyDown: handleKeyDown }}
-                    inputRef={cellRefs[index]}
-                    disabled={mode === "Table" ? false : true}
-                    margin="dense"
-                    className={classes.text}
-                  />
+                  <TableCell>
+                    <TextField
+                      variant="outlined"
+                      value={position}
+                      onChange={handlePositionChange}
+                      inputProps={{ "data-index": index, onKeyDown: handleKeyDown }}
+                      inputRef={cellRefs[index]}
+                      disabled={mode === "Table" ? false : true}
+                      margin="dense"
+                      className={classes.text}
+                    />
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
