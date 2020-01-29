@@ -23,6 +23,7 @@ import Videocam from "@material-ui/icons/Videocam";
 import Warning from "@material-ui/icons/Warning";
 import SwapHoriz from "@material-ui/icons/SwapHoriz";
 import CallMissedOutgoing from "@material-ui/icons/CallMissedOutgoing";
+import ImageSearch from "@material-ui/icons/ImageSearch";
 import Settings from "@material-ui/icons/Settings";
 import ViewComfy from "@material-ui/icons/ViewComfy";
 import PlayCircleOutline from "@material-ui/icons/PlayCircleOutline";
@@ -33,6 +34,7 @@ import ConfigPage from "./components/config_page/config_page.js";
 import VacuumPage from "./components/vacuum/Vacuum";
 import TensilePage from "./components/tensile/Tensile";
 import GrazingPage from "./components/grazing_page/grazing_page";
+import ChanhPage from "./components/chanh_page/ChanhPage";
 import VideoPage from "./components/video_page/video_page";
 import DockerPage from "./components/docker_page/docker_page";
 import LoggerPage from "./components/logger_page/logger_page";
@@ -252,7 +254,8 @@ class App extends Component {
                 ["Grazing Setup", <CallMissedOutgoing />],
                 ["Tensile Setup", <SwapHoriz />],
                 ["Python Logger", <Warning />],
-                ["Docker", <Docker />]
+                ["Docker", <Docker />],
+                ["Chanh Experiment!", <ImageSearch />]
               ].map((item, index) => (
                 <ListItem button key={item[0]} onClick={() => this.handlePageChange(index)}>
                   <ListItemIcon>{item[1]}</ListItemIcon>
@@ -307,6 +310,11 @@ class App extends Component {
             {page === 8 && (
               <div>
                 <DockerPage />
+              </div>
+            )}
+            {page === 9 && (
+              <div>
+                <ChanhPage />
               </div>
             )}
             <SnackBar

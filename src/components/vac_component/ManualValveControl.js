@@ -61,8 +61,8 @@ const ManualValveControl = props => {
             labelPosition="left"
             labelFirst="Close"
             labelSecond="Open"
-            valueFirst={2}
-            valueSecond={1}
+            valueFirst={1}
+            valueSecond={2}
             readFirst={0}
             readSecond={1}
             device={props.valve + ".open_close_withrbv"}
