@@ -240,8 +240,8 @@ const SinglePositioner = props => {
                     <TextField
                       variant="outlined"
                       value={position}
-                      onChange={handlePositionChange}
-                      inputProps={{ "data-index": index, onKeyDown: handleKeyDown }}
+                      onChange={event => handlePositionChange(event)} // TODO This should simply be onChange={handlePositionChange} but in production it has a rendered more hooks error.
+                      inputProps={{ "data-index": index, onKeyDown: event => handleKeyDown(event) }} // TODO This should simply be inputProps={{ "data-index": index, onKeyDown: handleKeyDown }} but in production it has a rendered more hooks error.
                       inputRef={cellRefs[index]}
                       disabled={mode === "Table" ? false : true}
                       margin="dense"
