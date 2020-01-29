@@ -575,10 +575,10 @@ const GrazingPage = props => {
         <Grid item>
           <Grid container direction="row" spacing={2} justify="space-around">
             <Grid item>
-              <ChartElement numplots={4} data={heightScanData} width={chartWidth} height={750} yTitle="Counts" type="Scatter" />
+              <ChartElement numplots={4} data={heightScanData} width={chartWidth} height={750} xTitle="Height" yTitle="Counts" type="Scatter" />
             </Grid>
             <Grid item>
-              <ChartElement numplots={4} data={omegaScanData} width={chartWidth} height={750} yTitle="Counts" type="Scatter" />
+              <ChartElement numplots={4} data={omegaScanData} width={chartWidth} height={750} xTitle="Omega" yTitle="Counts" type="Scatter" />
             </Grid>
           </Grid>
         </Grid>

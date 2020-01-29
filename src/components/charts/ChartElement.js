@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { makeStyles, getThemeProps } from "@material-ui/styles";
+import React, { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/styles";
 import Paper from "@material-ui/core/Paper";
 import { Button } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
@@ -28,59 +28,52 @@ const useStyles = makeStyles({
   }
 });
 
-class ChartElement extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      customTimeOpen: false,
-      staff: false,
-      password: ""
-    };
-  }
+const ChartElement = props => {
+  const classes = useStyles();
 
-  renderLineSeries = () => {
-    return [...Array(this.props.numplots).keys()].map(el => {
-      return <LineSeries valueField={"y" + el} argumentField={"x" + el} />;
-    });
-  };
-  renderScatterSeries = () => {
-    return [...Array(this.props.numplots).keys()].map(el => {
-      return <ScatterSeries valueField={"y" + el} argumentField={"x" + el} />;
-    });
-  };
-  renderBarSeries = () => {
-    return [...Array(this.props.numplots).keys()].map(el => {
-      return <BarSeries valueField={"y" + el} argumentField={"x" + el} />;
-    });
-  };
+  const renderLineSeries = () =>
+    [...Array(props.numplots).keys()].map(el => (
+      <LineSeries valueField={"y" + el} argumentField={"x" + el} />
+    ));
+  const renderScatterSeries = () =>
+    [...Array(props.numplots).keys()].map(el => (
+      <ScatterSeries valueField={"y" + el} argumentField={"x" + el} />
+    ));
+  const renderBarSeries = () =>
+    [...Array(props.numplots).keys()].map(el => (
+      <BarSeries valueField={"y" + el} argumentField={"x" + el} />
+    ));
 
-  render() {
-    const { classes } = this.props;
-    return (
-      <div>
-        <Paper>
-          <Chart
-            data={this.props.data}
-            width={this.props.width !== undefined ? this.props.width : 300}
-            height={this.props.height !== undefined ? this.props.height : 500}
-          >
-            {this.props.type === "Bar" ? <ArgumentScale factory={scaleBand} /> : null}
-            <ArgumentAxis />
-            <ArgumentAxis.Label text={this.props.yTitle !== undefined ? this.props.yTitle : "Y Axis"} />
+  const AxisLabel = () => (
+    <ValueAxis.Label text={props.xTitle !== undefined ? props.xTitle : "X Axis"} />
+  );
+  const YAxisLabel = () => (
+    <ArgumentAxis.Label text={props.yTitle !== undefined ? props.yTitle : "Y Axis"} />
+  );
 
-            <ValueAxis />
-            {this.props.type === "Scatter"
-              ? this.renderScatterSeries(10)
-              : this.props.type === "Line"
-              ? this.renderLineSeries(10)
-              : this.props.type === "Bar"
-              ? this.renderBarSeries(10)
-              : this.renderScatterSeries(10)}
-          </Chart>
-        </Paper>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <Paper>
+        <Chart
+          data={props.data}
+          width={props.width !== undefined ? props.width : 300}
+          height={props.height !== undefined ? props.height : 500}
+        >
+          {props.type === "Bar" ? <ArgumentScale factory={scaleBand} /> : null}
+          <ArgumentAxis labelComponent={AxisLabel} />
+          <ValueAxis labelComponent={YAxisLabel} />
+
+          {props.type === "Scatter"
+            ? renderScatterSeries()
+            : props.type === "Line"
+            ? renderLineSeries()
+            : props.type === "Bar"
+            ? renderBarSeries()
+            : renderScatterSeries()}
+        </Chart>
+      </Paper>
+    </div>
+  );
+};
 
 export default ChartElement;
