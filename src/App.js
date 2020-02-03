@@ -200,6 +200,9 @@ class App extends Component {
                 <OphydStatusField
                   label="Beamline Status"
                   device="EPICS_status_devices.epics_status.beam_on_sample"
+                  good_status={1}
+                  badStatusText="Something is wrong"
+                  goodStatusText="Beamline is ok"
                 />
                 <div className={classes.horizontal}>
                   <Typography variant="h6" color="inherit">

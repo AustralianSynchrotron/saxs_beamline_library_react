@@ -99,92 +99,120 @@ const BeamlineControl = props => {
           <Grid item xs={4}>
             <Typography variant="h5">Beamline Status</Typography>
             <OphydStatusField
-              printVal={true}
-              asString={true}
+              printVal={false}
               label="Status of IOCs"
               device="EPICS_status_devices.epics_status.ioc_status"
-              good_status="IOCs OK"
+              good_status={1}
+              badStatusText="IOC error"
+              goodStatusText="IOC's ok"
             />
             <OphydStatusField
-              printVal={true}
+              printVal={false}
               label="Shutter Enable"
               device="EPICS_status_devices.epics_status.master_shutter_enable"
-              good_status="On"
+              good_status={1}
+              badStatusText="Shutter disabled"
+              goodStatusText="Shutter enabled"
             />
             <OphydStatusField
               label="White Beam"
               device="EPICS_status_devices.epics_status.white_beam"
-              printVal={true}
-              good_status="On"
+              printVal={false}
+              good_status={1}
+              badStatusText="Closed"
+              goodStatusText="Open"
             />
             <OphydStatusField
               label="Mono Beam"
               device="EPICS_status_devices.epics_status.mono_beam"
-              printVal={true}
-              good_status="On"
+              printVal={false}
+              good_status={1}
+              badStatusText="Closed"
+              goodStatusText="Open"
             />
             <OphydStatusField
-              printVal={true}
+              printVal={false}
               label="Sample Shutter"
               device="EPICS_status_devices.epics_status.sample_shutter"
-              good_status="OK"
+              good_status={1}
+              badStatusText="Closed"
+              goodStatusText="Open"
             />
             <OphydStatusField
-              printVal={true}
+              printVal={false}
               label="Beam on Sample?"
               device="EPICS_status_devices.epics_status.beam_on_sample"
-              good_status="No"
+              good_status={0}
+              badStatusText="Yes"
+              goodStatusText="No"
             />
             <OphydStatusField
-              printVal={true}
+              printVal={false}
               label="Beam on Feedback?"
               device="EPICS_status_devices.epics_status.beam_on_fdbk"
-              good_status="No"
+              good_status={1}
+              badStatusText="No"
+              goodStatusText="Yes"
             />
             <OphydStatusField
-              printVal={true}
+              printVal={false}
               label="Beam position Status"
               device="EPICS_status_devices.epics_status.beam_position"
-              good_status="In Position"
+              good_status={1}
+              badStatusText="Out of position"
+              goodStatusText="In Position"
             />
 
             <OphydStatusField
-              printVal={true}
+              printVal={false}
               label="Feedback Status"
               device="EPICS_status_devices.epics_status.feedback"
-              good_status="ON"
+              good_status={1}
+              badStatusText="Off"
+              goodStatusText="On"
             />
 
             <OphydStatusField
-              printVal={true}
+              printVal={false}
               label="HFM FB in range?"
               device="EPICS_status_devices.epics_status.HFM_feedback"
+              good_status={0}
+              badStatusText="No"
+              goodStatusText="Yes"
             />
 
             <OphydStatusField
-              printVal={true}
+              printVal={false}
               label="VFM FB in range?"
               device="EPICS_status_devices.epics_status.VFM_feedback"
+              good_status={0}
+              badStatusText="No"
+              goodStatusText="Yes"
             />
             <OphydStatusField
-              printVal={true}
+              printVal={false}
               label="Attenuators"
               device="EPICS_status_devices.epics_status.attenuators"
-              good_status="OK"
+              good_status={1}
+              badStatusText="Attenuators IN!!!"
+              goodStatusText="Attenuators out"
             />
-
             <OphydStatusField
-              printVal={true}
+              printVal={false}
               label="Undulator Gap"
-              device="EPICS_status_devices.epics_status.undulator_gap"
-              good_status="GAP OK"
+              device="EPICS_status_devices.epics_status.undulator_gap_status"
+              good_status={0}
+              badStatusText="Gap Bad!!!"
+              goodStatusText="Gap Ok"
             />
 
             <OphydStatusField
-              printVal={true}
+              printVal={false}
               label="Undulator Taper"
-              device="EPICS_status_devices.epics_status.undulator_taper"
-              good_status="TAPER OK"
+              device="EPICS_status_devices.epics_status.undulator_taper_status"
+              good_status={0}
+              badStatusText="Taper Bad!!!"
+              goodStatusText="Taper Ok"
             />
           </Grid>
 
@@ -231,6 +259,18 @@ const BeamlineControl = props => {
               device="saxs_scaler.saxs_scaler.transmission"
               toNumber={true}
               precision={6}
+            />
+            <OphydStatusField
+              label="Gap"
+              device="EPICS_status_devices.epics_status.undulator_gap"
+              toNumber={true}
+              precision={2}
+            />
+            <OphydStatusField
+              label="Taper"
+              device="EPICS_status_devices.epics_status.undulator_taper"
+              toNumber={true}
+              precision={2}
             />
           </Grid>
           <Grid item xs={2} />
