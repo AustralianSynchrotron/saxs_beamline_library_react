@@ -25,3 +25,4 @@ yarn-error.log*
 # local
 .vscode/
 .idea/
+yarn.lock
