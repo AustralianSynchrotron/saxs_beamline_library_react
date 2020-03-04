@@ -49,7 +49,8 @@ class NewConfigDialog extends Component {
       invalidConfigNameText: "",
       baseConfig: "",
       configName: "",
-      enterValidName: false
+      enterValidName: false,
+      path:""
     };
   }
 
@@ -79,7 +80,7 @@ class NewConfigDialog extends Component {
     if (this.state.configName.trim() === "" || this.state.invalidConfigNameText) {
       this.setState({ enterValidName: true });
     } else {
-      this.props.onClose(this.state.configName, this.state.baseConfig);
+      this.props.onClose(this.state.configName, this.state.baseConfig, this.state.path);
     }
   };
 
@@ -95,8 +96,42 @@ class NewConfigDialog extends Component {
     this.setState({ baseConfig: event.target.value });
   };
 
+  handleSelectPath = event => {
+    this.setState({ path: event.target.value });
+  };
+
   render() {
     const classes = this.props.classes;
+
+    var old_path = "";
+    var pathItems = [];
+
+    var configMenuItems = this.props.configs.map((name, index) => {
+      const path = name
+        .split("$")
+        .slice(0, -1)
+        .join("/");
+
+      if (path != old_path) {
+        old_path = path;
+        pathItems.push({
+          index: index + pathItems.length,
+          element: (
+            <MenuItem key={path} value={path} disabled>
+              {path}
+            </MenuItem>
+          )
+        });
+      }
+      return (
+        <MenuItem key={name} value={name}>
+          {name.split("$").slice(-1)}
+        </MenuItem>
+      );
+    });
+
+    pathItems.forEach(pathItem => configMenuItems.splice(pathItem.index, 0, pathItem.element));
+
     return (
       <Dialog onClose={this.handleClose} open={this.props.open}>
         <DialogTitle>Create New Config</DialogTitle>
@@ -124,11 +159,24 @@ class NewConfigDialog extends Component {
             onChange={this.handleSelectConfig}
             input={<Input id="select-config" />}
           >
-            {this.props.configs.map(name => (
-              <MenuItem key={name} value={name}>
-                {name}
-              </MenuItem>
-            ))}
+            {configMenuItems}
+          </Select>
+          <InputLabel htmlFor="select-path" className={classes.item}>
+            Save Path
+          </InputLabel>
+          <Select
+            label={"Paths"}
+            value={this.state.path}
+            onChange={this.handleSelectPath}
+            input={<Input id="select-path" />}
+          >
+            {this.props.paths.map(path => {
+              return (
+                <MenuItem key={path} value={path}>
+                  {path}
+                </MenuItem>
+              );
+            })}
           </Select>
         </DialogContent>
         <DialogActions>

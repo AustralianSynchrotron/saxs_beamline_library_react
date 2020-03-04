@@ -95,6 +95,15 @@ export const listConfigs = () => ({
     mode: "cors"
   }
 });
+export const getConfigPaths = () => ({
+  type: actions.GETCONFIGPATHS,
+  fetch: true,
+  url: beamlineConfigURL + "/api/v1.0/paths",
+  data: {
+    method: "GET",
+    mode: "cors"
+  }
+});
 export const getConfig = config => ({
   type: actions.GETCONFIG,
   fetch: true,
@@ -104,7 +113,7 @@ export const getConfig = config => ({
     mode: "cors"
   }
 });
-export const newConfig = (config_name, base_config_name) => ({
+export const newConfig = (config_name, base_config_name, save_path) => ({
   type: actions.NEWCONFIG,
   fetch: true,
   url: beamlineConfigURL + "/api/v1.0/create",
@@ -115,7 +124,7 @@ export const newConfig = (config_name, base_config_name) => ({
       Accept: "application/json",
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ config_name, base_config_name })
+    body: JSON.stringify({ config_name, base_config_name, save_path })
   }
 });
 export const reRead = () => ({

@@ -2,7 +2,8 @@ import * as actions from "../actions/actionTypes";
 
 const default_state = {
   config_list: [],
-  config: { name: "", description: "", devices: {} }
+  config: { name: "", description: "", devices: {} },
+  paths: []
 };
 
 export default (state = default_state, action) => {
@@ -11,8 +12,8 @@ export default (state = default_state, action) => {
       return { ...state, config_list: action.data };
     case actions.GETCONFIG:
       return { ...state, config: action.data };
-    case actions.DEFAULTCONFIG:
-      return { ...state, config: action.data };
+    case actions.GETCONFIGPATHS:
+      return { ...state, paths: action.data };
     case actions.CONFIGSETPARAM:
       return { ...state, config: action.data };
     case actions.ADDDEVICE:

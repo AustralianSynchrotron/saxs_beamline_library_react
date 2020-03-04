@@ -141,18 +141,22 @@ class ConfigPage extends Component {
   };
 
   handleOpenNewConfig = () => {
+    this.props.listConfigs();
+    this.props.getConfigPaths();
     this.setState({ newConfigOpen: true });
   };
 
-  handleNewConfigClose = (configName, baseConfigName) => {
+  handleNewConfigClose = (configName, baseConfigName, savePath) => {
     if (configName === null) {
     } else {
-      this.props.newConfig(configName, baseConfigName);
+      this.props.newConfig(configName, baseConfigName, savePath);
     }
     this.setState({ newConfigOpen: false });
+    this.setState({ selectedConfig: (savePath + "$" + configName + ".cfg").replace(/\//g, "$")});
   };
 
   handleSelectConfig = event => {
+    console.log(event);
     this.setState({ selectedConfig: event.target.value });
     this.props.getConfig(event.target.value);
   };
@@ -232,6 +236,35 @@ class ConfigPage extends Component {
 
   render() {
     const { classes } = this.props;
+    var old_path = "";
+    var pathItems = [];
+
+    var configMenuItems = this.props.configs.config_list.map((name, index) => {
+      const path = name
+        .split("$")
+        .slice(0, -1)
+        .join("/");
+
+      if (path != old_path) {
+        old_path = path;
+        pathItems.push({
+          index: index + pathItems.length,
+          element: (
+            <MenuItem key={path} value={path} disabled>
+              {path}
+            </MenuItem>
+          )
+        });
+      }
+      return (
+        <MenuItem key={name} value={name}>
+          {name.split("$").slice(-1)}
+        </MenuItem>
+      );
+    });
+
+    pathItems.forEach(pathItem => configMenuItems.splice(pathItem.index, 0, pathItem.element));
+
     return (
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={12}>
@@ -303,11 +336,7 @@ class ConfigPage extends Component {
                 onChange={this.handleSelectConfig}
                 input={<Input id="select-config" />}
               >
-                {this.props.configs.config_list.map(name => (
-                  <MenuItem key={name} value={name}>
-                    {name}
-                  </MenuItem>
-                ))}
+                {configMenuItems}
               </Select>
             </Grid>
           </Grid>
@@ -406,6 +435,7 @@ class ConfigPage extends Component {
           onClose={this.handleNewConfigClose}
           open={this.state.newConfigOpen}
           configs={this.props.configs.config_list}
+          paths={this.props.configs.paths}
         />
         <NewDeviceDialog
           onClose={this.handleNewDeviceClose}
