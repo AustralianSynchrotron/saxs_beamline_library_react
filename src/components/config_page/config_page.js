@@ -49,6 +49,9 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import { red, blue } from "@material-ui/core/colors";
 
+const beamlineConfigURL = "http://10.138.13.201:8080";
+// const beamlineConfigURL = "beamlineConfigURL";
+
 const switchTheme = createMuiTheme({
   palette: {
     secondary: { main: purple[400] }
@@ -126,7 +129,7 @@ class ConfigPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedConfig: "default",
+      selectedConfig: "",
       newConfigOpen: false,
       newDeviceOpen: false,
       noOpenConfigWarning: false
@@ -141,21 +144,17 @@ class ConfigPage extends Component {
     this.setState({ newConfigOpen: true });
   };
 
-  handleNewConfigClose = configName => {
+  handleNewConfigClose = (configName, baseConfigName) => {
     if (configName === null) {
     } else {
-      this.props.newConfig(configName);
+      this.props.newConfig(configName, baseConfigName);
     }
     this.setState({ newConfigOpen: false });
   };
 
   handleSelectConfig = event => {
     this.setState({ selectedConfig: event.target.value });
-    if (event.target.value === "default") {
-      this.props.getDefaultConfig(event.target.value);
-    } else {
-      this.props.getConfig(event.target.value);
-    }
+    this.props.getConfig(event.target.value);
   };
 
   handleReReadConfigs = event => {
@@ -194,7 +193,7 @@ class ConfigPage extends Component {
   };
 
   handleCheckDevice = device => {
-    return fetch("http://10.138.11.39:8086/api/v1.0/device/" + device, {
+    return fetch(beamlineConfigURL + "/api/v1.0/device/" + device, {
       method: "GET",
       mode: "cors"
     }).then(response => {
@@ -248,7 +247,7 @@ class ConfigPage extends Component {
                   <Create className={classes.extendedIcon} />
                   Create
                 </Fab>
-                <Fab
+                {/* <Fab
                   variant="extended"
                   aria-label="Store"
                   className={classes.fab}
@@ -256,8 +255,8 @@ class ConfigPage extends Component {
                 >
                   <Save className={classes.extendedIcon} />
                   Store To Disk
-                </Fab>
-                <Fab
+                </Fab> */}
+                {/* <Fab
                   variant="extended"
                   aria-label="Reread"
                   className={classes.fab}
@@ -265,7 +264,7 @@ class ConfigPage extends Component {
                 >
                   <Restore className={classes.extendedIcon} />
                   Re-Read from Disk
-                </Fab>
+                </Fab> */}
                 <Fab
                   variant="extended"
                   aria-label="Create"
@@ -275,7 +274,7 @@ class ConfigPage extends Component {
                   <AutoRenew className={classes.extendedIcon} />
                   Reinitialise
                 </Fab>
-                <Fab
+                {/* <Fab
                   variant="extended"
                   aria-label="Update"
                   className={classes.fab}
@@ -283,7 +282,7 @@ class ConfigPage extends Component {
                 >
                   <PlaylistAddCheck className={classes.extendedIcon} />
                   Update
-                </Fab>
+                </Fab> */}
                 <Fab
                   variant="extended"
                   aria-label="Restore"
@@ -319,9 +318,9 @@ class ConfigPage extends Component {
                   <TableRow>
                     <TableCell> Device </TableCell>
                     <TableCell> Value </TableCell>
-                    <TableCell> Don't Update </TableCell>
+                    {/* <TableCell> Don't Update </TableCell>
                     <TableCell> Relative Device </TableCell>
-                    <TableCell> Relative Direction </TableCell>
+                    <TableCell> Relative Direction </TableCell> */}
                     <TableCell> </TableCell>
                   </TableRow>
                 </TableHead>
@@ -340,7 +339,7 @@ class ConfigPage extends Component {
                         />
                       </TableCell>
 
-                      <TableCell>
+                      {/* <TableCell>
                         <CheckBox
                           inputProps={{ "data-device": key }}
                           checked={this.props.configs.config.devices[key]["update"]["no_update"]}
@@ -362,26 +361,22 @@ class ConfigPage extends Component {
                         />
                       </TableCell>
                       <TableCell className={classes.horizontal}>
-                        {/* <div className={classes.horizontal}> */}
-                          {/* <div className={classes.horizontal}> */}
-                            <Typography>Neg</Typography>
-                            <ThemeProvider theme={switchTheme}>
-                              <ColourSwitch
-                                inputProps={{ "data-device": key }}
-                                checked={
-                                  this.props.configs.config.devices[key]["update"]["relative"]
-                                    ? this.props.configs.config.devices[key]["update"]["relative"][
-                                        "dir"
-                                      ] === "positive"
-                                    : false
-                                }
-                                onChange={this.handleDirChange}
-                              />
-                            </ThemeProvider>
-                            <Typography>Pos</Typography>
-                          {/* </div> */}
-                        {/* </div> */}
-                      </TableCell>
+                        <Typography>Neg</Typography>
+                        <ThemeProvider theme={switchTheme}>
+                          <ColourSwitch
+                            inputProps={{ "data-device": key }}
+                            checked={
+                              this.props.configs.config.devices[key]["update"]["relative"]
+                                ? this.props.configs.config.devices[key]["update"]["relative"][
+                                    "dir"
+                                  ] === "positive"
+                                : false
+                            }
+                            onChange={this.handleDirChange}
+                          />
+                        </ThemeProvider>
+                        <Typography>Pos</Typography>
+                      </TableCell> */}
                       <TableCell>
                         <IconButton
                           data-device={key}

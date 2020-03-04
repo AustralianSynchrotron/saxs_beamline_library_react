@@ -47,7 +47,7 @@ class NewConfigDialog extends Component {
     this.state = {
       validConfigName: true,
       invalidConfigNameText: "",
-      baseConfig: "default",
+      baseConfig: "",
       configName: "",
       enterValidName: false
     };
@@ -79,7 +79,7 @@ class NewConfigDialog extends Component {
     if (this.state.configName.trim() === "" || this.state.invalidConfigNameText) {
       this.setState({ enterValidName: true });
     } else {
-      this.props.onClose(this.state.configName);
+      this.props.onClose(this.state.configName, this.state.baseConfig);
     }
   };
 

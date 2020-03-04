@@ -5,6 +5,9 @@ const url = () => {
   return process.env.NODE_ENV === "production" ? "http://10.138.11.39" : "http://localhost";
 };
 
+const beamlineConfigURL = "http://10.138.13.201:8080";
+// const beamlineConfigURL = "beamlineConfigURL";
+
 export const handleDataFromServer = raw_data => {
   var data = {};
   if (typeof raw_data === "string") {
@@ -86,7 +89,7 @@ export const ophydConnected = connected => ({
 export const listConfigs = () => ({
   type: actions.LISTCONFIGS,
   fetch: true,
-  url: "http://10.138.11.39:8086/api/v1.0/configs",
+  url: beamlineConfigURL + "/api/v1.0/configs",
   data: {
     method: "GET",
     mode: "cors"
@@ -95,16 +98,16 @@ export const listConfigs = () => ({
 export const getConfig = config => ({
   type: actions.GETCONFIG,
   fetch: true,
-  url: "http://10.138.11.39:8086/api/v1.0/config/" + config,
+  url: beamlineConfigURL + "/api/v1.0/config/" + config,
   data: {
     method: "GET",
     mode: "cors"
   }
 });
-export const newConfig = config_name => ({
+export const newConfig = (config_name, base_config_name) => ({
   type: actions.NEWCONFIG,
   fetch: true,
-  url: "http://10.138.11.39:8086/api/v1.0/create",
+  url: beamlineConfigURL + "/api/v1.0/create",
   data: {
     method: "PUT",
     mode: "cors",
@@ -112,22 +115,13 @@ export const newConfig = config_name => ({
       Accept: "application/json",
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ config_name: config_name })
-  }
-});
-export const getDefaultConfig = () => ({
-  type: actions.DEFAULTCONFIG,
-  fetch: true,
-  url: "http://10.138.11.39:8086/api/v1.0/default",
-  data: {
-    method: "GET",
-    mode: "cors"
+    body: JSON.stringify({ config_name, base_config_name })
   }
 });
 export const reRead = () => ({
   type: actions.REREAD,
   fetch: true,
-  url: "http://10.138.11.39:8086/api/v1.0/read",
+  url: beamlineConfigURL + "/api/v1.0/read",
   data: {
     method: "GET",
     mode: "cors"
@@ -137,7 +131,7 @@ export const reRead = () => ({
 export const reInitConfig = config_name => ({
   type: actions.REINITCONFIG,
   fetch: true,
-  url: "http://10.138.11.39:8086/api/v1.0/reinit",
+  url: beamlineConfigURL + "/api/v1.0/reinit",
   data: {
     method: "PUT",
     mode: "cors",
@@ -148,7 +142,7 @@ export const reInitConfig = config_name => ({
 export const storeConfig = config_name => ({
   type: actions.STORECONFIG,
   fetch: true,
-  url: "http://10.138.11.39:8086/api/v1.0/store",
+  url: beamlineConfigURL + "/api/v1.0/store",
   data: {
     method: "PUT",
     mode: "cors",
@@ -159,7 +153,7 @@ export const storeConfig = config_name => ({
 export const updateConfig = config_name => ({
   type: actions.UPDATECONFIG,
   fetch: true,
-  url: "http://10.138.11.39:8086/api/v1.0/update",
+  url: beamlineConfigURL + "/api/v1.0/update",
   data: {
     method: "PUT",
     mode: "cors",
@@ -170,7 +164,7 @@ export const updateConfig = config_name => ({
 export const restoreConfig = config_name => ({
   type: actions.RESTORECONFIG,
   fetch: true,
-  url: "http://10.138.11.39:8086/api/v1.0/restore",
+  url: beamlineConfigURL + "/api/v1.0/restore",
   data: {
     method: "PUT",
     mode: "cors",
@@ -181,7 +175,7 @@ export const restoreConfig = config_name => ({
 export const configSetParameter = (config_name, key, value) => ({
   type: actions.CONFIGSETPARAM,
   fetch: true,
-  url: "http://10.138.11.39:8086/api/v1.0/config/parameter",
+  url: beamlineConfigURL + "/api/v1.0/config/parameter",
   data: {
     method: "PUT",
     mode: "cors",
@@ -196,7 +190,7 @@ export const configSetParameter = (config_name, key, value) => ({
 export const newDevice = (config_name, device) => ({
   type: actions.ADDDEVICE,
   fetch: true,
-  url: "http://10.138.11.39:8086/api/v1.0/config/device",
+  url: beamlineConfigURL + "/api/v1.0/config/device",
   data: {
     method: "PUT",
     mode: "cors",
@@ -211,7 +205,7 @@ export const newDevice = (config_name, device) => ({
 export const deleteDevice = (config_name, device) => ({
   type: actions.DELETEDEVICE,
   fetch: true,
-  url: "http://10.138.11.39:8086/api/v1.0/config/device",
+  url: beamlineConfigURL + "/api/v1.0/config/device",
   data: {
     method: "DELETE",
     mode: "cors",
