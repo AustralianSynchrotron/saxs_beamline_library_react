@@ -5,8 +5,8 @@ const url = () => {
   return process.env.NODE_ENV === "production" ? "http://10.138.11.39" : "http://localhost";
 };
 
-const beamlineConfigURL = "http://10.138.13.201:8080";
-// const beamlineConfigURL = "beamlineConfigURL";
+// const beamlineConfigURL = "http://10.138.13.201:8080";
+const beamlineConfigURL = "http://10.138.11.39:8086";
 
 export const handleDataFromServer = raw_data => {
   var data = {};

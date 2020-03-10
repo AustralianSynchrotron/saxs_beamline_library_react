@@ -49,8 +49,8 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import { red, blue } from "@material-ui/core/colors";
 
-const beamlineConfigURL = "http://10.138.13.201:8080";
-// const beamlineConfigURL = "beamlineConfigURL";
+// const beamlineConfigURL = "http://10.138.13.201:8080";
+const beamlineConfigURL = "http://10.138.11.39:8086";
 
 const switchTheme = createMuiTheme({
   palette: {
@@ -150,9 +150,9 @@ class ConfigPage extends Component {
     if (configName === null) {
     } else {
       this.props.newConfig(configName, baseConfigName, savePath);
+      this.setState({ selectedConfig: (savePath + "$" + configName + ".cfg").replace(/\//g, "$") }); // TODO: Move this to global state and update from return from API.
     }
     this.setState({ newConfigOpen: false });
-    this.setState({ selectedConfig: (savePath + "$" + configName + ".cfg").replace(/\//g, "$")});
   };
 
   handleSelectConfig = event => {
