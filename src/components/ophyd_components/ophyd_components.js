@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
 import { makeStyles, getThemeProps } from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
@@ -50,12 +51,17 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "center"
   },
-  statusfield: {
+  statusField: {
     padding: "2px",
-    margin: "5px",
-    background: grey["900"]
+    margin: "5px"
   },
-
+  statusFieldInput: {
+    background: "transparent"
+  },
+  statusFieldGood: {},
+  statusFieldBad: {
+    background: "red"
+  },
   padding: {
     padding: "2px"
   },
@@ -80,43 +86,59 @@ export const OphydStatusField = props => {
     }
   }
 
+  useEffect(() => {
+    if (props.good_status !== undefined && props.errorCallback !== undefined) {
+      if (deviceData.value !== props.good_status) {
+        try {
+          props.errorCallback()
+        } catch {
+          console.log("Error Callback didn't work");
+        }
+      }
+    }
+  }, [deviceData]);
+
   return (
-    <Typography
-      className={classNames(classes.statusfield, classes.padding)}
-      color={
+    <TextField
+      className={classNames(
+        classes.statusfield,
+        classes.padding,
         props.good_status !== undefined
           ? deviceData.value === props.good_status
-            ? "primary"
-            : "secondary"
-          : "initial"
-      }
-    >
-      {props.label !== undefined ? props.label + ": " : null}
-      {deviceData.name !== undefined
-        ? props.good_status !== undefined
-          ? props.printVal !== undefined
-            ? props.asString !== undefined
-              ? deviceData.obj_value
-              : deviceData.value
-            : deviceData.value === props.good_status
-            ? props.goodStatusText !== undefined
-              ? props.goodStatusText
-              : deviceData.value
-            : props.badStatusText
-          : props.toNumber === true
-          ? props.toExp === true
-            ? parseFloat(deviceData.value).toExponential()
-            : parseFloat(deviceData.value)
-          : deviceData.value
-        : props.undef_val !== undefined
-        ? props.undef_val
-        : "Not Available"}
-      {deviceData.name !== undefined
-        ? props.suffix !== undefined
-          ? " " + props.suffix
+            ? classes.statusFieldGood
+            : classes.statusFieldBad
           : null
-        : null}
-    </Typography>
+      )}
+      InputProps={{ className: classes.statusFieldInput, readonly: true, disableUnderline: true }}
+      variant="filled"
+      label={props.label !== undefined ? props.label + ": " : null}
+      value={
+        (deviceData.name !== undefined
+          ? props.good_status !== undefined
+            ? props.printVal !== undefined
+              ? props.asString !== undefined
+                ? deviceData.obj_value
+                : deviceData.value
+              : deviceData.value === props.good_status
+              ? props.goodStatusText !== undefined
+                ? props.goodStatusText
+                : deviceData.value
+              : props.badStatusText
+            : props.toNumber === true
+            ? props.toExp === true
+              ? parseFloat(deviceData.value).toExponential()
+              : parseFloat(deviceData.value)
+            : deviceData.value
+          : props.undef_val !== undefined
+          ? props.undef_val
+          : "Status Unavailable") +
+        (deviceData.name !== undefined
+          ? props.suffix !== undefined
+            ? " " + props.suffix
+            : ""
+          : "")
+      }
+    />
   );
 };
 

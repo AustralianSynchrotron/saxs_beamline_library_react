@@ -23,6 +23,8 @@ import green from "@material-ui/core/colors/green";
 import grey from "@material-ui/core/colors/grey";
 import red from "@material-ui/core/colors/red";
 
+import { klaxon } from "../../media/sounds";
+
 const useStyles = makeStyles({
   hidden: { display: "None" },
   showButton: { marginTop: 0 },
@@ -100,56 +102,57 @@ const BeamlineControl = props => {
             <Typography variant="h5">Beamline Status</Typography>
             <OphydStatusField
               label="Status of IOCs"
-              device="EPICS_status_devices.epics_status.ioc_status"
+              device="ophyd_status_devices.ophyd_status.detector_status"
               good_status={1}
               badStatusText="IOC error"
               goodStatusText="IOC's ok"
             />
             <OphydStatusField
               label="Shutter Enable"
-              device="EPICS_status_devices.epics_status.master_shutter_enable"
+              device="ophyd_status_devices.ophyd_status.master_shutter_enable"
               good_status={1}
               badStatusText="Shutter disabled"
               goodStatusText="Shutter enabled"
             />
             <OphydStatusField
               label="White Beam"
-              device="EPICS_status_devices.epics_status.white_beam"
+              device="ophyd_status_devices.ophyd_status.white_beam"
               good_status={1}
               badStatusText="Closed"
               goodStatusText="Open"
             />
             <OphydStatusField
               label="Mono Beam"
-              device="EPICS_status_devices.epics_status.mono_beam"
+              device="ophyd_status_devices.ophyd_status.mono_beam"
               good_status={1}
               badStatusText="Closed"
               goodStatusText="Open"
             />
             <OphydStatusField
               label="Sample Shutter"
-              device="EPICS_status_devices.epics_status.sample_shutter"
+              device="ophyd_status_devices.ophyd_status.sample_shutter"
               good_status={1}
               badStatusText="Closed"
               goodStatusText="Open"
             />
             <OphydStatusField
               label="Beam on Sample?"
-              device="EPICS_status_devices.epics_status.beam_on_sample"
+              device="ophyd_status_devices.ophyd_status.beam_on_sample"
               good_status={0}
+              errorCallback={() => klaxon.play()}
               badStatusText="Yes"
               goodStatusText="No"
             />
             <OphydStatusField
               label="Beam on Feedback?"
-              device="EPICS_status_devices.epics_status.beam_on_fdbk"
+              device="ophyd_status_devices.ophyd_status.beam_on_fdbk"
               good_status={1}
               badStatusText="No"
               goodStatusText="Yes"
             />
             <OphydStatusField
               label="Beam position Status"
-              device="EPICS_status_devices.epics_status.beam_position"
+              device="ophyd_status_devices.ophyd_status.beam_position"
               good_status={1}
               badStatusText="Out of position"
               goodStatusText="In Position"
@@ -157,7 +160,7 @@ const BeamlineControl = props => {
 
             <OphydStatusField
               label="Feedback Status"
-              device="EPICS_status_devices.epics_status.feedback"
+              device="ophyd_status_devices.ophyd_status.feedback"
               good_status={1}
               badStatusText="Off"
               goodStatusText="On"
@@ -165,7 +168,7 @@ const BeamlineControl = props => {
 
             <OphydStatusField
               label="HFM FB in range?"
-              device="EPICS_status_devices.epics_status.HFM_feedback"
+              device="ophyd_status_devices.ophyd_status.HFM_feedback"
               good_status={0}
               badStatusText="No"
               goodStatusText="Yes"
@@ -173,21 +176,21 @@ const BeamlineControl = props => {
 
             <OphydStatusField
               label="VFM FB in range?"
-              device="EPICS_status_devices.epics_status.VFM_feedback"
+              device="ophyd_status_devices.ophyd_status.VFM_feedback"
               good_status={0}
               badStatusText="No"
               goodStatusText="Yes"
             />
             <OphydStatusField
               label="Attenuators"
-              device="EPICS_status_devices.epics_status.attenuators"
+              device="ophyd_status_devices.ophyd_status.attenuators"
               good_status={1}
               badStatusText="Attenuators IN!!!"
               goodStatusText="Attenuators out"
             />
             <OphydStatusField
               label="Undulator Gap"
-              device="EPICS_status_devices.epics_status.undulator_gap_status"
+              device="ophyd_status_devices.ophyd_status.undulator_gap_status"
               good_status={0}
               badStatusText="Gap Bad!!!"
               goodStatusText="Gap Ok"
@@ -195,7 +198,7 @@ const BeamlineControl = props => {
 
             <OphydStatusField
               label="Undulator Taper"
-              device="EPICS_status_devices.epics_status.undulator_taper_status"
+              device="ophyd_status_devices.ophyd_status.undulator_taper_status"
               good_status={0}
               badStatusText="Taper Bad!!!"
               goodStatusText="Taper Ok"
@@ -248,13 +251,13 @@ const BeamlineControl = props => {
             />
             <OphydStatusField
               label="Gap"
-              device="EPICS_status_devices.epics_status.undulator_gap"
+              device="ophyd_status_devices.ophyd_status.undulator_gap"
               toNumber={true}
               precision={2}
             />
             <OphydStatusField
               label="Taper"
-              device="EPICS_status_devices.epics_status.undulator_taper"
+              device="ophyd_status_devices.ophyd_status.undulator_taper"
               toNumber={true}
               precision={2}
             />

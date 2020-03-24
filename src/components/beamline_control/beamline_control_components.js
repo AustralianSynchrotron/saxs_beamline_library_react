@@ -133,7 +133,7 @@ export const Energy = props => {
               label="Feedback?"
             />
             <OphydStatusField
-              device="EPICS_status_devices.epics_status.energy_change_message"
+              device="ophyd_status_devices.ophyd_status.energy_change_message"
               label="Energy Change Status"
               printVal={true}
             />

@@ -81,7 +81,7 @@ const socket = new ReconnectingWebSocket(
         vacstatus: `ws://localhost:3145`,
         status: `ws://localhost:3143`,
         acquire: `ws://localhost:3142`,
-        ophyd: `ws://10.138.11.39:9999`,
+        ophyd: `ws://localhost:9999`,
         docker: `ws://localhost:9991`,
         logger: `ws://localhost:3001`,
         grazing: `ws://localhost:3002`

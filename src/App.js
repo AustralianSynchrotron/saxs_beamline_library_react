@@ -45,6 +45,8 @@ import grey from "@material-ui/core/colors/grey";
 import red from "@material-ui/core/colors/red";
 import { mergeClasses } from "@material-ui/styles";
 
+import { klaxon } from "./media/sounds";
+
 const drawerWidth = 240;
 
 const theme = createMuiTheme({
@@ -199,10 +201,22 @@ class App extends Component {
               <div className={classes.horizontal}>
                 <OphydStatusField
                   label="Beamline Status"
-                  device="EPICS_status_devices.epics_status.beam_on_sample"
+                  device="ophyd_status_devices.epics_status.beam_on_sample"
                   good_status={1}
                   badStatusText="Something is wrong"
                   goodStatusText="Beamline is ok"
+                />
+                <OphydStatusField
+                  label="Detector Status"
+                  device="ophyd_status_devices.ophyd_status.beam_on_sample"
+                  good_status={false}
+                  errorCallback={() => klaxon.play()}
+                  badStatusText="Detector Error"
+                  goodStatusText="Detector Happy"
+                />
+                <OphydStatusField
+                  label="Last Successful File"
+                  device="ophyd_status_devices.ophyd_status.last_file"
                 />
                 <div className={classes.horizontal}>
                   <Typography variant="h6" color="inherit">
