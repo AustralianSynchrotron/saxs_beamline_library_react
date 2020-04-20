@@ -205,7 +205,7 @@ class AcquirePage extends Component {
       this.setState({ finishDemanded: false });
     } else {
       this.setState({ finishDemanded: true });
-      this.props.stop();
+      this.props.abort();
     }
   };
   handleAdInfinitum = () => {

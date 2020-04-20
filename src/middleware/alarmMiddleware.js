@@ -1,5 +1,5 @@
-import { chime as chimeSound } from "./media/sounds";
-import { CHIME } from "./actions/actionTypes";
+import { chime as chimeSound } from "../media/sounds";
+import { CHIME } from "../actions/actionTypes";
 
 export const alarmMiddleware = store => {
 

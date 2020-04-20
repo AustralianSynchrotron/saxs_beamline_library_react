@@ -6,7 +6,7 @@ export const fetchMiddleware = store => {
         try {
           body = JSON.parse(action.data.body);
         } catch {
-          
+
         }
         const state = store.getState();
         Object.keys(action.store).forEach(key => {
@@ -18,7 +18,12 @@ export const fetchMiddleware = store => {
         });
         action.data.body = JSON.stringify(body);
       }
-      fetch(action.url, action.data)
+      !("mode" in action.data) && (action.data.mode = "cors");
+      !("headers" in action.data) && (action.data.headers = { 
+        "Accept": "application/json", 
+        "Content-Type": "application/json" 
+      });
+      fetch(action.fetch, action.data)
         .then(response => {
           if (response.status !== 200) {
             return { response: "error" };
@@ -27,7 +32,7 @@ export const fetchMiddleware = store => {
           }
         })
         .then(responseData => {
-          store.dispatch({ type: action.type, fromServer: true, data: responseData });
+          store.dispatch({ type: action.type, data: responseData });
         });
     }
     next(action);

@@ -3,6 +3,7 @@ export const ACQUIRE = "acquire";
 export const PAUSE = "pause";
 export const RESUME = "resume";
 export const STOP = "stop";
+export const ABORT = "abort";
 export const HALT = "halt";
 export const LISTENSTATUS = "listen";
 export const OPHYDCONNECTED = "ophyd_connected";

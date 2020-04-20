@@ -1,4 +1,38 @@
-// From Robbies MX Robot app. I think he might have gotten it from somewhere else?
+export const websocketMiddleware = endpoints => store => {
+  const sockets = new ReconnectingWebSocket(endpoints.urls)
+
+  sockets.onopen = websocket => {
+    console.log("websocket " + websocket + " opened");
+    try {
+      store.dispatch(endpoints.onOpenDispatch[websocket]())
+    } catch (err) { }
+  };
+  sockets.onclose = websocket => {
+    console.log("websocket " + websocket + " closed");
+    try {
+      store.dispatch(endpoints.onCloseDispatch[websocket]())
+    } catch (err) { }
+  };
+  sockets.onmessage = event => {
+  
+    var data = event.data;
+    if (typeof data === "string") {
+      data = JSON.parse(data);
+    }
+    // Strip websocket key if it exists to prevent loops
+    delete data.websocket 
+
+    store.dispatch(data);
+  };
+
+  return next => action => {
+    if (action.websocket) {
+      sockets.send(action.websocket, JSON.stringify(action));
+    } else {
+      next(action);
+    }
+  }
+}
 
 class ReconnectingWebSocket {
   static NORMAL_CLOSURE = 1000;
@@ -25,13 +59,13 @@ class ReconnectingWebSocket {
     this.instance[key].close(...args);
   };
 
-  onopen = () => {};
+  onopen = () => { };
 
-  onmessage = () => {};
+  onmessage = () => { };
 
-  onerror = () => {};
+  onerror = () => { };
 
-  onclose = () => {};
+  onclose = () => { };
 
   _open = (key, url) => {
     this.instance[key] = new WebSocket(url);
@@ -63,29 +97,4 @@ class ReconnectingWebSocket {
   };
 }
 
-const socket = new ReconnectingWebSocket(
-  process.env.NODE_ENV === "production"
-    ? {
-        vacuum: `ws://10.138.11.39:3144`,
-        vacstatus: `ws://10.138.11.39:3145`,
-        status: `ws://10.138.11.39:3143`,
-        acquire: `ws://10.138.11.39:3142`,
-        ophyd: `ws://10.138.11.39:9999`,
-        docker: `ws://10.138.11.39:9991`,
-        logger: `ws://10.138.11.39:3001`,
-        grazing: `ws://10.138.11.39:3002`
-      }
-    : {
-        tensile: `ws://10.138.11.39:3146`,
-        vacuum: `ws://localhost:3144`,
-        vacstatus: `ws://localhost:3145`,
-        status: `ws://localhost:3143`,
-        acquire: `ws://localhost:3142`,
-        ophyd: `ws://localhost:9999`,
-        docker: `ws://localhost:9991`,
-        logger: `ws://localhost:3001`,
-        grazing: `ws://localhost:3002`
-      }
-);
 
-export default socket;
