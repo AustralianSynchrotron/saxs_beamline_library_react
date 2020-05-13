@@ -10,6 +10,7 @@ import LoggerReducer from "./reducer_logger";
 import LibraryReducer from "./reducer_saxs_library";
 import GrazingReducer from "./reducer_grazing";
 import GenericScanReducer from "./reducer_generic_scan";
+import GamePadReducer from "./reducer_gamepad";
 
 const rootReducer = combineReducers({
   acquire: AcquireReducer,
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
   logger: LoggerReducer,
   library: LibraryReducer,
   grazing: GrazingReducer,
-  genericScan: GenericScanReducer
+  genericScan: GenericScanReducer,
+  gamePad: GamePadReducer
 });
 
 export default rootReducer;

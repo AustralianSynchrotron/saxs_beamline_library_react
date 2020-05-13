@@ -23,6 +23,7 @@ export const fetchMiddleware = store => {
         "Accept": "application/json", 
         "Content-Type": "application/json" 
       });
+      console.log("fetching" + action.fetch);
       fetch(action.fetch, action.data)
         .then(response => {
           if (response.status !== 200) {

@@ -1,42 +1,29 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-
-import * as actionCreators from "../../actions/index";
-
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Select from "@material-ui/core/Select";
+import Checkbox from "@material-ui/core/Checkbox";
 import Chip from "@material-ui/core/Chip";
+import amber from "@material-ui/core/colors/amber";
+import deepOrange from "@material-ui/core/colors/deepOrange";
+import green from "@material-ui/core/colors/green";
+import grey from "@material-ui/core/colors/grey";
+import red from "@material-ui/core/colors/red";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Grid from "@material-ui/core/Grid";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import { withStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
 import CancelIcon from "@material-ui/icons/Cancel";
 import classNames from "classnames";
-import green from "@material-ui/core/colors/green";
-import amber from "@material-ui/core/colors/amber";
-import red from "@material-ui/core/colors/red";
-import deepOrange from "@material-ui/core/colors/deepOrange";
-import grey from "@material-ui/core/colors/grey";
-import Grid from "@material-ui/core/Grid";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-
+import PropTypes from "prop-types";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import * as actionCreators from "../../actions/index";
 import CustomTimeDialog from "../custom_time_dialog/custom_time_dialog";
-import { Typography } from "@material-ui/core";
-import { strikethrough } from "ansi-colors";
 import GenericScan from "../generic_scan/generic_scan";
 
-function mapDeviceToProps(state) {
-  return {
-    devices: state.ophyd.devices
-  };
-}
-
-function Hello(props) {
-  return <h1>Hello, {props.devices[props.device]}</h1>;
-}
 
 const styles = theme => ({
   root: {
@@ -178,7 +165,6 @@ class AcquirePage extends Component {
   };
 
   handleAcquire = () => {
-    this.props.subscribeOphyd("simulated.sim_motors.sample_table.x");
     this.setState({ finishDemanded: false, pauseDemanded: false, acquiringFlag: true });
     this.props.acquire(
       this.state.filename,
@@ -223,6 +209,7 @@ class AcquirePage extends Component {
           <Grid container justify="flex-start" spacing={10}>
             <Grid item>
               <div>
+                <h1>{this.props.gamePad[0]}</h1>
                 <Button
                   variant="contained"
                   size="large"
@@ -386,7 +373,8 @@ AcquirePage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    status: state.acquire.status
+    status: state.acquire.status,
+    gamePad: state.gamePad.buttons
   };
 }
 

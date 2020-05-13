@@ -66,7 +66,7 @@ const ManualValveControl = props => {
             readFirst={0}
             readSecond={1}
             device={props.valve + ".open_close_withrbv"}
-            classes={classes}
+            toggleClasses={classes}
             disable={props.disable}
           />
           <OphydStatusField

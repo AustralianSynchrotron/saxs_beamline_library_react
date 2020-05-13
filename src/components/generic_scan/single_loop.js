@@ -1,38 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/styles";
-
-import { useSelector, useDispatch } from "react-redux";
-
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardHeader from "@material-ui/core/CardHeader";
+import green from "@material-ui/core/colors/green";
+import grey from "@material-ui/core/colors/grey";
+import red from "@material-ui/core/colors/red";
 import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
-
+import TextField from "@material-ui/core/TextField";
 import Add from "@material-ui/icons/Add";
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
-
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardContent from "@material-ui/core/CardContent";
-
+import { makeStyles } from "@material-ui/styles";
 import classNames from "classnames";
-
-import green from "@material-ui/core/colors/green";
-import red from "@material-ui/core/colors/red";
-import grey from "@material-ui/core/colors/grey";
-import {
-  OphydButton,
-  OphydToggleButton,
-  OphydSlider,
-  OphydTextField,
-  OphydStatusField
-} from "../ophyd_components/ophyd_components";
-
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addGSPositioner, removeGSPositioner } from "../../actions";
 import SinglePositioner from "./single_positioner";
 
-import { addGSPositioner, removeGSPositioner } from "../../actions";
+
+
+
+
+
+
+
 
 const useStyles = makeStyles({
   buttons: {

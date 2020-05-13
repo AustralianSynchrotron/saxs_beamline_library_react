@@ -1,8 +1,10 @@
 import * as actions from "../actions/actionTypes";
+import randomString from "../utilities/randomString";
 
 const default_state = {
   devices: {},
   bundles: {},
+  token: randomString(),
   setError: null,
   connected: false
 };
@@ -31,6 +33,14 @@ export default (state = default_state, action) => {
           [action.data.device]: { ...state.devices[action.data.device], ...action.data }
         },
         setError: errorMessage
+      };
+    case actions.GETDEVICE:
+      return {
+        ...state,
+        devices: {
+          ...state.devices,
+          [action.data.device]: { ...state.devices[action.data.device], ...action.data }
+        }
       };
     case actions.SUBSCRIBEDEVICE:
       return {

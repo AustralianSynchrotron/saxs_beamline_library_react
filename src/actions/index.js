@@ -1,4 +1,3 @@
-import { bindActionCreators } from "redux";
 import * as actions from "./actionTypes";
 
 const url = () => {
@@ -8,7 +7,9 @@ const url = () => {
 // const beamlineConfigURL = "http://10.138.13.201:8080";
 const beamlineConfigURL = "http://10.138.11.39:8086";
 // const acquireURL = "http://10.138.11.39:3143";
-const acquireURL = "http://localhost:8082";
+const acquireURL = "http://localhost:3001";
+const ophydURL = "http://localhost:8082";
+const ophydWSURL = "ws://localhost:8082";
 
 export const acquire = (filename, exp_times, num_images, delay, use_shutter, description) => ({
   type: actions.ACQUIRE,
@@ -268,22 +269,71 @@ export const vac_abort = () => ({
   websocket: "vacuum"
 });
 
-export const subscribeOphyd = device => ({
+export const subscribeOphyd = token => ({
+  type: actions.SUBSCRIBEOPHYD,
+  fetch: ophydURL + "/api/v1.0/subscriptions",
+  data: {
+    method: "POST",
+    body: JSON.stringify({ token })
+  }
+})
+
+export const connectOphyd = token => ({
+  type: actions.CONNECTOPHYD,
+  websocketConnect: true,
+  data: {
+    endPoints: {
+      urls: { ophyd: ophydWSURL + "/api/v1.0/subscriptions/" + token + "/ws" },
+      onOpenDispatch: {
+        status: listenStatus,
+        ophyd: () => (ophydConnected(true))
+      },
+      onCloseDispatch: {
+        ophyd: () => (ophydConnected(false))
+      }
+    }
+  }
+})
+
+export const subscribeOphydDevice = (token, devices) => ({
   type: actions.SUBSCRIBEDEVICE,
-  data: { device },
-  websocket: "ophyd"
+  fetch: ophydURL + "/api/v1.0/subscriptions/" + token,
+  data: {
+    method: "PUT",
+    body: JSON.stringify({ devices: devices })
+  }
 });
+
+export const getOphyd = (device, describe = false) => {
+  var url = new URL(ophydURL + "/api/v1.0/devices/" + device);
+  var params = { describe }
+  url.search = new URLSearchParams(params).toString();
+  return {
+    type: actions.GETDEVICE,
+    fetch: url,
+    data: {
+      method: "GET"
+    }
+  }
+};
 
 export const setOphyd = (device, value, timeout = null) => ({
   type: actions.SETDEVICE,
-  data: { device, value, timeout },
-  websocket: "ophyd"
+  fetch: ophydURL + "/api/v1.0/devices/" + device,
+  data: {
+    method: "PUT",
+    value: value,
+    timeout: timeout
+  }
 });
 
-export const getBundleList = (bundle, connected = false) => ({
+export const getBundleList = (bundle) => ({
   type: actions.GETBUNDLELIST,
-  data: { bundle, connected },
-  websocket: "ophyd"
+  fetch: ophydURL + "/api/v1.0/bundles/" + bundle,
+  data: {
+    method: "GET",
+    bundle: bundle
+  },
 });
 
 export const tensileLength = length => ({
@@ -459,3 +509,8 @@ export const listGSScan = () => ({
     mode: "cors"
   }
 });
+
+export const buttonStatus = buttons => ({
+  type: actions.GAMEPAD_BUTTON_STATUS,
+  data: { buttons }
+})

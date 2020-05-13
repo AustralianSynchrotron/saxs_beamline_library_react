@@ -1,44 +1,32 @@
-import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/styles";
-
-import { useSelector, useDispatch } from "react-redux";
-
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-
 import Button from "@material-ui/core/Button";
-import SaveIcon from "@material-ui/icons/Save";
-import PlayArrow from "@material-ui/icons/PlayArrow";
+import amber from "@material-ui/core/colors/amber";
+import blue from "@material-ui/core/colors/blue";
+import green from "@material-ui/core/colors/green";
+import purple from "@material-ui/core/colors/purple";
+import red from "@material-ui/core/colors/red";
+import Fab from "@material-ui/core/Fab";
+import Grid from "@material-ui/core/Grid";
+import Add from "@material-ui/icons/Add";
 import OpenInBrowser from "@material-ui/icons/OpenInBrowser";
 import Pause from "@material-ui/icons/Pause";
+import PlayArrow from "@material-ui/icons/PlayArrow";
+import SaveIcon from "@material-ui/icons/Save";
 import Stop from "@material-ui/icons/Stop";
-import IconButton from "@material-ui/core/IconButton";
-import Fab from "@material-ui/core/Fab";
-
-import Add from "@material-ui/icons/Add";
-import DeleteOutline from "@material-ui/icons/DeleteOutline";
-
+import { makeStyles } from "@material-ui/styles";
 import classNames from "classnames";
-
-import blue from "@material-ui/core/colors/blue";
-import purple from "@material-ui/core/colors/purple";
-import green from "@material-ui/core/colors/green";
-import amber from "@material-ui/core/colors/amber";
-import red from "@material-ui/core/colors/red";
-import SingleLoop from "./single_loop";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addGSLoop, listGSScan, loadGSScan, removeGSLoop, runGSScan, saveGSScan } from "../../actions";
 import LoadScanDialog from "./load_scan_dialog";
 import SaveScanDialog from "./save_scan_dialog";
+import SingleLoop from "./single_loop";
 
-import {
-  addGSLoop,
-  removeGSLoop,
-  runGSScan,
-  saveGSScan,
-  loadGSScan,
-  listGSScan
-} from "../../actions";
+
+
+
+
+
+
 
 const useStyles = makeStyles({
   buttons: {

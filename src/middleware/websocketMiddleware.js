@@ -1,32 +1,10 @@
-export const websocketMiddleware = endpoints => store => {
-  const sockets = new ReconnectingWebSocket(endpoints.urls)
-
-  sockets.onopen = websocket => {
-    console.log("websocket " + websocket + " opened");
-    try {
-      store.dispatch(endpoints.onOpenDispatch[websocket]())
-    } catch (err) { }
-  };
-  sockets.onclose = websocket => {
-    console.log("websocket " + websocket + " closed");
-    try {
-      store.dispatch(endpoints.onCloseDispatch[websocket]())
-    } catch (err) { }
-  };
-  sockets.onmessage = event => {
-  
-    var data = event.data;
-    if (typeof data === "string") {
-      data = JSON.parse(data);
-    }
-    // Strip websocket key if it exists to prevent loops
-    delete data.websocket 
-
-    store.dispatch(data);
-  };
+export const websocketMiddleware = endPoints => store => {
+  const sockets = new ReconnectingWebSocket(endPoints, store)
 
   return next => action => {
-    if (action.websocket) {
+    if (action.websocketConnect) {
+      sockets.addEndPoints(action.data.endPoints)
+    } else if (action.websocket) {
       sockets.send(action.websocket, JSON.stringify(action));
     } else {
       next(action);
@@ -37,38 +15,31 @@ export const websocketMiddleware = endpoints => store => {
 class ReconnectingWebSocket {
   static NORMAL_CLOSURE = 1000;
 
-  constructor(urls, autoReconnectInterval = 3000) {
-    this.urls = urls;
+  constructor(endPoints, store, autoReconnectInterval = 3000) {
+    this.store = store;
     this.autoReconnectInterval = autoReconnectInterval;
+    this.endPoints = {};
     this.instance = {};
+    this.keyLookup = {};
     this.buffer = {};
-    for (let [key, url] of Object.entries(this.urls)) {
-      this._open(key, url);
-    }
+    this.addEndPoints(endPoints)
   }
 
-  async send(key, ...args) {
-    try {
-      this.instance[key].send(...args);
-    } catch {
-      this.buffer[key].push(args);
+  addEndPoints = (endPoints) => {
+    for (let [key, url] of Object.entries(endPoints.urls)) {
+      try { this._open(key,url); } catch { continue }
+      this.endPoints[key] = {
+        url: endPoints.urls[key],
+        onOpenDispatch: endPoints.onOpenDispatch[key] || null,
+        onCloseDispatch: endPoints.onCloseDispatch[key] || null
+      };
     }
   }
-
-  close = (key, ...args) => {
-    this.instance[key].close(...args);
-  };
-
-  onopen = () => { };
-
-  onmessage = () => { };
-
-  onerror = () => { };
-
-  onclose = () => { };
 
   _open = (key, url) => {
-    this.instance[key] = new WebSocket(url);
+    const websocket = new WebSocket(url);
+    this.instance[key] = websocket;
+    this.keyLookup[websocket] = key;
     this.buffer[key] = [];
     console.log("new websocket");
     this.instance[key].onopen = (...args) => {
@@ -95,6 +66,50 @@ class ReconnectingWebSocket {
       this._open(key, url);
     }, this.autoReconnectInterval);
   };
+
+  async send(key, ...args) {
+    try {
+      this.instance[key].send(...args);
+    } catch {
+      this.buffer[key].push(args);
+    }
+  }
+
+  close = (key, ...args) => {
+    this.instance[key].close(...args);
+  };
+
+  onopen = websocket => {
+    console.log("websocket " + websocket + " opened");
+
+    try {
+      let onOpenDispatch = this.endPoints[this.keyLookup[websocket]].onOpenDispatch
+      this.store.dispatch(onOpenDispatch[websocket]())
+    } catch (err) { }
+  };
+  onclose = websocket => {
+    console.log("websocket " + websocket + " closed");
+    try {
+      let onCloseDispatch = this.endPoints[this.keyLookup[websocket]].onCloseDispatch
+      this.store.dispatch(onCloseDispatch[websocket]())
+    } catch (err) { }
+  };
+  onmessage = event => {
+
+    var data = event.data;
+    if (typeof data === "string") {
+      data = JSON.parse(data);
+    }
+    // Strip websocket key if it exists to prevent loops
+    delete data.websocket
+
+    console.log("dispatching data" + data);
+    this.store.dispatch(data);
+  };
+
+  onerror = () => { };
+
+
 }
 
 

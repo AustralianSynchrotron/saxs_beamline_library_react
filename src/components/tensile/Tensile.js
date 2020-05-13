@@ -1,28 +1,25 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-
-import * as actionCreators from "../../actions/index";
-
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import classNames from "classnames";
-import red from "@material-ui/core/colors/red";
+import Chip from "@material-ui/core/Chip";
+import blue from "@material-ui/core/colors/blue";
 import green from "@material-ui/core/colors/green";
 import grey from "@material-ui/core/colors/grey";
-import blue from "@material-ui/core/colors/blue";
+import red from "@material-ui/core/colors/red";
 import Grid from "@material-ui/core/Grid";
-import Select from "@material-ui/core/Select";
-import Chip from "@material-ui/core/Chip";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import { withStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
 import CancelIcon from "@material-ui/icons/Cancel";
 import ColoriseIcon from "@material-ui/icons/Colorize";
-import CustomTimeDialog from "../custom_time_dialog/custom_time_dialog";
+import classNames from "classnames";
+import PropTypes from "prop-types";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import * as actionCreators from "../../actions/index";
 
-import { Typography } from "@material-ui/core";
 
 const styles = theme => ({
   root: {

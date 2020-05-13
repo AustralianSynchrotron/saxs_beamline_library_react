@@ -1,29 +1,16 @@
-import React, { Component } from "react";
-import { makeStyles, getThemeProps } from "@material-ui/styles";
-import BrightnessLow from "@material-ui/icons/BrightnessLow";
-import BrightnessHigh from "@material-ui/icons/BrightnessHigh";
-import {
-  OphydMotorCompact,
-  OphydSlider,
-  OphydMotorBundleCompact,
-  OphydStatusField
-} from "../ophyd_components/ophyd_components";
-import Grid from "@material-ui/core/Grid";
-import {
-  Energy,
-  Flux,
-  SampleLights,
-  CameraControls,
-  WindowControls
-} from "./beamline_control_components";
-
-import Typography from "@material-ui/core/Typography";
-
 import green from "@material-ui/core/colors/green";
 import grey from "@material-ui/core/colors/grey";
 import red from "@material-ui/core/colors/red";
-
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/styles";
+import React from "react";
 import { klaxon } from "../../media/sounds";
+import { OphydStatusField } from "../ophyd_components/ophyd_components";
+import { CameraControls, Energy, Flux, SampleLights, WindowControls } from "./beamline_control_components";
+
+
+
 
 const useStyles = makeStyles({
   hidden: { display: "None" },
@@ -100,13 +87,13 @@ const BeamlineControl = props => {
         >
           <Grid item xs={4}>
             <Typography variant="h5">Beamline Status</Typography>
-            <OphydStatusField
+            {/* <OphydStatusField
               label="Status of IOCs"
               device="ophyd_status_devices.ophyd_status.detector_status"
               good_status={1}
               badStatusText="IOC error"
               goodStatusText="IOC's ok"
-            />
+            /> */}
             <OphydStatusField
               label="Shutter Enable"
               device="ophyd_status_devices.ophyd_status.master_shutter_enable"
@@ -285,7 +272,6 @@ const BeamlineControl = props => {
           direction="row"
           alignItems="baseline"
           justify="center"
-          xs={12}
         >
           <Grid item xs={12}>
             <Flux />

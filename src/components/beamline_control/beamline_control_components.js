@@ -1,26 +1,16 @@
-import React, { Component, useEffect, useState } from "react";
-import { makeStyles, getThemeProps } from "@material-ui/styles";
-import clsx from "clsx";
-import {
-  OphydMotorCompact,
-  OphydSlider,
-  OphydMotorBundleCompact,
-  OphydStatusField,
-  OphydTextField,
-  OphydToggleButton,
-  OphydButton,
-  OphydDropdown,
-  OphydStateIcon
-} from "../ophyd_components/ophyd_components";
-
-import BrightnessLow from "@material-ui/icons/BrightnessLow";
-import BrightnessHigh from "@material-ui/icons/BrightnessHigh";
 import green from "@material-ui/core/colors/green";
 import grey from "@material-ui/core/colors/grey";
 import red from "@material-ui/core/colors/red";
-import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import BrightnessHigh from "@material-ui/icons/BrightnessHigh";
+import BrightnessLow from "@material-ui/icons/BrightnessLow";
+import { makeStyles } from "@material-ui/styles";
+import clsx from "clsx";
+import React, { useState } from "react";
+import { OphydButton, OphydDropdown, OphydSlider, OphydStateIcon, OphydStatusField, OphydTextField, OphydToggleButton } from "../ophyd_components/ophyd_components";
+
 const useStyles = makeStyles({
   hidden: { display: "None" },
   showButton: { marginTop: 0 },
@@ -163,14 +153,14 @@ export const Flux = props => {
               readFirst={0}
               readSecond={1}
               device={"saxs_slits.flux.flux_level"}
-              classes={classes}
+              toggleClasses={classes}
             />
             <OphydTextField device="saxs_slits.flux.percent_flux" precision={3} />
             <OphydSlider
               device="saxs_slits.flux.percent_flux"
               step={0.1}
               min={0}
-              max={100}
+              max={10}
               label="% Flux"
               leftIcon={<BrightnessLow />}
               rightIcon={<BrightnessHigh />}
@@ -284,7 +274,7 @@ export const WindowControls = props => {
       <Paper>
         <div className={classes.padding}>
           <Typography variant="h5">Move Window</Typography>
-          <Typography variant="body">Only moves relative by the tweak value</Typography>
+          <Typography variant="body1">Only moves relative by the tweak value</Typography>
         </div>
         <div className={classes.horizontal}>
           <div className={classes.horizontal}>

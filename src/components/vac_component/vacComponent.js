@@ -1,33 +1,19 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-
-import * as actionCreators from "../../actions/index";
-
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import Paper from "@material-ui/core/Paper";
-
-import classNames from "classnames";
-import green from "@material-ui/core/colors/green";
-import amber from "@material-ui/core/colors/amber";
-import red from "@material-ui/core/colors/red";
 import deepOrange from "@material-ui/core/colors/deepOrange";
+import green from "@material-ui/core/colors/green";
 import grey from "@material-ui/core/colors/grey";
 import Grid from "@material-ui/core/Grid";
-
-import VentDialog from "../custom_vac_dialog/custom_vent_dialog";
+import Paper from "@material-ui/core/Paper";
+import { withStyles } from "@material-ui/core/styles";
+import classNames from "classnames";
+import PropTypes from "prop-types";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import * as actionCreators from "../../actions/index";
 import PumpDialog from "../custom_vac_dialog/custom_pump_dialog";
-
-import {
-  OphydButton,
-  OphydToggleButton,
-  OphydSlider,
-  OphydTextField,
-  OphydStatusField
-} from "../ophyd_components/ophyd_components";
-
-import { Typography } from "@material-ui/core";
+import VentDialog from "../custom_vac_dialog/custom_vent_dialog";
+import { OphydStatusField } from "../ophyd_components/ophyd_components";
 
 const styles = theme => ({
   root: {

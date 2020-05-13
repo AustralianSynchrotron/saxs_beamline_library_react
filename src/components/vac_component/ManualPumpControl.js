@@ -1,17 +1,11 @@
-import React from "react";
-import { makeStyles, getThemeProps } from "@material-ui/styles";
-import Typography from "@material-ui/core/Typography";
 import green from "@material-ui/core/colors/green";
 import grey from "@material-ui/core/colors/grey";
 import red from "@material-ui/core/colors/red";
 import Paper from "@material-ui/core/Paper";
-import {
-  OphydButton,
-  OphydToggleButton,
-  OphydSlider,
-  OphydTextField,
-  OphydStatusField
-} from "../ophyd_components/ophyd_components";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/styles";
+import React from "react";
+import { OphydStatusField, OphydToggleButton } from "../ophyd_components/ophyd_components";
 
 const useStyles = makeStyles({
   second: {
@@ -66,7 +60,7 @@ const ManualPumpControl = props => {
             readFirst={0}
             readSecond={1}
             device={props.pump + ".start_stop_with_rbv"}
-            classes={classes}
+            toggleClasses={classes}
             disable={props.disable}
           />
           <OphydStatusField

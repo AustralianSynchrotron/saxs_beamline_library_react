@@ -1,51 +1,47 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import classNames from "classnames";
-import { withStyles, createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import Drawer from "@material-ui/core/Drawer";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import Favorite from "@material-ui/icons/Favorite";
+import green from "@material-ui/core/colors/green";
+import red from "@material-ui/core/colors/red";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
+import Drawer from "@material-ui/core/Drawer";
+import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import NoteAdd from "@material-ui/icons/NoteAdd";
+import SnackBar from "@material-ui/core/SnackBar";
+import { createMuiTheme } from "@material-ui/core/styles";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 import Cached from "@material-ui/icons/Cached";
+import CallMissedOutgoing from "@material-ui/icons/CallMissedOutgoing";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import Favorite from "@material-ui/icons/Favorite";
+import MenuIcon from "@material-ui/icons/Menu";
+import PlayCircleOutline from "@material-ui/icons/PlayCircleOutline";
+import Settings from "@material-ui/icons/Settings";
+import SwapHoriz from "@material-ui/icons/SwapHoriz";
 import Videocam from "@material-ui/icons/Videocam";
 import Warning from "@material-ui/icons/Warning";
-import SwapHoriz from "@material-ui/icons/SwapHoriz";
-import CallMissedOutgoing from "@material-ui/icons/CallMissedOutgoing";
-import ImageSearch from "@material-ui/icons/ImageSearch";
-import Settings from "@material-ui/icons/Settings";
-import ViewComfy from "@material-ui/icons/ViewComfy";
-import PlayCircleOutline from "@material-ui/icons/PlayCircleOutline";
+import { makeStyles, ThemeProvider } from "@material-ui/styles";
+import classNames from "classnames";
 import Docker from "mdi-material-ui/Docker";
-import BeamlineControl from "./components/beamline_control/beamline_control.js";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { connectOphyd, subscribeOphyd, buttonStatus } from "./actions/index";
 import AcquirePage from "./components/acquire_page/acquire_page.js";
+import BeamlineControl from "./components/beamline_control/beamline_control.js";
 import ConfigPage from "./components/config_page/config_page.js";
-import VacuumPage from "./components/vacuum/Vacuum";
-import TensilePage from "./components/tensile/Tensile";
-import GrazingPage from "./components/grazing_page/grazing_page";
-import VideoPage from "./components/video_page/video_page";
 import DockerPage from "./components/docker_page/docker_page";
+import GrazingPage from "./components/grazing_page/grazing_page";
 import LoggerPage from "./components/logger_page/logger_page";
-import SnackBar from "@material-ui/core/SnackBar";
-import * as actionCreators from "./actions/index";
-import { OphydStatusField, OphydButton } from "./components/ophyd_components/ophyd_components.js";
-import green from "@material-ui/core/colors/green";
-import grey from "@material-ui/core/colors/grey";
-import red from "@material-ui/core/colors/red";
-import { mergeClasses } from "@material-ui/styles";
+import { OphydButton, OphydStatusField } from "./components/ophyd_components/ophyd_components.js";
+import TensilePage from "./components/tensile/Tensile";
+import VacuumPage from "./components/vacuum/Vacuum";
+import VideoPage from "./components/video_page/video_page";
 
-import { klaxon } from "./media/sounds";
+
+
 
 const drawerWidth = 240;
 
@@ -55,7 +51,7 @@ const theme = createMuiTheme({
   }
 });
 
-const styles = theme => ({
+const useStyles = makeStyles({
   root: {
     display: "flex"
   },
@@ -145,212 +141,219 @@ const styles = theme => ({
   }
 });
 
-class App extends Component {
-  constructor(prop) {
-    super(prop);
-    this.state = {
-      drawerOpen: false,
-      page: 0
-    };
+const App = props => {
+  const dispatch = useDispatch();
+  const classes = useStyles(theme);
+
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [page, setPage] = useState(0);
+
+  const handleDrawerOpen = () => {
+    setDrawerOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setDrawerOpen(false);
+  };
+
+  const handlePageChange = page => {
+    setPage(page);
+  };
+
+  const handleErrorClose = () => {
+    props.clearSetError();
+  };
+
+  const ophydError = useSelector(state => state.ophyd.setError);
+  const ophydConnected = useSelector(state => state.ophyd.connected);
+  const token = useSelector(state => state.ophyd.token);
+
+  const requestRef = React.useRef();
+
+  const animate = () => {
+
+    var gamepads = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
+    if (gamepads) {
+      var gp = gamepads[0];
+      if (gp) {
+        dispatch(buttonStatus(gp.buttons));
+      }
+    }
+    requestRef.current = requestAnimationFrame(animate);
   }
 
-  handleDrawerOpen = () => {
-    this.setState({ drawerOpen: true });
-  };
+  useEffect(() => {
+    dispatch(subscribeOphyd(token));
+    dispatch(connectOphyd(token));
+    window.addEventListener("gamepadconnected", function (e) {
+      requestRef.current = requestAnimationFrame(animate);
+    });
+    return () => cancelAnimationFrame(requestRef.current);
+  }, [])
 
-  handleDrawerClose = () => {
-    this.setState({ drawerOpen: false });
-  };
-
-  handlePageChange = page => {
-    this.setState({ page });
-  };
-
-  handleErrorClose = () => {
-    this.props.clearSetError();
-  };
-
-  render() {
-    const { classes } = this.props;
-    const { drawerOpen, page } = this.state;
-    return (
-      <MuiThemeProvider theme={theme}>
-        <div className={classes.root}>
-          <CssBaseline />
-          <AppBar
-            color={this.props.connected ? "primary" : "secondary"}
-            position="absolute"
-            className={classNames(classes.appBar, {
-              [classes.appBarShift]: drawerOpen
-            })}
-          >
-            <Toolbar disableGutters={!drawerOpen}>
-              <IconButton
-                color="inherit"
-                aria-label="Menu"
-                onClick={this.handleDrawerOpen}
-                className={classNames(classes.menuButton, {
-                  [classes.hide]: drawerOpen
-                })}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Typography variant="h6" color="inherit">
-                SAXS
+  return (
+    <ThemeProvider theme={theme}>
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar
+          color={ophydConnected ? "primary" : "secondary"}
+          position="absolute"
+          className={classNames(classes.appBar, {
+            [classes.appBarShift]: drawerOpen
+          })}
+        >
+          <Toolbar disableGutters={!drawerOpen}>
+            <IconButton
+              color="inherit"
+              aria-label="Menu"
+              onClick={handleDrawerOpen}
+              className={classNames(classes.menuButton, {
+                [classes.hide]: drawerOpen
+              })}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" color="inherit">
+              SAXS
               </Typography>
+            <div className={classes.horizontal}>
+              <OphydStatusField
+                label="Beamline Status"
+                device="ophyd_status_devices.ophyd_status.beam_on_sample"
+                good_status={1}
+                badStatusText="Something is wrong"
+                goodStatusText="Beamline is ok"
+              />
+              <OphydStatusField
+                label="Detector Status"
+                device="ophyd_status_devices.ophyd_status.beam_on_sample"
+                good_status={false}
+                // errorCallback={() => klaxon.play()}
+                badStatusText="Detector Error"
+                goodStatusText="Detector Happy"
+              />
+              {/* <OphydStatusField
+                label="Last Successful File"
+                device="ophyd_status_devices.ophyd_status.last_file"
+              /> */}
               <div className={classes.horizontal}>
-                <OphydStatusField
-                  label="Beamline Status"
-                  device="ophyd_status_devices.epics_status.beam_on_sample"
-                  good_status={1}
-                  badStatusText="Something is wrong"
-                  goodStatusText="Beamline is ok"
-                />
-                <OphydStatusField
-                  label="Detector Status"
-                  device="ophyd_status_devices.ophyd_status.beam_on_sample"
-                  good_status={false}
-                  errorCallback={() => klaxon.play()}
-                  badStatusText="Detector Error"
-                  goodStatusText="Detector Happy"
-                />
-                <OphydStatusField
-                  label="Last Successful File"
-                  device="ophyd_status_devices.ophyd_status.last_file"
-                />
-                <div className={classes.horizontal}>
-                  <Typography variant="h6" color="inherit">
-                    Mono Shutter:
+                <Typography variant="h6" color="inherit">
+                  Mono Shutter:
                   </Typography>
-                  <OphydButton
-                    label="Close"
-                    value={1}
-                    device="saxs_pss.pss.mono_shutter_close"
-                    classes={classes.redButton}
-                  />
-                  <OphydButton
-                    label="Open"
-                    value={1}
-                    device="saxs_pss.pss.mono_shutter_open"
-                    classes={classes.greenButton}
-                  />
-                </div>
+                <OphydButton
+                  label="Close"
+                  value={1}
+                  device="saxs_pss.pss.mono_shutter_close"
+                  buttonClasses={classes.redButton}
+                />
+                <OphydButton
+                  label="Open"
+                  value={1}
+                  device="saxs_pss.pss.mono_shutter_open"
+                  buttonClasses={classes.greenButton}
+                />
               </div>
-            </Toolbar>
-          </AppBar>
-          <Drawer
-            variant="permanent"
-            anchor="left"
-            open={drawerOpen}
-            className={classNames(classes.drawer, {
+            </div>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          variant="permanent"
+          anchor="left"
+          open={drawerOpen}
+          className={classNames(classes.drawer, {
+            [classes.drawerOpen]: drawerOpen,
+            [classes.drawerClose]: !drawerOpen
+          })}
+          classes={{
+            paper: classNames({
               [classes.drawerOpen]: drawerOpen,
               [classes.drawerClose]: !drawerOpen
-            })}
-            classes={{
-              paper: classNames({
-                [classes.drawerOpen]: drawerOpen,
-                [classes.drawerClose]: !drawerOpen
-              })
-            }}
-          >
-            <div className={classes.toolbar}>
-              <IconButton onClick={this.handleDrawerClose}>
-                <ChevronLeftIcon />
-              </IconButton>
+            })
+          }}
+        >
+          <div className={classes.toolbar}>
+            <IconButton onClick={handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            {[
+              ["Acquisition", <PlayCircleOutline />],
+              // ["New Experiment", <NoteAdd />],
+              ["Beamline Control", <Settings />],
+              ["Beamline Config", <Favorite />],
+              ["Vacuum Controls", <Cached />],
+              ["Video Cameras", <Videocam />],
+              ["Grazing Setup", <CallMissedOutgoing />],
+              ["Tensile Setup", <SwapHoriz />],
+              ["Python Logger", <Warning />],
+              ["Docker", <Docker />]
+            ].map((item, index) => (
+              <ListItem button key={item[0]} onClick={() => handlePageChange(index)}>
+                <ListItemIcon>{item[1]}</ListItemIcon>
+                <ListItemText primary={item[0]} />
+              </ListItem>
+            ))}
+          </List>
+          <Divider />
+        </Drawer>
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          {page === 0 && (
+            <div>
+              <AcquirePage />
             </div>
-            <Divider />
-            <List>
-              {[
-                ["Acquisition", <PlayCircleOutline />],
-                // ["New Experiment", <NoteAdd />],
-                ["Beamline Control", <Settings />],
-                ["Beamline Config", <Favorite />],
-                ["Vacuum Controls", <Cached />],
-                ["Video Cameras", <Videocam />],
-                ["Grazing Setup", <CallMissedOutgoing />],
-                ["Tensile Setup", <SwapHoriz />],
-                ["Python Logger", <Warning />],
-                ["Docker", <Docker />]
-              ].map((item, index) => (
-                <ListItem button key={item[0]} onClick={() => this.handlePageChange(index)}>
-                  <ListItemIcon>{item[1]}</ListItemIcon>
-                  <ListItemText primary={item[0]} />
-                </ListItem>
-              ))}
-            </List>
-            <Divider />
-          </Drawer>
-          <main className={classes.content}>
-            <div className={classes.toolbar} />
-            {page === 0 && (
-              <div>
-                <AcquirePage />
-              </div>
-            )}
-            {page === 1 && (
-              <div>
-                <BeamlineControl />
-              </div>
-            )}
-            {page === 2 && (
-              <div>
-                <ConfigPage />
-              </div>
-            )}
-            {page === 3 && (
-              <div>
-                <VacuumPage />
-              </div>
-            )}
-            {page === 4 && (
-              <div>
-                <VideoPage />
-              </div>
-            )}
-            {page === 5 && (
-              <div>
-                <GrazingPage />
-              </div>
-            )}
-            {page === 6 && (
-              <div>
-                <TensilePage />
-              </div>
-            )}
-            {page === 7 && (
-              <div>
-                <LoggerPage />
-              </div>
-            )}
-            {page === 8 && (
-              <div>
-                <DockerPage />
-              </div>
-            )}
-            <SnackBar
-              open={this.props.error !== null}
-              message={this.props.error}
-              onClose={this.handleErrorClose}
-            />
-          </main>
-        </div>
-      </MuiThemeProvider>
-    );
-  }
+          )}
+          {page === 1 && (
+            <div>
+              <BeamlineControl />
+            </div>
+          )}
+          {page === 2 && (
+            <div>
+              <ConfigPage />
+            </div>
+          )}
+          {page === 3 && (
+            <div>
+              <VacuumPage />
+            </div>
+          )}
+          {page === 4 && (
+            <div>
+              <VideoPage />
+            </div>
+          )}
+          {page === 5 && (
+            <div>
+              <GrazingPage />
+            </div>
+          )}
+          {page === 6 && (
+            <div>
+              <TensilePage />
+            </div>
+          )}
+          {page === 7 && (
+            <div>
+              <LoggerPage />
+            </div>
+          )}
+          {page === 8 && (
+            <div>
+              <DockerPage />
+            </div>
+          )}
+          <SnackBar
+            open={ophydError !== null}
+            message={ophydError}
+            onClose={handleErrorClose}
+          />
+        </main>
+      </div>
+    </ThemeProvider>
+  );
 }
 
-App.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-function mapStateToProps(state) {
-  return {
-    error: state.ophyd.setError,
-    connected: state.ophyd.connected
-  };
-}
-
-export default connect(
-  mapStateToProps,
-  actionCreators
-)(withStyles(styles)(App));
+export default App;

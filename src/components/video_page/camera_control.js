@@ -1,18 +1,12 @@
-import React from "react";
-import { makeStyles } from "@material-ui/styles";
-import BrightnessLow from "@material-ui/icons/BrightnessLow";
-import BrightnessHigh from "@material-ui/icons/BrightnessHigh";
-import ShutterSpeed from "@material-ui/icons/ShutterSpeed";
-import ShutterSpeedTwoTone from "@material-ui/icons/ShutterSpeedTwoTone";
 import green from "@material-ui/core/colors/green";
 import red from "@material-ui/core/colors/red";
-import {
-  OphydButton,
-  OphydToggleButton,
-  OphydSlider,
-  OphydTextField,
-  OphydStatusField
-} from "../ophyd_components/ophyd_components";
+import BrightnessHigh from "@material-ui/icons/BrightnessHigh";
+import BrightnessLow from "@material-ui/icons/BrightnessLow";
+import ShutterSpeed from "@material-ui/icons/ShutterSpeed";
+import ShutterSpeedTwoTone from "@material-ui/icons/ShutterSpeedTwoTone";
+import { makeStyles } from "@material-ui/styles";
+import React from "react";
+import { OphydButton, OphydSlider, OphydTextField, OphydToggleButton } from "../ophyd_components/ophyd_components";
 
 const useStyles = makeStyles({
   second: {
@@ -64,7 +58,7 @@ const CameraControl = props => {
               valueSecond={1}
               noShowLabel={true}
               device={props.cam + ".cam.acquire"}
-              classes={classes}
+              toggleClasses={classes}
             />
           </div>
           <div className={classes.sliders}>

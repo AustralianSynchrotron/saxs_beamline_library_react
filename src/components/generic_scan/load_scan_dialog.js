@@ -1,26 +1,17 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/styles";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import Popper from "@material-ui/core/Popper";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import Fab from "@material-ui/core/Fab";
-import OpenInBrowser from "@material-ui/icons/OpenInBrowser";
-import Close from "@material-ui/icons/Close";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions";
-import Dialog from "@material-ui/core/Dialog";
-import Snackbar from "@material-ui/core/Snackbar";
-import SnackbarContent from "@material-ui/core/SnackbarContent";
-
-import red from "@material-ui/core/colors/red";
 import blue from "@material-ui/core/colors/blue";
+import red from "@material-ui/core/colors/red";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Fab from "@material-ui/core/Fab";
+import TextField from "@material-ui/core/TextField";
+import Close from "@material-ui/icons/Close";
+import OpenInBrowser from "@material-ui/icons/OpenInBrowser";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import { makeStyles } from "@material-ui/styles";
+import React, { useState } from "react";
+
 
 const useStyles = makeStyles({
   root: {
@@ -43,7 +34,6 @@ const useStyles = makeStyles({
 const LoadScanDialog = props => {
   const classes = useStyles();
   const [scanName, setScanName] = useState("");
-  console.log(props.scans);
   const handleScanNameChange = event => {
     setScanName(event.target.value);
   };
@@ -65,7 +55,7 @@ const LoadScanDialog = props => {
           getOptionLabel={option => option}
           style={{ width: 300 }}
           renderInput={params => (
-              <TextField {...params} value={scanName || ''} label="Scans" variant="outlined" fullWidth />
+            <TextField {...params} value={scanName || ''} label="Scans" variant="outlined" fullWidth />
           )}
           onSelect={handleScanNameChange}
         />

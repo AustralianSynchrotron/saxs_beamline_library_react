@@ -1,11 +1,15 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { subscribeOphyd, setOphyd } from "../../actions/index";
+import { getOphyd, setOphyd, subscribeOphydDevice } from "../../actions/index";
 
 export const useSubscribeOphyd = device => {
   const dispatch = useDispatch();
+
+  const token = useSelector(state => state.ophyd.token)
+
   useEffect(() => {
-    dispatch(subscribeOphyd(device));
+    dispatch(subscribeOphydDevice(token, [device]));
+    dispatch(getOphyd(device, true));
   }, []);
 
   try {

@@ -1,21 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/styles";
-import Paper from "@material-ui/core/Paper";
-import { Button } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
-import {
-  Chart,
-  ArgumentAxis,
-  ValueAxis,
-  ValeScale,
-  SplineSeries,
-  LineSeries,
-  ScatterSeries,
-  BarSeries
-} from "@devexpress/dx-react-chart-material-ui";
-import { ArgumentScale, Stack } from "@devexpress/dx-react-chart";
 import { scaleBand } from "@devexpress/dx-chart-core";
-import { strict } from "assert";
+import { ArgumentScale } from "@devexpress/dx-react-chart";
+import { ArgumentAxis, BarSeries, Chart, LineSeries, ScatterSeries, ValueAxis } from "@devexpress/dx-react-chart-material-ui";
+import Paper from "@material-ui/core/Paper";
+import { makeStyles } from "@material-ui/styles";
+import React from "react";
 
 const useStyles = makeStyles({
   root: {
@@ -66,10 +54,10 @@ const ChartElement = props => {
           {props.type === "Scatter"
             ? renderScatterSeries()
             : props.type === "Line"
-            ? renderLineSeries()
-            : props.type === "Bar"
-            ? renderBarSeries()
-            : renderScatterSeries()}
+              ? renderLineSeries()
+              : props.type === "Bar"
+                ? renderBarSeries()
+                : renderScatterSeries()}
         </Chart>
       </Paper>
     </div>

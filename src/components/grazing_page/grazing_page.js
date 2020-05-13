@@ -1,50 +1,48 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { makeStyles } from "@material-ui/styles";
-import classNames from "classnames";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
+import CheckBox from "@material-ui/core/Checkbox";
+import Chip from "@material-ui/core/Chip";
+import amber from "@material-ui/core/colors/amber";
+import blue from "@material-ui/core/colors/blue";
+import green from "@material-ui/core/colors/green";
+import grey from "@material-ui/core/colors/grey";
+import red from "@material-ui/core/colors/red";
+import Fab from "@material-ui/core/Fab";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import CheckBox from "@material-ui/core/Checkbox"
-import Select from "@material-ui/core/Select";
+import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
 import Input from "@material-ui/core/Input";
+import InputAdornment from "@material-ui/core/InputAdornment";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import Fab from "@material-ui/core/Fab";
-import IconButton from "@material-ui/core/IconButton";
-import InputAdornment from "@material-ui/core/InputAdornment";
-
-
-import Chip from "@material-ui/core/Chip";
-
-import PlayArrow from "@material-ui/icons/PlayArrow";
-import Pause from "@material-ui/icons/Pause";
-import Stop from "@material-ui/icons/Stop";
+import Select from "@material-ui/core/Select";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import Add from "@material-ui/icons/Add";
 import CancelIcon from "@material-ui/icons/Cancel";
 import Done from "@material-ui/icons/Done";
-import Add from "@material-ui/icons/Add";
+import Pause from "@material-ui/icons/Pause";
+import PlayArrow from "@material-ui/icons/PlayArrow";
+import Stop from "@material-ui/icons/Stop";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-
-import red from "@material-ui/core/colors/red";
-import amber from "@material-ui/core/colors/amber";
-import green from "@material-ui/core/colors/green";
-import blue from "@material-ui/core/colors/blue";
-import grey from "@material-ui/core/colors/grey";
-import deepOrange from "@material-ui/core/colors/deepOrange";
-
-import CustomTimeDialog from "../custom_time_dialog/custom_time_dialog";
-import ChartElement from "../charts/ChartElement";
-
+import { makeStyles } from "@material-ui/styles";
+import classNames from "classnames";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { listenGrazing } from "../../actions/index";
+import ChartElement from "../charts/ChartElement";
+import CustomTimeDialog from "../custom_time_dialog/custom_time_dialog";
 
-import { OphydMotorBundleCompact } from "../ophyd_components/ophyd_components";
+
+
+
+
+
+
 
 
 const useStyles = makeStyles({
@@ -138,7 +136,7 @@ const GrazingPage = props => {
 
   const heightScanData = useSelector(state => state.grazing.heightScans);
   const omegaScanData = useSelector(state => state.grazing.omegaScans);
-  
+
   const handleEditableChange = () => {
     setEditable(!editable);
   }

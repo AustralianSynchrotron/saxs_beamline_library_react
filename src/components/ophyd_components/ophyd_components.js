@@ -1,31 +1,26 @@
-import classNames from "classnames";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import PropTypes from "prop-types";
-import { makeStyles, getThemeProps } from "@material-ui/styles";
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
+import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import ToggleButton from "@material-ui/lab/ToggleButton";
-import IconButton from "@material-ui/core/IconButton";
-import Slider from "@material-ui/core/Slider";
-import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
+import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
 import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import Slider from "@material-ui/core/Slider";
+import TextField from "@material-ui/core/TextField";
 import ArrowBackIos from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIos from "@material-ui/icons/ArrowForwardIos";
+import DragHandle from "@material-ui/icons/DragHandle";
+import ToggleButton from "@material-ui/lab/ToggleButton";
+import { makeStyles } from "@material-ui/styles";
+import classNames from "classnames";
 import CheckAll from "mdi-material-ui/CheckAll";
 import CloseOutline from "mdi-material-ui/CloseOutline";
 import Help from "mdi-material-ui/Help";
-import DragHandle from "@material-ui/icons/DragHandle";
-import { useSubscribeOphyd } from "../hooks/ophyd";
-import { useSetOphyd } from "../hooks/ophyd";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { getBundleList } from "../../actions/index";
-import { Typography } from "@material-ui/core";
-import grey from "@material-ui/core/colors/grey";
-import red from "@material-ui/core/colors/red";
+import { useSetOphyd, useSubscribeOphyd } from "../hooks/ophyd";
 
 const useStyles = makeStyles({
   hidden: { display: "None" },
@@ -109,7 +104,7 @@ export const OphydStatusField = props => {
             : classes.statusFieldBad
           : null
       )}
-      InputProps={{ className: classes.statusFieldInput, readonly: true, disableUnderline: true }}
+      InputProps={{ className: classes.statusFieldInput, readOnly: true, disableUnderline: true }}
       variant="filled"
       label={props.label !== undefined ? props.label + ": " : null}
       value={
@@ -120,18 +115,18 @@ export const OphydStatusField = props => {
                 ? deviceData.obj_value
                 : deviceData.value
               : deviceData.value === props.good_status
-              ? props.goodStatusText !== undefined
-                ? props.goodStatusText
-                : deviceData.value
-              : props.badStatusText
+                ? props.goodStatusText !== undefined
+                  ? props.goodStatusText
+                  : deviceData.value
+                : props.badStatusText
             : props.toNumber === true
-            ? props.toExp === true
-              ? parseFloat(deviceData.value).toExponential()
-              : parseFloat(deviceData.value)
-            : deviceData.value
+              ? props.toExp === true
+                ? parseFloat(deviceData.value).toExponential()
+                : parseFloat(deviceData.value)
+              : deviceData.value
           : props.undef_val !== undefined
-          ? props.undef_val
-          : "Status Unavailable") +
+            ? props.undef_val
+            : "Status Unavailable") +
         (deviceData.name !== undefined
           ? props.suffix !== undefined
             ? " " + props.suffix
@@ -151,13 +146,16 @@ export const OphydTextField = props => {
   var deviceData = useSubscribeOphyd(props.device);
   if (deviceData === undefined) {
     deviceData = { value: "", dtype: "string" };
-  } else {
-    if (deviceData.dtype === "number") {
-      deviceData.value = parseFloat(deviceData.value).toPrecision(6);
-    } else {
-      console.log(deviceData);
-    }
   }
+  if (deviceData.value === undefined) {
+    deviceData.value = "";
+  }
+  if (deviceData.dtype === "number") {
+    deviceData.value = parseFloat(deviceData.value).toPrecision(6);
+  }
+
+
+
 
   const handleChange = event => {
     setTempValue(event.target.value);
@@ -174,8 +172,8 @@ export const OphydTextField = props => {
         deviceData.dtype === "number"
           ? parseFloat(tempValue)
           : deviceData.dtype === "integer"
-          ? parseInt(tempValue)
-          : tempValue
+            ? parseInt(tempValue)
+            : tempValue
       );
       setEditing(false);
     }
@@ -200,8 +198,8 @@ export const OphydTextField = props => {
         deviceData.set_success === undefined
           ? null
           : deviceData.set_success
-          ? null
-          : {
+            ? null
+            : {
               classes: {
                 root: classes.cssOutlinedInput,
                 notchedOutline: classes.notchedOutline
@@ -223,7 +221,7 @@ export const OphydButton = props => {
       <div className={classes.padding}>
         <Button
           onClick={handleClick}
-          className={props.classes}
+          className={props.buttonClasses}
           disabled={props.disable !== undefined ? props.disable : false}
         >
           {props.label}
@@ -282,8 +280,9 @@ export const OphydToggleButton = props => {
         ) : null}
         <div className={classes.padding}>
           <ToggleButton
+            value={props.label !== undefined ? props.label : deviceData.name}
             onChange={handleChange}
-            className={classNames(status === 1 ? props.classes.second : props.classes.first)}
+            className={classNames(status === 1 ? props.toggleClasses.second : props.toggleClasses.first)}
             disabled={props.disable !== undefined ? props.disable : false}
           >
             {status === 1 ? props.labelSecond : status === 2 ? props.labelFirst : "Not Connected"}
@@ -308,8 +307,17 @@ export const OphydSlider = props => {
   const setOphyd = useSetOphyd();
 
   var deviceData = useSubscribeOphyd(props.device);
+
   if (deviceData === undefined) {
     deviceData = { value: 0 };
+  }
+
+  if (typeof (deviceData.value) !== "number") {
+    deviceData.value = parseFloat(deviceData.value);
+  }
+
+  if (deviceData.value === undefined || Number.isNaN(deviceData.value)) {
+    deviceData.value = 0;
   }
   const handleChange = (event, value) => {
     setOphyd(props.device, parseFloat(value), props.setTimeout);
@@ -471,7 +479,7 @@ export const OphydDropdown = props => {
       enum_strs = [0, 1, 2];
     }
     return enum_strs.map((el, i) => {
-      return <MenuItem value={i}> {el}</MenuItem>;
+      return <MenuItem value={i} key={i}> {el}</MenuItem>;
     });
   };
 
@@ -502,8 +510,6 @@ export const OphydStateIcon = props => {
     deviceData = { value: 0, dtype: "integer", name: undefined };
   }
 
-  var readValue = null;
-
   return (
     <React.Fragment>
       <div className={classes.horizontal}>
@@ -515,11 +521,11 @@ export const OphydStateIcon = props => {
             deviceData.value !== props.good_value ? (
               <CloseOutline color="secondary" />
             ) : (
-              <CheckAll color="primary" />
-            )
+                <CheckAll color="primary" />
+              )
           ) : (
-            <Help color="default" />
-          )}
+              <Help color="error" />
+            )}
         </div>
       </div>
     </React.Fragment>

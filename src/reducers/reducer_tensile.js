@@ -1,5 +1,4 @@
 import * as actions from "../actions/actionTypes";
-import version from "../version";
 
 const default_state = {
   force: 0,

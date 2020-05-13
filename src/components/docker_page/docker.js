@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { subscribeDocker, setDocker } from "../../actions/index";
+import { setDocker, subscribeDocker } from "../../actions/index";
 
 export const useSubscribeDocker = () => {
   const dispatch = useDispatch();
