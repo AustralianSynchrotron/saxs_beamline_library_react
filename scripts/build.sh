@@ -1,7 +1,7 @@
 #!/bin/sh
 rm -r docker/production/build
 # yarn upgrade
-REACT_APP_WEBSOCKET=3142 yarn build
+yarn build
 mv build docker/production/
 hash=$(git  rev-parse --short=6 HEAD)
 docker build -f docker/production/Dockerfile -t docker.synchrotron.org.au/saxs/beamline_library_react:$hash docker/production
