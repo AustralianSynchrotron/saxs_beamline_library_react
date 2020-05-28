@@ -22,6 +22,7 @@ import PlayCircleOutline from "@material-ui/icons/PlayCircleOutline";
 import Settings from "@material-ui/icons/Settings";
 import SwapHoriz from "@material-ui/icons/SwapHoriz";
 import Videocam from "@material-ui/icons/Videocam";
+import SwitchCameraIcon from "@material-ui/icons/SwitchCamera";
 import Warning from "@material-ui/icons/Warning";
 import { makeStyles, ThemeProvider } from "@material-ui/styles";
 import classNames from "classnames";
@@ -39,8 +40,7 @@ import { OphydButton, OphydStatusField } from "./components/ophyd_components/oph
 import TensilePage from "./components/tensile/Tensile";
 import VacuumPage from "./components/vacuum/Vacuum";
 import VideoPage from "./components/video_page/video_page";
-
-
+import QRangeChange from "./components/q_range_change_page/q_range_change_page.js";
 
 
 const drawerWidth = 240;
@@ -285,6 +285,7 @@ const App = props => {
               ["Beamline Config", <Favorite />],
               ["Vacuum Controls", <Cached />],
               ["Video Cameras", <Videocam />],
+              ["Q Range Setup", <SwitchCameraIcon />],
               ["Grazing Setup", <CallMissedOutgoing />],
               ["Tensile Setup", <SwapHoriz />],
               ["Python Logger", <Warning />],
@@ -327,20 +328,25 @@ const App = props => {
           )}
           {page === 5 && (
             <div>
-              <GrazingPage />
+              <QRangeChange />
             </div>
           )}
           {page === 6 && (
             <div>
-              <TensilePage />
+              <GrazingPage />
             </div>
           )}
           {page === 7 && (
             <div>
-              <LoggerPage />
+              <TensilePage />
             </div>
           )}
           {page === 8 && (
+            <div>
+              <LoggerPage />
+            </div>
+          )}
+          {page === 9 && (
             <div>
               <DockerPage />
             </div>

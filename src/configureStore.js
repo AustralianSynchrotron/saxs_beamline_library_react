@@ -17,6 +17,7 @@ const endpoints = {
     // docker: `ws://${baseURL}:9991`,
     // logger: `ws://${baseURL}:3001`,
     // grazing: `ws://${baseURL}:3002`
+    cameraLength: `ws://${baseURL}:8082/api/v1.0/ws`
   },
   onOpenDispatch: {
     status: listenStatus,

@@ -154,9 +154,6 @@ export const OphydTextField = props => {
     deviceData.value = parseFloat(deviceData.value).toPrecision(6);
   }
 
-
-
-
   const handleChange = event => {
     setTempValue(event.target.value);
   };

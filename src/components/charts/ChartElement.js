@@ -1,6 +1,13 @@
 import { scaleBand } from "@devexpress/dx-chart-core";
 import { ArgumentScale } from "@devexpress/dx-react-chart";
-import { ArgumentAxis, BarSeries, Chart, LineSeries, ScatterSeries, ValueAxis } from "@devexpress/dx-react-chart-material-ui";
+import {
+  ArgumentAxis,
+  BarSeries,
+  Chart,
+  LineSeries,
+  ScatterSeries,
+  ValueAxis,
+} from "@devexpress/dx-react-chart-material-ui";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/styles";
 import React from "react";
@@ -12,23 +19,23 @@ const useStyles = makeStyles({
     width: "350px",
     justifyContent: "center",
     alignItems: "center",
-    padding: "1px"
-  }
+    padding: "1px",
+  },
 });
 
-const ChartElement = props => {
+const ChartElement = (props) => {
   const classes = useStyles();
 
   const renderLineSeries = () =>
-    [...Array(props.numplots).keys()].map(el => (
+    [...Array(props.numplots).keys()].map((el) => (
       <LineSeries valueField={"y" + el} argumentField={"x" + el} />
     ));
   const renderScatterSeries = () =>
-    [...Array(props.numplots).keys()].map(el => (
+    [...Array(props.numplots).keys()].map((el) => (
       <ScatterSeries valueField={"y" + el} argumentField={"x" + el} />
     ));
   const renderBarSeries = () =>
-    [...Array(props.numplots).keys()].map(el => (
+    [...Array(props.numplots).keys()].map((el) => (
       <BarSeries valueField={"y" + el} argumentField={"x" + el} />
     ));
 
@@ -54,10 +61,10 @@ const ChartElement = props => {
           {props.type === "Scatter"
             ? renderScatterSeries()
             : props.type === "Line"
-              ? renderLineSeries()
-              : props.type === "Bar"
-                ? renderBarSeries()
-                : renderScatterSeries()}
+            ? renderLineSeries()
+            : props.type === "Bar"
+            ? renderBarSeries()
+            : renderScatterSeries()}
         </Chart>
       </Paper>
     </div>
