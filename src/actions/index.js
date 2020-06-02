@@ -5,13 +5,12 @@ const url = () => {
 };
 
 // const beamlineConfigURL = "http://10.138.13.201:8080";
-const ophydURL = "http://10.138.11.39:4001";
-const ophydWSURL = "ws://10.138.11.39:4001";
-const acquireURL = "http://10.138.11.39:4002";
+const ophydURL = "http://dockervip.saxs:4001";
+const ophydWSURL = "ws://dockervip.saxs:4001";
+const acquireURL = "http://dockervip.saxs:4002";
 
-const cameraLengthURL = "http://10.138.11.39:4004";
-const beamlineConfigURL = "http://10.138.11.39:8086";
-
+const cameraLengthURL = "http://dockervip.saxs:4004";
+const beamlineConfigURL = "http://dockervip.saxs:8086";
 
 export const acquire = (filename, exp_times, num_images, delay, use_shutter, description) => ({
   type: actions.ACQUIRE,
@@ -319,15 +318,20 @@ export const getOphyd = (device, describe = false) => {
   };
 };
 
-export const setOphyd = (device, value, timeout = null) => ({
-  type: actions.SETDEVICE,
-  fetch: ophydURL + "/api/v1.0/devices/" + device,
-  data: {
-    method: "PUT",
-    value: value,
-    timeout: timeout,
-  },
-});
+export const setOphyd = (device, value, timeout = null) => {
+  var body = { value: value };
+  if (timeout !== null) {
+    body.timeout = timeout;
+  }
+  return {
+    type: actions.SETDEVICE,
+    fetch: ophydURL + "/api/v1.0/devices/" + device,
+    data: {
+      method: "PUT",
+      body: JSON.stringify(body)
+    }
+  };
+};
 
 export const getBundleList = (bundle) => ({
   type: actions.GETBUNDLELIST,

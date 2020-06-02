@@ -12,7 +12,7 @@ import { changeCameraLength, noseCone, listNoseCones, changeNoseCone } from "../
 import {
   OphydStatusField,
   OphydMotorCompact,
-  OphydToggleButton,
+  OphydButton,
 } from "../ophyd_components/ophyd_components";
 
 const useStyles = makeStyles({
@@ -127,18 +127,17 @@ const QRangeChange = (props) => {
               <TextField value={beamstopY} />
               <OphydMotorCompact device={"saxs_motors.saxs_det.x"} />
               <OphydMotorCompact device={"saxs_motors.saxs_det.y"} />
-              <OphydStatusField label="Beamstop Counts" device={"saxs_scaler.beamstop"} />
-              <OphydToggleButton
+              <OphydStatusField
+                label="Beamstop Counts"
+                device={"saxs_scaler.saxs_scaler.beamstop"}
+                toNumber={true}
+                precision={6}
+              />
+
+              <OphydButton
                 label="Check Beamstop Counts"
-                labelPosition="left"
-                labelFirst="Check"
-                labelSecond="Finish"
-                valueFirst={0}
-                valueSecond={1}
-                readFirst={0}
-                readSecond={1}
-                device={"saxs_slits.flux.flux_level"}
-                toggleClasses={classes}
+                value={1}
+                device={"saxs_scaler.saxs_scaler.autocount_mode"}
               />
             </div>
           </Grid>
