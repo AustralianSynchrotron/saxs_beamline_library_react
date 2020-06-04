@@ -53,7 +53,7 @@ const QRangeChange = (props) => {
 
   const [cameraLength, setCameraLength] = useState();
 
-  const message = useSelector((state) => state.cameraLength.progressMessage) || null;
+  const message = useSelector((state) => state.cameraLength.progressLog) || null;
   const currentNoseCone = useSelector((state) => state.cameraLength.noseCone) || null;
   const noseCones = useSelector((state) => state.cameraLength.noseCones) || null;
   const beamstopX = useSelector((state) => state.cameraLength.data.beamstop_stages_x) || null;
