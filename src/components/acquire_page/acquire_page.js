@@ -216,7 +216,7 @@ class AcquirePage extends Component {
                   onClick={this.handleAcquire}
                   className={classNames(classes.button, classes.acquire)}
                 >
-                  Acquire
+                  Pew Pew!
                 </Button>
                 <Button
                   variant="contained"

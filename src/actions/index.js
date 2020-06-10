@@ -8,7 +8,8 @@ const url = () => {
 const ophydURL = "http://dockervip.saxs:4001";
 const ophydWSURL = "ws://dockervip.saxs:4001";
 const acquireURL = "http://dockervip.saxs:4002";
-
+const flagsURL = "http://dockervip.saxs:4005";
+const redisURL = "http://dockervip.saxs:4006";
 const cameraLengthURL = "http://dockervip.saxs:4004";
 const beamlineConfigURL = "http://dockervip.saxs:8086";
 
@@ -558,3 +559,30 @@ export const buttonStatus = (buttons) => ({
   type: actions.GAMEPAD_BUTTON_STATUS,
   data: { buttons },
 });
+
+export const getFlags = () => ({
+  type: actions.GETFLAGS,
+  fetch: flagsURL + "/api/v1.0/flags",
+  data: {
+    method: "GET",
+    mode: "cors",
+  },
+})
+
+export const setFlag = (key, value) => ({
+  type: actions.SETFLAG,
+  fetch: flagsURL + "/api/v1.0/flags/" + key,
+  data: {
+    method: "PUT",
+    mode: "cors",
+    body: JSON.stringify({ value }),
+  },
+})
+export const getKVs = () => ({
+  type: actions.GETKVS,
+  fetch: redisURL + "/api/v1.0/kvs",
+  data: {
+    method: "GET",
+    mode: "cors",
+  },
+})

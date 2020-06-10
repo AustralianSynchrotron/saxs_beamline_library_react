@@ -18,6 +18,7 @@ import CallMissedOutgoing from "@material-ui/icons/CallMissedOutgoing";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Favorite from "@material-ui/icons/Favorite";
 import MenuIcon from "@material-ui/icons/Menu";
+import FlagIcon from "@material-ui/icons/Flag";
 import PlayCircleOutline from "@material-ui/icons/PlayCircleOutline";
 import Settings from "@material-ui/icons/Settings";
 import SwapHoriz from "@material-ui/icons/SwapHoriz";
@@ -27,6 +28,7 @@ import Warning from "@material-ui/icons/Warning";
 import { makeStyles, ThemeProvider } from "@material-ui/styles";
 import classNames from "classnames";
 import Docker from "mdi-material-ui/Docker";
+import Database from "mdi-material-ui/Database";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { connectOphyd, subscribeOphyd, buttonStatus } from "./actions/index";
@@ -34,6 +36,8 @@ import AcquirePage from "./components/acquire_page/acquire_page.js";
 import BeamlineControl from "./components/beamline_control/beamline_control.js";
 import ConfigPage from "./components/config_page/config_page.js";
 import DockerPage from "./components/docker_page/docker_page";
+import FlagsPage from "./components/flags_page/flags_page";
+import RedisPage from "./components/redis_page/redis_page";
 import GrazingPage from "./components/grazing_page/grazing_page";
 import LoggerPage from "./components/logger_page/logger_page";
 import { OphydButton, OphydStatusField } from "./components/ophyd_components/ophyd_components.js";
@@ -289,7 +293,9 @@ const App = props => {
               ["Grazing Setup", <CallMissedOutgoing />],
               ["Tensile Setup", <SwapHoriz />],
               ["Python Logger", <Warning />],
-              ["Docker", <Docker />]
+              ["Docker", <Docker />],
+              ["Flags", <FlagIcon />],
+              ["Redis", <Database />]
             ].map((item, index) => (
               <ListItem button key={item[0]} onClick={() => handlePageChange(index)}>
                 <ListItemIcon>{item[1]}</ListItemIcon>
@@ -349,6 +355,16 @@ const App = props => {
           {page === 9 && (
             <div>
               <DockerPage />
+            </div>
+          )}
+          {page === 10 && (
+            <div>
+              <FlagsPage />
+            </div>
+          )}
+          {page === 11 && (
+            <div>
+              <RedisPage />
             </div>
           )}
           <SnackBar

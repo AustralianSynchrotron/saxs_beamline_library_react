@@ -12,6 +12,8 @@ const endpoints = {
     vacuum: `ws://${baseURL}:3144`,
     vacstatus: `ws://${baseURL}:3145`,
     status: `ws://${baseURL}:3143`,
+    flags: `ws://dockervip.saxs:4005/api/v1.0/ws`,
+    redis: `ws://dockervip.saxs:4006/api/v1.0/ws`,
     // acquire: `ws://${baseURL}:3142`,
     // // ophyd: `ws://${baseURL}:9999`,
     // docker: `ws://${baseURL}:9991`,

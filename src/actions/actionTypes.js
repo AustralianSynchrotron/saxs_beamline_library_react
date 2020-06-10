@@ -84,5 +84,11 @@ export const NOSECONE = "nose_cone";
 export const CAMERALENGTH = "camera_length";
 export const CAMERALENGTHUPDATE = "camera_length_update";
 
+export const GETFLAGS = "get_flags";
+export const SETFLAG = "set_flag";
+export const FLAGSUPDATE = "flags_update";
+
+export const GETKVS = "get_kvs";
+export const REDISUPDATE = "redis_update";
 
 export const GAMEPAD_BUTTON_STATUS = "gamepad_button_status";

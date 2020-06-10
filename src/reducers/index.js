@@ -11,7 +11,9 @@ import LibraryReducer from "./reducer_saxs_library";
 import GrazingReducer from "./reducer_grazing";
 import GenericScanReducer from "./reducer_generic_scan";
 import GamePadReducer from "./reducer_gamepad";
-import CameraLengthReducer from "./reducer_camera_length"
+import CameraLengthReducer from "./reducer_camera_length";
+import FlagsReducer from "./reducer_flags";
+import RedisReducer from "./reducer_redis";
 
 const rootReducer = combineReducers({
   acquire: AcquireReducer,
@@ -26,7 +28,9 @@ const rootReducer = combineReducers({
   grazing: GrazingReducer,
   genericScan: GenericScanReducer,
   gamePad: GamePadReducer,
-  cameraLength: CameraLengthReducer
+  cameraLength: CameraLengthReducer,
+  flags: FlagsReducer,
+  redis: RedisReducer
 });
 
 export default rootReducer;
