@@ -5,13 +5,13 @@ const url = () => {
 };
 
 // const beamlineConfigURL = "http://10.138.13.201:8080";
-const ophydURL = "http://dockervip.saxs:4001";
-const ophydWSURL = "ws://dockervip.saxs:4001";
-const acquireURL = "http://dockervip.saxs:4002";
-const flagsURL = "http://dockervip.saxs:4005";
-const redisURL = "http://dockervip.saxs:4006";
-const cameraLengthURL = "http://dockervip.saxs:4004";
-const beamlineConfigURL = "http://dockervip.saxs:8086";
+const ophydURL = "http://dockervip:4001";
+const ophydWSURL = "ws://dockervip:4001";
+const acquireURL = "http://dockervip:4002";
+const flagsURL = "http://dockervip:4005";
+const redisURL = "http://dockervip:4006";
+const cameraLengthURL = "http://dockervip:4004";
+const beamlineConfigURL = "http://dockervip:8086";
 
 export const acquire = (filename, exp_times, num_images, delay, use_shutter, description) => ({
   type: actions.ACQUIRE,
