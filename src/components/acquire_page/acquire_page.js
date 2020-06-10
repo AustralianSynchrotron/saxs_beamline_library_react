@@ -1,5 +1,7 @@
 import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import Tooltip from "@material-ui/core/Tooltip";
+import DeathStar from "mdi-material-ui/DeathStar";
 import Checkbox from "@material-ui/core/Checkbox";
 import Chip from "@material-ui/core/Chip";
 import amber from "@material-ui/core/colors/amber";
@@ -24,65 +26,64 @@ import * as actionCreators from "../../actions/index";
 import CustomTimeDialog from "../custom_time_dialog/custom_time_dialog";
 import GenericScan from "../generic_scan/generic_scan";
 
-
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     display: "flex",
-    flexGrow: 1
+    flexGrow: 1,
   },
   button: {
     color: "white",
     margin: "2px",
     "&:hover": {
-      color: "white"
-    }
+      color: "white",
+    },
   },
   acquire: {
     backgroundColor: green["700"],
     "&:hover": {
-      backgroundColor: green["A700"]
-    }
+      backgroundColor: green["A700"],
+    },
   },
   pause: {
     backgroundColor: amber["700"],
     "&:hover": {
-      backgroundColor: amber["A700"]
-    }
+      backgroundColor: amber["A700"],
+    },
   },
   resume: {
     backgroundColor: amber["700"],
     "&:hover": {
-      backgroundColor: amber["A700"]
-    }
+      backgroundColor: amber["A700"],
+    },
   },
   finish: {
     backgroundColor: deepOrange["500"],
     "&:hover": {
-      backgroundColor: deepOrange["A400"]
-    }
+      backgroundColor: deepOrange["A400"],
+    },
   },
   halt: {
     backgroundColor: red["500"],
     "&:hover": {
-      backgroundColor: red["A700"]
-    }
+      backgroundColor: red["A700"],
+    },
   },
   chip: {
-    margin: "2px"
+    margin: "2px",
   },
   status: {
-    color: grey["400"]
+    color: grey["400"],
   },
   small_check: {
     width: "24px",
-    height: "24px"
+    height: "24px",
   },
   label: {
-    color: grey["400"]
+    color: grey["400"],
   },
   number: {
-    height: "8px"
-  }
+    height: "8px",
+  },
 });
 
 var times = [0.1, 0.5, 1, 2, 5, 10, 20, 30, 60, 120, "Custom"];
@@ -102,11 +103,11 @@ class AcquirePage extends Component {
       finishDemanded: false,
       pauseDemanded: false,
       adinfinitum: false,
-      useShutter: false
+      useShutter: false,
     };
   }
 
-  handleFilename = event => {
+  handleFilename = (event) => {
     this.setState({ filename: event.target.value });
 
     const invalidCharacters = event.target.value.match(/[-!@#$%^&*()+|~=`{}\[\]:";'<>?,. \\\/]/g);
@@ -124,7 +125,7 @@ class AcquirePage extends Component {
     }
   };
 
-  handleExpTime = event => {
+  handleExpTime = (event) => {
     if (event.target.value.includes("Custom")) {
       this.setState({ customTimeOpen: true });
     } else {
@@ -132,22 +133,22 @@ class AcquirePage extends Component {
     }
   };
 
-  handleNumImages = event => {
+  handleNumImages = (event) => {
     this.setState({ numImages: parseInt(event.target.value) });
   };
 
-  handleDelay = event => {
+  handleDelay = (event) => {
     this.setState({ delay: parseFloat(event.target.value) });
   };
 
-  handleDescription = event => {
+  handleDescription = (event) => {
     this.setState({ description: event.target.value });
   };
-  handleDeleteTime = value => {
-    this.setState({ expTimes: this.state.expTimes.filter(num => num !== value) });
+  handleDeleteTime = (value) => {
+    this.setState({ expTimes: this.state.expTimes.filter((num) => num !== value) });
   };
 
-  handleCustomTime = time => {
+  handleCustomTime = (time) => {
     this.setState({ customTimeOpen: false });
     if (times.includes(time)) {
       return;
@@ -210,14 +211,17 @@ class AcquirePage extends Component {
             <Grid item>
               <div>
                 <h1>{this.props.gamePad[0]}</h1>
-                <Button
-                  variant="contained"
-                  size="large"
-                  onClick={this.handleAcquire}
-                  className={classNames(classes.button, classes.acquire)}
-                >
-                  Pew Pew!
-                </Button>
+                <Tooltip title="That's no moon..." placement="top" arrow>
+                  <Button
+                    variant="contained"
+                    size="large"
+                    startIcon={<DeathStar />}
+                    onClick={this.handleAcquire}
+                    className={classNames(classes.button, classes.acquire)}
+                  >
+                    Pew Pew!!!
+                  </Button>
+                </Tooltip>
                 <Button
                   variant="contained"
                   size="large"
@@ -253,9 +257,9 @@ class AcquirePage extends Component {
                 value={this.state.expTimes}
                 onChange={this.handleExpTime}
                 input={<Input id="select-exp-time" />}
-                renderValue={selected => (
+                renderValue={(selected) => (
                   <div className={classes.chips}>
-                    {selected.map(value => (
+                    {selected.map((value) => (
                       <Chip
                         key={value}
                         label={value}
@@ -267,7 +271,7 @@ class AcquirePage extends Component {
                   </div>
                 )}
               >
-                {times.map(name => (
+                {times.map((name) => (
                   <MenuItem key={name} value={name}>
                     {name}
                   </MenuItem>
@@ -368,17 +372,14 @@ class AcquirePage extends Component {
 }
 
 AcquirePage.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
     status: state.acquire.status,
-    gamePad: state.gamePad.buttons
+    gamePad: state.gamePad.buttons,
   };
 }
 
-export default connect(
-  mapStateToProps,
-  actionCreators
-)(withStyles(styles)(AcquirePage));
+export default connect(mapStateToProps, actionCreators)(withStyles(styles)(AcquirePage));
