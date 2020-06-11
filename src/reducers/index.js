@@ -14,6 +14,7 @@ import GamePadReducer from "./reducer_gamepad";
 import CameraLengthReducer from "./reducer_camera_length";
 import FlagsReducer from "./reducer_flags";
 import RedisReducer from "./reducer_redis";
+import EnergyReducer from "./reducer_energy";
 
 const rootReducer = combineReducers({
   acquire: AcquireReducer,
@@ -30,7 +31,8 @@ const rootReducer = combineReducers({
   gamePad: GamePadReducer,
   cameraLength: CameraLengthReducer,
   flags: FlagsReducer,
-  redis: RedisReducer
+  redis: RedisReducer,
+  energy: EnergyReducer
 });
 
 export default rootReducer;

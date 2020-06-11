@@ -1,65 +1,40 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-
-import * as actionCreators from "../../actions/index";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Dialog from "@material-ui/core/Dialog";
+import { makeStyles, Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import PropTypes from "prop-types";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { vent } from "../../actions/index";
 
-const styles = theme => ({
-  root: {
-    display: "flex"
-  }
-});
-
-class VentDialog extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      closed: 1
-    };
-  }
-
-  handleClose = () => {
-    this.props.onClose(this.state.closed);
-  };
+const VentDialog = (props) => {
+  const dispatch = useDispatch();
   
-  handleVent = () => {
-    this.props.vent(this.props.id);
-    console.log(this.props.id)
-    this.props.onClose(this.state.closed)
-  }
+  const handleClose = () => {
+    props.onClose();
+  };
 
+  const handleVent = () => {
+    dispatch(vent(props.id.toLowerCase()));
+    handleClose();
+  };
 
-
-  render() {
-    return (
-      <Dialog fullWidth={true} maxwidth="xs" onClose={this.handleClose} open={this.props.open}>
-        <DialogTitle></DialogTitle>
-        <div align="center">
-        <Typography variant='body1'>Do you really want to Vent?</Typography>
-        </div>
-        <Button onClick={this.handleClose}>No</Button>
-        <Button onClick={this.handleVent}>Yes</Button>
-      </Dialog>
-    );
-  }
-}
-
-VentDialog.propTypes = {
-  classes: PropTypes.object.isRequired
+  return (
+    <Dialog fullWidth={true} maxwidth="xs" onClose={handleClose} open={props.open}>
+      <DialogTitle />
+      <div align="center">
+        <Typography variant="body1">Vent this section?</Typography>
+      </div>
+      <Button onClick={handleClose}>No</Button>
+      <Button onClick={handleVent}>Yes</Button>
+    </Dialog>
+  );
 };
 
-function mapStateToProps(state) {
-  return {
-    
-  };
-}
+VentDialog.propTypes = {
+  id: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.object.isRequired,
+};
 
-export default connect(
-  mapStateToProps,
-  actionCreators
-)(withStyles(styles)(VentDialog));
+export default VentDialog;

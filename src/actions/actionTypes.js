@@ -79,10 +79,14 @@ export const RUN_GS_SCAN = "run_gs_scan";
 export const SAVE_GS_SCAN = "save_gs_scan";
 export const LOAD_GS_SCAN = "load_gs_scan";
 export const LIST_GS_SCAN = "list_gs_scan";
+
 export const NOSECONES = "nose_cones";
 export const NOSECONE = "nose_cone";
 export const CAMERALENGTH = "camera_length";
 export const CAMERALENGTHUPDATE = "camera_length_update";
+
+export const ENERGYCHANGEUPDATE = "energy_change_update"
+export const ENERGYCHANGE = "energy_change"
 
 export const GETFLAGS = "get_flags";
 export const SETFLAG = "set_flag";

@@ -4,16 +4,19 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import PropTypes from "prop-types";
 import React from "react";
-import { useSetOphyd } from "../hooks/ophyd.js";
+import { useDispatch } from "react-redux";
+import { pump } from "../../actions/index";
 
 const PumpDialog = (props) => {
+  const dispatch = useDispatch();
+  
   const handleClose = () => {
-    this.props.onClose();
+    props.onClose();
   };
 
-  const handlePump = (props) => {
-    useSetOphyd(props.device, props.value);
-    this.handleClose();
+  const handlePump = () => {
+    dispatch(pump(props.id.toLowerCase()));
+    handleClose();
   };
 
   return (
@@ -29,8 +32,8 @@ const PumpDialog = (props) => {
 };
 
 PumpDialog.propTypes = {
-  device: PropTypes.string.isRequired,
-  value: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
   open: PropTypes.object.isRequired,
 };
 

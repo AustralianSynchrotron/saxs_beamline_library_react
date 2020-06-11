@@ -11,7 +11,7 @@ const endpoints = {
   urls: {
     vacuum: `ws://${baseURL}:3144`,
     vacstatus: `ws://${baseURL}:3145`,
-    status: `ws://${baseURL}:3143`,
+    status: `ws://dockervip:3143`,
     flags: `ws://dockervip:4005/api/v1.0/ws`,
     redis: `ws://dockervip:4006/api/v1.0/ws`,
     // acquire: `ws://${baseURL}:3142`,
@@ -19,7 +19,7 @@ const endpoints = {
     // docker: `ws://${baseURL}:9991`,
     // logger: `ws://${baseURL}:3001`,
     // grazing: `ws://${baseURL}:3002`
-    cameraLength: `ws://${baseURL}:8082/api/v1.0/ws`
+    cameraLength: `ws://dockervip:4004/api/v1.0/ws`
   },
   onOpenDispatch: {
     status: listenStatus,

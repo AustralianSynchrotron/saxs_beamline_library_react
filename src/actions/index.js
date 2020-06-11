@@ -11,6 +11,8 @@ const acquireURL = "http://dockervip:4002";
 const flagsURL = "http://dockervip:4005";
 const redisURL = "http://dockervip:4006";
 const cameraLengthURL = "http://dockervip:4004";
+const energyURL = "http://dockervip:4007";
+const pumpingURL = "http://dockervip:4008";
 const beamlineConfigURL = "http://dockervip:8086";
 
 export const acquire = (filename, exp_times, num_images, delay, use_shutter, description) => ({
@@ -239,14 +241,20 @@ export const updateValves = (vlv07, vlv10, vlv11, vlv12, igv06, igv08, igv09) =>
 
 export const pump = (name) => ({
   type: actions.PUMP,
-  data: { name },
-  websocket: "vacuum",
+  fetch: pumpingURL + "/api/v1.0/pump",
+  data: {
+    method: "POST",
+    body: JSON.stringify({ "section": name + "_pump" }),
+  },
 });
 
 export const vent = (name) => ({
   type: actions.VENT,
-  data: { name },
-  websocket: "vacuum",
+  fetch: pumpingURL + "/api/v1.0/pump",
+  data: {
+    method: "POST",
+    body: JSON.stringify({ "section": name + "_vent" }),
+  },
 });
 
 export const manual_pump = (name, request) => ({
@@ -552,6 +560,16 @@ export const changeCameraLength = (length) => ({
     method: "POST",
     mode: "cors",
     body: JSON.stringify({ length }),
+  },
+});
+
+export const changeEnergy = (energy) => ({
+  type: actions.ENERGYCHANGE,
+  fetch: energyURL + "/api/v1.0/energychange",
+  data: {
+    method: "POST",
+    mode: "cors",
+    body: JSON.stringify({ energy }),
   },
 });
 
