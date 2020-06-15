@@ -419,7 +419,6 @@ export const OphydMotorCompact = props => {
         <Grid container direction="row" justify="center">
           <IconButton
             size="small"
-            className={classes.showButton}
             onClick={handleShowTweak}
             className={classes.showButton}
           >

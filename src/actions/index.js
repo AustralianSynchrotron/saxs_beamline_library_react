@@ -556,6 +556,34 @@ export const changeNoseCone = (name) => ({
   },
 });
 
+export const getUserOffset = () => ({
+  type: actions.USEROFFSET,
+  fetch: cameraLengthURL + "/api/v1.0/useroffset",
+  data: {
+    method: "GET",
+    mode: "cors",
+  },
+});
+
+export const changeUserOffset = (user) => ({
+  type: actions.USEROFFSET,
+  fetch: cameraLengthURL + "/api/v1.0/nosecone",
+  data: {
+    method: "PUT",
+    mode: "cors",
+    body: JSON.stringify({ user }),
+  },
+});
+
+export const getCameraLength = () => ({
+  type: actions.CAMERALENGTH,
+  fetch: cameraLengthURL + "/api/v1.0/cameralength",
+  data: {
+    method: "GET",
+    mode: "cors",
+  },
+});
+
 export const changeCameraLength = (length) => ({
   type: actions.CAMERALENGTH,
   fetch: cameraLengthURL + "/api/v1.0/cameralength",

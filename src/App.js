@@ -290,7 +290,7 @@ const App = props => {
               ["Beamline Config", <Favorite />],
               ["Vacuum Controls", <Cached />],
               ["Video Cameras", <Videocam />],
-              ["Q Range Setup", <Typography variant="h6" style={{paddingLeft: "5px"}}>Q</Typography>],
+              ["Q Range Setup", <Typography variant="h6" style={{paddingLeft: "5px"}}>q</Typography>],
               ["Grazing Setup", <CallMissedOutgoing />],
               ["Tensile Setup", <SwapHoriz />],
               ["Python Logger", <Warning />],

@@ -13,12 +13,15 @@ import { makeStyles, mergeClasses } from "@material-ui/styles";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  getCameraLength,
   changeCameraLength,
   noseCone,
   listNoseCones,
   changeNoseCone,
   changeEnergy,
   clearProgressLog,
+  getUserOffset,
+  changeUserOffset,
 } from "../../actions";
 import {
   OphydStatusField,
@@ -67,8 +70,17 @@ const useStyles = makeStyles({
     flexDirection: "column",
     alignItems: "center",
   },
+  changeH: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   padding: {
-    padding: "3px",
+    paddingBottom: "35px",
+  },
+  smallPadding: {
+    paddingBottom: "15px",
   },
 
   horizontal: {
@@ -87,10 +99,12 @@ const QRangeChange = (props) => {
   const [cameraLength, setCameraLength] = useState();
   const [energy, setEnergy] = useState();
 
+  const cameraLengthReadback = useSelector((state) => state.cameraLength.cameraLength) || null;
   const cameraMessage = useSelector((state) => state.cameraLength.progressLog) || null;
   const energyMessage = useSelector((state) => state.energy.progressLog) || null;
   const currentNoseCone = useSelector((state) => state.cameraLength.noseCone) || null;
   const noseCones = useSelector((state) => state.cameraLength.noseCones) || null;
+  const userOffset = useSelector((state) => state.cameraLength.userOffset) || null;
   const beamstopX = useSelector((state) => state.cameraLength.data.beamstop_stages_x) || null;
   const beamstopY = useSelector((state) => state.cameraLength.data.beamstop_stages_y) || null;
   const beamstop = useSelector((state) => state.cameraLength.data.beamstop) || null;
@@ -125,9 +139,15 @@ const QRangeChange = (props) => {
     dispatch(changeNoseCone(event.target.value));
   };
 
+  const handleUserOffset = (event) => {
+    dispatch(changeUserOffset(event.target.value));
+  };
+
   useEffect(() => {
+    dispatch(getCameraLength());
     dispatch(listNoseCones());
     dispatch(noseCone());
+    dispatch(getUserOffset());
   }, []);
 
   return (
@@ -142,96 +162,120 @@ const QRangeChange = (props) => {
           justify="center"
           xs={12}
         >
-          <Grid item xs={6}>
-            <div className={classes.change}>
-              <OphydStatusField
-                device="saxs_optics.dcm.energy"
-                label="Energy"
-                toNumber={true}
-                precision={3}
-                suffix="keV"
+          <Grid item container xs={6} className={classes.change}>
+            <OphydStatusField
+              device="saxs_optics.dcm.energy"
+              label="Energy"
+              toNumber={true}
+              precision={3}
+              suffix="keV"
+            />
+            <Grid item direction="row" className={classes.padding}>
+              <TextField
+                variant="outlined"
+                label="Energy (kV)"
+                size="small"
+                value={energy}
+                onChange={handleEnergyChange}
               />
-              <span>
-                <TextField
-                  variant="outlined"
-                  label="Energy (kV)"
-                  size="small"
-                  value={energy}
-                  onChange={handleEnergyChange}
-                />
-                <Button
-                  variant="contained"
-                  endIcon={<Send />}
-                  onClick={handleStartEnergyChange}
-                  className={clsx(classes.button, classes.changeButton)}
-                >
-                  Change Energy
-                </Button>
-              </span>
-              <span>
-                <OphydStatusField label="Detector Z Position" device="saxs_motors.saxs_det.z" />
-                <OphydStatusField
-                  label="Detector Cover Position"
-                  device="saxs_motors.beamstop.large_x"
-                />
-              </span>
-              <InputLabel id="nose-cone-select-label">Nose Cone</InputLabel>
-              <Select
-                labelId="nose-cone-select-label"
-                value={currentNoseCone.name}
-                onChange={handleNoseCone}
+              <Button
+                variant="contained"
+                endIcon={<Send />}
+                onClick={handleStartEnergyChange}
+                className={clsx(classes.button, classes.changeButton)}
               >
-                {Object.entries(noseCones).map((nc) => (
-                  <MenuItem key={nc[0]} value={nc[0]}>
-                    {nc[0]} {nc[1]}
-                  </MenuItem>
-                ))}
-              </Select>
-              <span>
-                <TextField
-                  variant="outlined"
-                  label="Camera Length (mm)"
-                  size="small"
-                  value={cameraLength}
-                  onChange={handleCameraLengthChange}
-                />
-                <Button
-                  variant="contained"
-                  endIcon={<Send />}
-                  onClick={handleStartCameraLengthChange}
-                  className={clsx(classes.button, classes.changeButton)}
-                >
-                  Change Camera Length
-                </Button>
-              </span>
-
-              <span>
-                <Typography variant="h6">Scan Reedback</Typography>
-                <TextField label="Beamstop Counts" value={beamstop} />
-                <TextField label="Beamstop X" value={beamstopX} />
-                <TextField label="Beamstop Y" value={beamstopY} />
-              </span>
-              <span>
-                <Typography variant="h6" style={{paddingBottom: "24px"}}>SAXS Detector Position</Typography>
-                <OphydMotorCompact device={"saxs_motors.saxs_det.x"} />
-                <OphydMotorCompact device={"saxs_motors.saxs_det.y"} />
-              </span>
+                Change Energy
+              </Button>
+            </Grid>
+            <Grid item direction="row">
+              <OphydStatusField label="Detector Z Position" device="saxs_motors.saxs_det.z" />
               <OphydStatusField
-                label="Beamstop Counts"
-                device={"saxs_scaler.saxs_scaler.beamstop"}
-                toNumber={true}
-                precision={6}
+                label="Detector Cover Position"
+                device="saxs_motors.beamstop.large_x"
               />
+            </Grid>
+            <Grid
+              item
+              container
+              direction="row"
+              className={clsx(classes.changeH, classes.smallPadding)}
+            >
+              <Grid item direction="column" style={{ paddingRight: "24px" }}>
+                <InputLabel id="nose-cone-select-label">Nose Cone</InputLabel>
+                <Select
+                  labelId="nose-cone-select-label"
+                  value={currentNoseCone.name}
+                  onChange={handleNoseCone}
+                >
+                  {Object.entries(noseCones).map((nc) => (
+                    <MenuItem key={nc[0]} value={nc[0]}>
+                      {nc[0]} {nc[1]}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Grid>
+              <TextField
+                label="Sample⇔Entrance (mm)"
+                variant="outlined"
+                size="small"
+                value={userOffset}
+                onChange={handleUserOffset}
+              />
+            </Grid>
+            <Typography variant="caption">Current Camera Length:</Typography><Typography>{cameraLengthReadback}</Typography>
+            <Grid item direction="row" className={classes.padding}>
+              <TextField
+                variant="outlined"
+                label="Camera Length (mm)"
+                size="small"
+                value={cameraLength}
+                onChange={handleCameraLengthChange}
+              />
+              <Button
+                variant="contained"
+                endIcon={<Send />}
+                onClick={handleStartCameraLengthChange}
+                className={clsx(classes.button, classes.changeButton)}
+              >
+                Change Camera Length
+              </Button>
+            </Grid>
 
-              <OphydButton
-                label="Check Beamstop Counts"
-                value={1}
-                device={"saxs_scaler.saxs_scaler.autocount_mode"}
-                buttonClasses={clsx(classes.button, classes.checkButton)}
-              />
-            </div>
+            <Grid item direction="row" className={classes.padding}>
+              <Typography variant="h6">Scan Readback</Typography>
+              <TextField label="Beamstop Counts" value={beamstop} />
+              <TextField label="Beamstop X" value={beamstopX} />
+              <TextField label="Beamstop Y" value={beamstopY} />
+            </Grid>
+            <Grid item container direction="column" className={classes.change}>
+              <Typography variant="h6" className={classes.padding}>
+                SAXS Detector Position
+              </Typography>
+              <Grid item container direction="row" className={classes.changeH}>
+                <Grid item direction="column">
+                  <OphydMotorCompact device={"saxs_motors.saxs_det.x"} />
+                </Grid>
+                <Grid item direction="column">
+                  <OphydMotorCompact device={"saxs_motors.saxs_det.y"} />
+                </Grid>
+              </Grid>
+            </Grid>
+            <OphydStatusField
+              label="Beamstop Counts"
+              device={"saxs_scaler.saxs_scaler.beamstop"}
+              toNumber={true}
+              precision={6}
+            />
+
+            <OphydButton
+              label="Check Beamstop Counts"
+              value={1}
+              device={"saxs_scaler.saxs_scaler.autocount_mode"}
+              buttonClasses={clsx(classes.button, classes.checkButton)}
+            />
           </Grid>
           <Grid item xs={6}>
+            <Typography variant="h6">Progress Log</Typography>
             <TextField
               multiline
               rows={50}

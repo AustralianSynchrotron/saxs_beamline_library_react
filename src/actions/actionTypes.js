@@ -82,6 +82,7 @@ export const LIST_GS_SCAN = "list_gs_scan";
 
 export const NOSECONES = "nose_cones";
 export const NOSECONE = "nose_cone";
+export const USEROFFSET = "user_offset";
 export const CAMERALENGTH = "camera_length";
 export const CAMERALENGTHUPDATE = "camera_length_update";
 
