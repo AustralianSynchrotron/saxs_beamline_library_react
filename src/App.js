@@ -45,6 +45,7 @@ import TensilePage from "./components/tensile/Tensile";
 import VacuumPage from "./components/vacuum/Vacuum";
 import VideoPage from "./components/video_page/video_page";
 import QRangeChange from "./components/q_range_change_page/q_range_change_page.js";
+import { TextField } from "@material-ui/core";
 
 
 const drawerWidth = 240;
@@ -289,7 +290,7 @@ const App = props => {
               ["Beamline Config", <Favorite />],
               ["Vacuum Controls", <Cached />],
               ["Video Cameras", <Videocam />],
-              ["Q Range Setup", <SwitchCameraIcon />],
+              ["Q Range Setup", <Typography variant="h6" style={{paddingLeft: "5px"}}>Q</Typography>],
               ["Grazing Setup", <CallMissedOutgoing />],
               ["Tensile Setup", <SwapHoriz />],
               ["Python Logger", <Warning />],

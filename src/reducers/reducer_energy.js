@@ -7,6 +7,8 @@ const default_state = {
 
 export default (state = default_state, action) => {
   switch (action.type) {
+    case actions.CLEARPROGRESSLOG:
+      return {...state, progressLog: ""}
     case actions.ENERGYCHANGE:
       return {...state, progressLog: ""}
     case actions.ENERGYCHANGEUPDATE:
@@ -17,7 +19,7 @@ export default (state = default_state, action) => {
       }
       return {
         ...state,
-        progressLog: state.progressLog + action.data.message + "\n",
+        progressLog: action.data.message + "\n" + state.progressLog,
         data: { ...state.data, ...data },
       };
     default:

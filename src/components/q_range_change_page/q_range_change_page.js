@@ -1,7 +1,9 @@
 import Button from "@material-ui/core/Button";
 import blue from "@material-ui/core/colors/blue";
 import yellow from "@material-ui/core/colors/yellow";
+import grey from "@material-ui/core/colors/grey";
 import Grid from "@material-ui/core/Grid";
+import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
@@ -16,6 +18,7 @@ import {
   listNoseCones,
   changeNoseCone,
   changeEnergy,
+  clearProgressLog,
 } from "../../actions";
 import {
   OphydStatusField,
@@ -53,7 +56,9 @@ const useStyles = makeStyles({
       borderColor: "red", //default
     },
   },
-
+  log: {
+    backgroundColor: grey["700"],
+  },
   notchedOutline: {},
   error: {},
   disabled: {},
@@ -82,7 +87,8 @@ const QRangeChange = (props) => {
   const [cameraLength, setCameraLength] = useState();
   const [energy, setEnergy] = useState();
 
-  const message = useSelector((state) => state.cameraLength.progressLog) || null;
+  const cameraMessage = useSelector((state) => state.cameraLength.progressLog) || null;
+  const energyMessage = useSelector((state) => state.energy.progressLog) || null;
   const currentNoseCone = useSelector((state) => state.cameraLength.noseCone) || null;
   const noseCones = useSelector((state) => state.cameraLength.noseCones) || null;
   const beamstopX = useSelector((state) => state.cameraLength.data.beamstop_stages_x) || null;
@@ -98,6 +104,7 @@ const QRangeChange = (props) => {
   };
 
   const handleStartEnergyChange = () => {
+    dispatch(clearProgressLog);
     dispatch(changeEnergy(energy));
   };
 
@@ -110,6 +117,7 @@ const QRangeChange = (props) => {
   };
 
   const handleStartCameraLengthChange = () => {
+    dispatch(clearProgressLog);
     dispatch(changeCameraLength(cameraLength));
   };
 
@@ -160,19 +168,22 @@ const QRangeChange = (props) => {
                   Change Energy
                 </Button>
               </span>
-              <OphydStatusField label="Detector Z Position" device="saxs_motors.saxs_det.z" />
-              <OphydStatusField
-                label="Detector Cover Position"
-                device="saxs_motors.beamstop.large_x"
-              />
-              <TextField value={currentNoseCone.name} />
-              <TextField value={currentNoseCone.length} />
-
-              <Select label={"Nose Cone"} value={currentNoseCone} onChange={handleNoseCone}>
+              <span>
+                <OphydStatusField label="Detector Z Position" device="saxs_motors.saxs_det.z" />
+                <OphydStatusField
+                  label="Detector Cover Position"
+                  device="saxs_motors.beamstop.large_x"
+                />
+              </span>
+              <InputLabel id="nose-cone-select-label">Nose Cone</InputLabel>
+              <Select
+                labelId="nose-cone-select-label"
+                value={currentNoseCone.name}
+                onChange={handleNoseCone}
+              >
                 {Object.entries(noseCones).map((nc) => (
                   <MenuItem key={nc[0]} value={nc[0]}>
-                    {nc[0]}
-                    {nc[1]}
+                    {nc[0]} {nc[1]}
                   </MenuItem>
                 ))}
               </Select>
@@ -194,14 +205,17 @@ const QRangeChange = (props) => {
                 </Button>
               </span>
 
-              <Typography>Beamstop Counts</Typography>
-              <TextField value={beamstop} />
-              <Typography>Beamstop X</Typography>
-              <TextField value={beamstopX} />
-              <Typography>Beamstop Y</Typography>
-              <TextField value={beamstopY} />
-              <OphydMotorCompact device={"saxs_motors.saxs_det.x"} />
-              <OphydMotorCompact device={"saxs_motors.saxs_det.y"} />
+              <span>
+                <Typography variant="h6">Scan Reedback</Typography>
+                <TextField label="Beamstop Counts" value={beamstop} />
+                <TextField label="Beamstop X" value={beamstopX} />
+                <TextField label="Beamstop Y" value={beamstopY} />
+              </span>
+              <span>
+                <Typography variant="h6" style={{paddingBottom: "24px"}}>SAXS Detector Position</Typography>
+                <OphydMotorCompact device={"saxs_motors.saxs_det.x"} />
+                <OphydMotorCompact device={"saxs_motors.saxs_det.y"} />
+              </span>
               <OphydStatusField
                 label="Beamstop Counts"
                 device={"saxs_scaler.saxs_scaler.beamstop"}
@@ -218,7 +232,18 @@ const QRangeChange = (props) => {
             </div>
           </Grid>
           <Grid item xs={6}>
-            <TextField multiline rows={10} fullWidth value={message} />
+            <TextField
+              multiline
+              rows={50}
+              fullWidth
+              value={String(cameraMessage) + String(energyMessage)}
+              className={classes.log}
+              inputProps={{
+                style: {
+                  padding: 25,
+                },
+              }}
+            />
           </Grid>
         </Grid>
       </Grid>

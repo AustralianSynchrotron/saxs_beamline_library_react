@@ -15,6 +15,8 @@ export default (state = default_state, action) => {
       return { ...state, noseCones: action.data };
     case actions.NOSECONE:
       return { ...state, noseCone: action.data };
+    case actions.CLEARPROGRESSLOG:
+        return {...state, progressLog: ""}
     case actions.CAMERALENGTHUPDATE:
       try {
         var data = action.data.data.data;
@@ -23,7 +25,7 @@ export default (state = default_state, action) => {
       }
       return {
         ...state,
-        progressLog: state.progressLog + action.data.message + "\n",
+        progressLog: action.data.message + "\n" + state.progressLog,
         data: { ...state.data, ...data },
       };
     default:

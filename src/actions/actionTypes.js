@@ -88,6 +88,8 @@ export const CAMERALENGTHUPDATE = "camera_length_update";
 export const ENERGYCHANGEUPDATE = "energy_change_update"
 export const ENERGYCHANGE = "energy_change"
 
+export const CLEARPROGRESSLOG = "clear_progress_log"
+
 export const GETFLAGS = "get_flags";
 export const SETFLAG = "set_flag";
 export const FLAGSUPDATE = "flags_update";

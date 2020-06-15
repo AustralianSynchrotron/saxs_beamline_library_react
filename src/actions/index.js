@@ -244,7 +244,7 @@ export const pump = (name) => ({
   fetch: pumpingURL + "/api/v1.0/pump",
   data: {
     method: "POST",
-    body: JSON.stringify({ "section": name + "_pump" }),
+    body: JSON.stringify({ section: name + "_pump" }),
   },
 });
 
@@ -253,7 +253,7 @@ export const vent = (name) => ({
   fetch: pumpingURL + "/api/v1.0/pump",
   data: {
     method: "POST",
-    body: JSON.stringify({ "section": name + "_vent" }),
+    body: JSON.stringify({ section: name + "_vent" }),
   },
 });
 
@@ -276,7 +276,10 @@ export const start_listeners = () => ({
 
 export const vac_abort = () => ({
   type: actions.VACABORT,
-  websocket: "vacuum",
+  fetch: pumpingURL + "/api/v1.0/pump",
+  data: {
+    method: "DELETE"
+  },
 });
 
 export const subscribeOphyd = (token) => ({
@@ -337,8 +340,8 @@ export const setOphyd = (device, value, timeout = null) => {
     fetch: ophydURL + "/api/v1.0/devices/" + device,
     data: {
       method: "PUT",
-      body: JSON.stringify(body)
-    }
+      body: JSON.stringify(body),
+    },
   };
 };
 
@@ -573,6 +576,10 @@ export const changeEnergy = (energy) => ({
   },
 });
 
+export const clearProgressLog = () => ({
+  type: actions.CLEARPROGRESSLOG,
+});
+
 export const buttonStatus = (buttons) => ({
   type: actions.GAMEPAD_BUTTON_STATUS,
   data: { buttons },
@@ -585,7 +592,7 @@ export const getFlags = () => ({
     method: "GET",
     mode: "cors",
   },
-})
+});
 
 export const setFlag = (key, value) => ({
   type: actions.SETFLAG,
@@ -595,7 +602,7 @@ export const setFlag = (key, value) => ({
     mode: "cors",
     body: JSON.stringify({ value }),
   },
-})
+});
 export const getKVs = () => ({
   type: actions.GETKVS,
   fetch: redisURL + "/api/v1.0/kvs",
@@ -603,4 +610,4 @@ export const getKVs = () => ({
     method: "GET",
     mode: "cors",
   },
-})
+});
