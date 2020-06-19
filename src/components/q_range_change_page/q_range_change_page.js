@@ -131,7 +131,7 @@ const QRangeChange = (props) => {
   };
 
   const handleStartCameraLengthChange = () => {
-    dispatch(clearProgressLog)();
+    dispatch(clearProgressLog());
     dispatch(changeCameraLength(cameraLength));
   };
 
