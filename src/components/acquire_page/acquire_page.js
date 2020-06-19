@@ -26,6 +26,8 @@ import * as actionCreators from "../../actions/index";
 import CustomTimeDialog from "../custom_time_dialog/custom_time_dialog";
 import GenericScan from "../generic_scan/generic_scan";
 
+import { pew } from "../../media/sounds";
+
 const styles = (theme) => ({
   root: {
     display: "flex",
@@ -175,6 +177,7 @@ class AcquirePage extends Component {
       this.state.useShutter,
       this.state.description
     );
+    pew.play()
   };
   handlePause = () => {
     if (this.state.pauseDemanded) {

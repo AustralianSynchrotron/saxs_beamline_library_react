@@ -7,10 +7,12 @@ import { makeStyles } from "@material-ui/styles";
 import React from "react";
 import { klaxon } from "../../media/sounds";
 import { OphydStatusField } from "../ophyd_components/ophyd_components";
-import { CameraControls, Energy, Flux, SampleLights, WindowControls } from "./beamline_control_components";
-
-
-
+import {
+  CameraControls,
+  Flux,
+  SampleLights,
+  WindowControls,
+} from "./beamline_control_components";
 
 const useStyles = makeStyles({
   hidden: { display: "None" },
@@ -18,24 +20,24 @@ const useStyles = makeStyles({
   slider: { flexDirection: "row" },
   cssOutlinedInput: {
     "&:not(hover):not($disabled):not($cssFocused):not($error) $notchedOutline": {
-      borderColor: "red" //default
-    }
+      borderColor: "red", //default
+    },
   },
   second: {
     background: green[500],
     color: "white",
     height: 48,
     "&:hover": {
-      backgroundColor: green[700]
-    }
+      backgroundColor: green[700],
+    },
   },
   first: {
     background: red[500],
     color: "white",
     height: 48,
     "&:hover": {
-      backgroundColor: red["A700"]
-    }
+      backgroundColor: red["A700"],
+    },
   },
 
   notchedOutline: {},
@@ -45,21 +47,21 @@ const useStyles = makeStyles({
     display: "flex",
     flexDireciton: "row",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   vertical: {
     display: "flex",
     flexDireciton: "column",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   statusfield: {
     padding: "2px",
-    background: grey["900"]
+    background: grey["900"],
   },
 
   padding: {
-    padding: "3px"
+    padding: "3px",
   },
 
   horizontal: {
@@ -67,11 +69,11 @@ const useStyles = makeStyles({
     flexDirection: "row",
     justifyContent: "left",
     alignItems: "center",
-    padding: "10px"
-  }
+    padding: "10px",
+  },
 });
 
-const BeamlineControl = props => {
+const BeamlineControl = (props) => {
   const classes = useStyles();
   return (
     <React.Fragment>
@@ -250,19 +252,6 @@ const BeamlineControl = props => {
             />
           </Grid>
           <Grid item xs={2} />
-        </Grid>
-        <Grid item />
-        <Grid
-          container
-          className={classes.root}
-          spacing={5}
-          direction="row"
-          alignItems="baseline"
-          justify="center"
-        >
-          <Grid item xs={12}>
-            <Energy />
-          </Grid>
         </Grid>
         <Grid item />
         <Grid

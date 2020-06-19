@@ -286,11 +286,11 @@ const App = props => {
             {[
               ["Acquisition", <PlayCircleOutline />],
               // ["New Experiment", <NoteAdd />],
+              ["Q Range Setup", <Typography variant="h6" style={{paddingLeft: "5px"}}>q</Typography>],
               ["Beamline Control", <Settings />],
               ["Beamline Config", <Favorite />],
               ["Vacuum Controls", <Cached />],
               ["Video Cameras", <Videocam />],
-              ["Q Range Setup", <Typography variant="h6" style={{paddingLeft: "5px"}}>q</Typography>],
               ["Grazing Setup", <CallMissedOutgoing />],
               ["Tensile Setup", <SwapHoriz />],
               ["Python Logger", <Warning />],
@@ -315,27 +315,27 @@ const App = props => {
           )}
           {page === 1 && (
             <div>
-              <BeamlineControl />
+              <QRangeChange />
             </div>
           )}
           {page === 2 && (
             <div>
-              <ConfigPage />
+              <BeamlineControl />
             </div>
           )}
           {page === 3 && (
             <div>
-              <VacuumPage />
+              <ConfigPage />
             </div>
           )}
           {page === 4 && (
             <div>
-              <VideoPage />
+              <VacuumPage />
             </div>
           )}
           {page === 5 && (
             <div>
-              <QRangeChange />
+              <VideoPage />
             </div>
           )}
           {page === 6 && (

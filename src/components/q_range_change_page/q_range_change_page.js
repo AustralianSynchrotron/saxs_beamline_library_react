@@ -96,7 +96,7 @@ const QRangeChange = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const [cameraLength, setCameraLength] = useState();
+  const [cameraLength, setCameraLength] = useState(0.);
   const [energy, setEnergy] = useState();
 
   const cameraLengthReadback = useSelector((state) => state.cameraLength.cameraLength) || null;
@@ -112,7 +112,7 @@ const QRangeChange = (props) => {
   const handleEnergyChange = (event) => {
     let value = parseFloat(event.target.value);
     if (isNaN(value)) {
-      value = 0;
+      setEnergy();
     }
     setEnergy(value);
   };
@@ -174,6 +174,7 @@ const QRangeChange = (props) => {
               <TextField
                 variant="outlined"
                 label="Energy (kV)"
+                type="number"
                 size="small"
                 value={energy}
                 onChange={handleEnergyChange}

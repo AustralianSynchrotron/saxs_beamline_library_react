@@ -9,7 +9,15 @@ import BrightnessLow from "@material-ui/icons/BrightnessLow";
 import { makeStyles } from "@material-ui/styles";
 import clsx from "clsx";
 import React, { useState } from "react";
-import { OphydButton, OphydDropdown, OphydSlider, OphydStateIcon, OphydStatusField, OphydTextField, OphydToggleButton } from "../ophyd_components/ophyd_components";
+import {
+  OphydButton,
+  OphydDropdown,
+  OphydSlider,
+  OphydStateIcon,
+  OphydStatusField,
+  OphydTextField,
+  OphydToggleButton,
+} from "../ophyd_components/ophyd_components";
 
 const useStyles = makeStyles({
   hidden: { display: "None" },
@@ -17,24 +25,24 @@ const useStyles = makeStyles({
   slider: { flexDirection: "row" },
   cssOutlinedInput: {
     "&:not(hover):not($disabled):not($cssFocused):not($error) $notchedOutline": {
-      borderColor: "red" //default
-    }
+      borderColor: "red", //default
+    },
   },
   second: {
     background: green[500],
     color: "white",
     height: 48,
     "&:hover": {
-      backgroundColor: green[700]
-    }
+      backgroundColor: green[700],
+    },
   },
   first: {
     background: red[500],
     color: "white",
     height: 48,
     "&:hover": {
-      backgroundColor: red["A700"]
-    }
+      backgroundColor: red["A700"],
+    },
   },
 
   notchedOutline: {},
@@ -44,21 +52,21 @@ const useStyles = makeStyles({
     display: "flex",
     flexDireciton: "row",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   vertical: {
     display: "flex",
     flexDireciton: "column",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   statusfield: {
     padding: "2px",
-    background: grey["900"]
+    background: grey["900"],
   },
 
   padding: {
-    padding: "1px"
+    padding: "1px",
   },
 
   horizontal: {
@@ -66,11 +74,11 @@ const useStyles = makeStyles({
     flexDirection: "row",
     justifyContent: "left",
     alignItems: "center",
-    padding: "10px"
-  }
+    padding: "10px",
+  },
 });
 
-export const Energy = props => {
+export const Energy = (props) => {
   const classes = useStyles(props);
   return (
     <React.Fragment>
@@ -134,7 +142,7 @@ export const Energy = props => {
   );
 };
 
-export const Flux = props => {
+export const Flux = (props) => {
   const classes = useStyles(props);
   return (
     <React.Fragment>
@@ -142,7 +150,6 @@ export const Flux = props => {
         <div className={classes.padding}>
           <Typography variant="h5">Flux</Typography>
           <div className={classes.horizontal}>
-            <OphydDropdown label="Camera Length" device="saxs_slits.flux.camera_length" />
             <OphydToggleButton
               label="Flux Scale"
               labelPosition="left"
@@ -173,7 +180,7 @@ export const Flux = props => {
   );
 };
 
-export const SampleLights = props => {
+export const SampleLights = (props) => {
   const classes = useStyles(props);
   return (
     <React.Fragment>
@@ -206,7 +213,7 @@ export const SampleLights = props => {
   );
 };
 
-export const CameraControls = props => {
+export const CameraControls = (props) => {
   const classes = useStyles(props);
   return (
     <React.Fragment>
@@ -259,14 +266,14 @@ export const CameraControls = props => {
   );
 };
 
-export const WindowControls = props => {
+export const WindowControls = (props) => {
   const classes = useStyles(props);
   const [TweakYValue, setTweakYValue] = useState("0.1");
-  const handleChangeY = event => {
+  const handleChangeY = (event) => {
     setTweakYValue(event.target.value);
   };
   const [TweakXValue, setTweakXValue] = useState("0.1");
-  const handleChangeX = event => {
+  const handleChangeX = (event) => {
     setTweakXValue(event.target.value);
   };
   return (
@@ -315,3 +322,51 @@ export const WindowControls = props => {
     </React.Fragment>
   );
 };
+
+// export const FeedbackControls = (props) => {
+//   const classes = useStyles(props);
+//   return (
+//     <React.Fragment>
+//       <Paper>
+//         <div className={classes.padding}>
+//           <Typography variant="h5">Feedback</Typography>
+//         </div>
+//         <div className={classes.horizontal}>
+//           <div className={classes.horizontal}>
+//             <OphydButton label="Move Window UP" device="move_window.wy.move" value={TweakYValue} />
+
+//             <TextField
+//               label="Tweak Value"
+//               variant="outlined"
+//               value={TweakYValue}
+//               onChange={handleChangeY}
+//             />
+//             <OphydButton
+//               label="Move Window Down"
+//               device="move_window.wy.move"
+//               value={-1 * TweakYValue}
+//             />
+//           </div>
+//           <div className={classes.horizontal}>
+//             <OphydButton
+//               label="Move Window outboard"
+//               device="move_window.wx.move"
+//               value={TweakXValue}
+//             />
+//             <TextField
+//               label="Tweak Value"
+//               variant="outlined"
+//               value={TweakXValue}
+//               onChange={handleChangeX}
+//             />
+//             <OphydButton
+//               label="Move Window inboard"
+//               device="move_window.wx.move"
+//               value={-1 * TweakXValue}
+//             />
+//           </div>
+//         </div>
+//       </Paper>
+//     </React.Fragment>
+//   );
+// };
