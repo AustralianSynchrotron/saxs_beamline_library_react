@@ -118,7 +118,7 @@ const QRangeChange = (props) => {
   };
 
   const handleStartEnergyChange = () => {
-    dispatch(clearProgressLog);
+    dispatch(clearProgressLog());
     dispatch(changeEnergy(energy));
   };
 
@@ -131,7 +131,7 @@ const QRangeChange = (props) => {
   };
 
   const handleStartCameraLengthChange = () => {
-    dispatch(clearProgressLog);
+    dispatch(clearProgressLog)();
     dispatch(changeCameraLength(cameraLength));
   };
 
