@@ -1,16 +1,16 @@
 import * as actions from "../actions/actionTypes";
 
 const default_state = {
-  progressLog: "",
+  progressLog: " ",
   data: {},
 };
 
 export default (state = default_state, action) => {
   switch (action.type) {
     case actions.CLEARPROGRESSLOG:
-      return {...state, progressLog: ""}
+      return {...state, progressLog: " "}
     case actions.ENERGYCHANGE:
-      return {...state, progressLog: ""}
+      return {...state, progressLog: " "}
     case actions.ENERGYCHANGEUPDATE:
       try {
         var data = action.data.data.data;

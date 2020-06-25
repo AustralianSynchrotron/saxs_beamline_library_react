@@ -1,11 +1,18 @@
+import { useDispatch, useSelector } from "react-redux";
 import green from "@material-ui/core/colors/green";
 import grey from "@material-ui/core/colors/grey";
 import red from "@material-ui/core/colors/red";
+import yellow from "@material-ui/core/colors/yellow";
+import blue from "@material-ui/core/colors/blue";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import BrightnessHigh from "@material-ui/icons/BrightnessHigh";
 import BrightnessLow from "@material-ui/icons/BrightnessLow";
+import PlayArrow from "@material-ui/icons/PlayArrow";
+import Stop from "@material-ui/icons/Stop";
 import { makeStyles } from "@material-ui/styles";
 import clsx from "clsx";
 import React, { useState } from "react";
@@ -18,6 +25,8 @@ import {
   OphydTextField,
   OphydToggleButton,
 } from "../ophyd_components/ophyd_components";
+
+import { doFeedback, stopFeedback } from "../../actions/index";
 
 const useStyles = makeStyles({
   hidden: { display: "None" },
@@ -74,6 +83,32 @@ const useStyles = makeStyles({
     flexDirection: "row",
     justifyContent: "left",
     alignItems: "center",
+    padding: "10px",
+  },
+  button: {
+    color: "white",
+    margin: "2px",
+    "&:hover": {
+      color: "white",
+    },
+  },
+  feedbackButton: {
+    backgroundColor: blue["700"],
+    "&:hover": {
+      backgroundColor: blue["A700"],
+    },
+  },
+  stopFeedbackButton: {
+    backgroundColor: yellow["700"],
+    "&:hover": {
+      backgroundColor: yellow["A700"],
+    },
+  },
+  messageField: {
+    backgroundColor: grey["700"],
+    maxWidth: "400px",
+  },
+  control: {
     padding: "10px",
   },
 });
@@ -221,7 +256,6 @@ export const CameraControls = (props) => {
         <div className={classes.padding}>
           <Typography variant="h5">Camera Exposure and Gain</Typography>
         </div>
-        <div className={classes.horizontal}>
           <OphydSlider
             device="saxs_video.video_cameras.video_camera_1.cam.acquire_time"
             step={0.01}
@@ -240,8 +274,6 @@ export const CameraControls = (props) => {
             leftIcon={<BrightnessLow />}
             rightIcon={<BrightnessHigh />}
           />
-        </div>
-        <div className={classes.horizontal}>
           <OphydSlider
             device="saxs_video.video_cameras.video_camera_6.cam.acquire_time"
             step={0.01}
@@ -260,7 +292,6 @@ export const CameraControls = (props) => {
             leftIcon={<BrightnessLow />}
             rightIcon={<BrightnessHigh />}
           />
-        </div>
       </Paper>
     </React.Fragment>
   );
@@ -323,50 +354,55 @@ export const WindowControls = (props) => {
   );
 };
 
-// export const FeedbackControls = (props) => {
-//   const classes = useStyles(props);
-//   return (
-//     <React.Fragment>
-//       <Paper>
-//         <div className={classes.padding}>
-//           <Typography variant="h5">Feedback</Typography>
-//         </div>
-//         <div className={classes.horizontal}>
-//           <div className={classes.horizontal}>
-//             <OphydButton label="Move Window UP" device="move_window.wy.move" value={TweakYValue} />
+export const FeedbackControls = (props) => {
+  const dispatch = useDispatch();
+  const classes = useStyles(props);
 
-//             <TextField
-//               label="Tweak Value"
-//               variant="outlined"
-//               value={TweakYValue}
-//               onChange={handleChangeY}
-//             />
-//             <OphydButton
-//               label="Move Window Down"
-//               device="move_window.wy.move"
-//               value={-1 * TweakYValue}
-//             />
-//           </div>
-//           <div className={classes.horizontal}>
-//             <OphydButton
-//               label="Move Window outboard"
-//               device="move_window.wx.move"
-//               value={TweakXValue}
-//             />
-//             <TextField
-//               label="Tweak Value"
-//               variant="outlined"
-//               value={TweakXValue}
-//               onChange={handleChangeX}
-//             />
-//             <OphydButton
-//               label="Move Window inboard"
-//               device="move_window.wx.move"
-//               value={-1 * TweakXValue}
-//             />
-//           </div>
-//         </div>
-//       </Paper>
-//     </React.Fragment>
-//   );
-// };
+  const message = useSelector((state) => state.feedback.message);
+
+  const handleDoFeedback = () => {
+    dispatch(doFeedback());
+  };
+  const handleStopFeedback = () => {
+    dispatch(stopFeedback());
+  };
+  return (
+    <React.Fragment>
+      <Paper>
+        <Grid container direction="column" className={classes.control}>
+          <Grid item>
+            <Typography variant="h5">Feedback</Typography>
+          </Grid>
+          <Grid item direction="row">
+            <Button
+              variant="contained"
+              endIcon={<PlayArrow />}
+              onClick={handleDoFeedback}
+              className={clsx(classes.button, classes.feedbackButton)}
+            >
+              Start Feedback
+            </Button>
+            <Button
+              variant="contained"
+              endIcon={<Stop />}
+              onClick={handleStopFeedback}
+              className={clsx(classes.button, classes.stopFeedbackButton)}
+            >
+              Stop Feedback
+            </Button>
+          </Grid>
+          <Grid container direction="row" className={classes.messageField}>
+            <Grid item>
+              <Typography variant="caption" className={classes.padding}>
+                Message:{" "}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography>{message}</Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Paper>
+    </React.Fragment>
+  );
+};

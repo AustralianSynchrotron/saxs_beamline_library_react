@@ -12,6 +12,7 @@ import {
   Flux,
   SampleLights,
   WindowControls,
+  FeedbackControls,
 } from "./beamline_control_components";
 
 const useStyles = makeStyles({
@@ -71,6 +72,10 @@ const useStyles = makeStyles({
     alignItems: "center",
     padding: "10px",
   },
+
+  item: {
+    margin: "10px",
+  }
 });
 
 const BeamlineControl = (props) => {
@@ -254,57 +259,75 @@ const BeamlineControl = (props) => {
           <Grid item xs={2} />
         </Grid>
         <Grid item />
-        <Grid
-          container
-          className={classes.root}
-          spacing={2}
-          direction="row"
-          alignItems="baseline"
-          justify="center"
-        >
-          <Grid item xs={12}>
-            <Flux />
+        <Grid container direction="row" xs={12}>
+          <Grid container direction="column" xs={6}>
+            <Grid
+              container
+              className={classes.root}
+              spacing={2}
+              direction="row"
+              alignItems="baseline"
+              justify="center"
+            >
+              <Grid item xs={12} className={classes.item}>
+                <FeedbackControls />
+              </Grid>
+            </Grid>
+            <Grid item />
+            <Grid
+              container
+              className={classes.root}
+              spacing={2}
+              direction="row"
+              alignItems="baseline"
+              justify="center"
+            >
+              <Grid item xs={12} className={classes.item}>
+                <Flux />
+              </Grid>
+            </Grid>
+            <Grid item />
+            <Grid
+              container
+              className={classes.root}
+              spacing={5}
+              direction="row"
+              alignItems="baseline"
+              justify="center"
+            >
+              <Grid item xs={12} className={classes.item}>
+                <SampleLights />
+              </Grid>
+            </Grid>
+            <Grid item />
+            <Grid
+              container
+              className={classes.root}
+              spacing={5}
+              direction="row"
+              alignItems="baseline"
+              justify="center"
+            >
+              <Grid item xs={12} className={classes.item}>
+                <CameraControls />
+              </Grid>
+            </Grid>
+            <Grid item />
+            <Grid
+              container
+              className={classes.root}
+              spacing={5}
+              direction="row"
+              alignItems="baseline"
+              justify="center"
+            >
+              <Grid item xs={12} className={classes.item}>
+                <WindowControls />
+              </Grid>
+              <Grid item xs={3} />
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid item />
-        <Grid
-          container
-          className={classes.root}
-          spacing={5}
-          direction="row"
-          alignItems="baseline"
-          justify="center"
-        >
-          <Grid item xs={12}>
-            <SampleLights />
-          </Grid>
-        </Grid>
-        <Grid item />
-        <Grid
-          container
-          className={classes.root}
-          spacing={5}
-          direction="row"
-          alignItems="baseline"
-          justify="center"
-        >
-          <Grid item xs={12}>
-            <CameraControls />
-          </Grid>
-        </Grid>
-        <Grid item />
-        <Grid
-          container
-          className={classes.root}
-          spacing={5}
-          direction="row"
-          alignItems="baseline"
-          justify="center"
-        >
-          <Grid item xs={7}>
-            <WindowControls />
-          </Grid>
-          <Grid item xs={3} />
+          <Grid container direction="column" xs={6}></Grid>
         </Grid>
       </Grid>
     </React.Fragment>

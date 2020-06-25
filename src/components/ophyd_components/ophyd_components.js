@@ -323,9 +323,9 @@ export const OphydSlider = props => {
   return (
     <React.Fragment>
       <Grid container direction={props.orientation === "vertical" ? "column" : "row"} spacing={1}>
-        <Grid item>{props.label}</Grid>
-        <Grid item>{props.leftIcon}</Grid>
-        <Grid item xs>
+        <Grid item xs={2} >{props.label}</Grid>
+        <Grid item xs={1} >{props.leftIcon}</Grid>
+        <Grid item xs={8} >
           <Slider
             value={deviceData.value}
             onChange={handleChange}
@@ -335,7 +335,7 @@ export const OphydSlider = props => {
             min={props.min === "undefined" ? deviceData.lower_disp_limit : props.min}
           />
         </Grid>
-        <Grid item>{props.rightIcon}</Grid>
+        <Grid item xs={1}>{props.rightIcon}</Grid>
       </Grid>
     </React.Fragment>
   );

@@ -15,6 +15,7 @@ import CameraLengthReducer from "./reducer_camera_length";
 import FlagsReducer from "./reducer_flags";
 import RedisReducer from "./reducer_redis";
 import EnergyReducer from "./reducer_energy";
+import FeedbackReducer from "./reducer_feedback";
 
 const rootReducer = combineReducers({
   acquire: AcquireReducer,
@@ -32,7 +33,8 @@ const rootReducer = combineReducers({
   cameraLength: CameraLengthReducer,
   flags: FlagsReducer,
   redis: RedisReducer,
-  energy: EnergyReducer
+  energy: EnergyReducer,
+  feedback: FeedbackReducer
 });
 
 export default rootReducer;

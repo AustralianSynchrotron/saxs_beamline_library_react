@@ -8,9 +8,10 @@ const url = () => {
 const ophydURL = "http://dockervip:4001";
 const ophydWSURL = "ws://dockervip:4001";
 const acquireURL = "http://dockervip:4002";
+const feedbackURL = "http://dockervip:4003";
+const cameraLengthURL = "http://dockervip:4004";
 const flagsURL = "http://dockervip:4005";
 const redisURL = "http://dockervip:4006";
-const cameraLengthURL = "http://dockervip:4004";
 const energyURL = "http://dockervip:4007";
 const pumpingURL = "http://dockervip:4008";
 const beamlineConfigURL = "http://dockervip:8086";
@@ -525,6 +526,24 @@ export const listGSScan = () => ({
   data: {
     method: "GET",
     mode: "cors",
+  },
+});
+
+export const doFeedback = () => ({
+  type: actions.DOFEEDBACK,
+  fetch: feedbackURL + "/api/v1.0/feedback",
+  data: {
+    method: "POST",
+    mode: "cors"
+  },
+});
+
+export const stopFeedback = () => ({
+  type: actions.STOPFEEDBACK,
+  fetch: feedbackURL + "/api/v1.0/feedback",
+  data: {
+    method: "DELETE",
+    mode: "cors"
   },
 });
 

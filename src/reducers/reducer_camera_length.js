@@ -5,14 +5,14 @@ const default_state = {
   noseCones: {},
   noseCone: { name: "none", length: 0 },
   userOffset: 0.,
-  progressLog: "",
+  progressLog: " ",
   data: {},
 };
 
 export default (state = default_state, action) => {
   switch (action.type) {
     case actions.CAMERALENGTH:
-      return {...state, progressLog: "", cameraLength: action.data}
+      return {...state, progressLog: " ", cameraLength: action.data}
     case actions.NOSECONES:
       return { ...state, noseCones: action.data };
     case actions.NOSECONE:
@@ -20,7 +20,7 @@ export default (state = default_state, action) => {
     case actions.USEROFFSET:
       return { ...state, userOffset: action.data.user_offset };
     case actions.CLEARPROGRESSLOG:
-        return {...state, progressLog: ""}
+        return {...state, progressLog: " "}
     case actions.CAMERALENGTHUPDATE:
       try {
         var data = action.data.data.data;
