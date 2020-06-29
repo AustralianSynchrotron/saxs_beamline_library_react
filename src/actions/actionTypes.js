@@ -82,6 +82,8 @@ export const LIST_GS_SCAN = "list_gs_scan";
 
 export const DOFEEDBACK = "do_feedback";
 export const STOPFEEDBACK = "stop_feedback";
+export const FEEDBACKIN = "feedback_out";
+export const FEEDBACKOUT = "feedback_in";
 
 export const NOSECONES = "nose_cones";
 export const NOSECONE = "nose_cone";

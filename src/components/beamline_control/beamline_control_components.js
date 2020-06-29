@@ -12,6 +12,8 @@ import Typography from "@material-ui/core/Typography";
 import BrightnessHigh from "@material-ui/icons/BrightnessHigh";
 import BrightnessLow from "@material-ui/icons/BrightnessLow";
 import PlayArrow from "@material-ui/icons/PlayArrow";
+import ExpandMore from "@material-ui/icons/ExpandMore";
+import ExpandLess from "@material-ui/icons/ExpandLess";
 import Stop from "@material-ui/icons/Stop";
 import { makeStyles } from "@material-ui/styles";
 import clsx from "clsx";
@@ -23,10 +25,10 @@ import {
   OphydStateIcon,
   OphydStatusField,
   OphydTextField,
-  OphydToggleButton,
+  OphydToggleButton
 } from "../ophyd_components/ophyd_components";
 
-import { doFeedback, stopFeedback } from "../../actions/index";
+import { doFeedback, stopFeedback, feedbackIn, feedbackOut } from "../../actions/index";
 
 const useStyles = makeStyles({
   hidden: { display: "None" },
@@ -34,24 +36,24 @@ const useStyles = makeStyles({
   slider: { flexDirection: "row" },
   cssOutlinedInput: {
     "&:not(hover):not($disabled):not($cssFocused):not($error) $notchedOutline": {
-      borderColor: "red", //default
-    },
+      borderColor: "red" //default
+    }
   },
   second: {
     background: green[500],
     color: "white",
     height: 48,
     "&:hover": {
-      backgroundColor: green[700],
-    },
+      backgroundColor: green[700]
+    }
   },
   first: {
     background: red[500],
     color: "white",
     height: 48,
     "&:hover": {
-      backgroundColor: red["A700"],
-    },
+      backgroundColor: red["A700"]
+    }
   },
 
   notchedOutline: {},
@@ -61,21 +63,21 @@ const useStyles = makeStyles({
     display: "flex",
     flexDireciton: "row",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   vertical: {
     display: "flex",
     flexDireciton: "column",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   statusfield: {
     padding: "2px",
-    background: grey["900"],
+    background: grey["900"]
   },
 
   padding: {
-    padding: "1px",
+    padding: "1px"
   },
 
   horizontal: {
@@ -83,37 +85,53 @@ const useStyles = makeStyles({
     flexDirection: "row",
     justifyContent: "left",
     alignItems: "center",
-    padding: "10px",
+    padding: "10px"
   },
   button: {
     color: "white",
     margin: "2px",
     "&:hover": {
-      color: "white",
-    },
+      color: "white"
+    }
+  },
+  feedbackButtonBase: {
+    width: "196px"
   },
   feedbackButton: {
     backgroundColor: blue["700"],
     "&:hover": {
-      backgroundColor: blue["A700"],
-    },
+      backgroundColor: blue["A700"]
+    }
   },
   stopFeedbackButton: {
     backgroundColor: yellow["700"],
     "&:hover": {
-      backgroundColor: yellow["A700"],
-    },
+      backgroundColor: yellow["A700"]
+    }
+  },
+  feedbackInOutButton: {
+    backgroundColor: grey["500"],
+    "&:hover": {
+      backgroundColor: grey["A500"]
+    }
+  },
+  feedbackActive: {
+    color: red["700"]
+  },
+  feedbackInActive: {
+    marginLeft: "15px",
+    color: green["700"]
   },
   messageField: {
     backgroundColor: grey["700"],
-    maxWidth: "400px",
+    maxWidth: "400px"
   },
   control: {
-    padding: "10px",
-  },
+    padding: "10px"
+  }
 });
 
-export const Energy = (props) => {
+export const Energy = props => {
   const classes = useStyles(props);
   return (
     <React.Fragment>
@@ -177,7 +195,7 @@ export const Energy = (props) => {
   );
 };
 
-export const Flux = (props) => {
+export const Flux = props => {
   const classes = useStyles(props);
   return (
     <React.Fragment>
@@ -215,7 +233,7 @@ export const Flux = (props) => {
   );
 };
 
-export const SampleLights = (props) => {
+export const SampleLights = props => {
   const classes = useStyles(props);
   return (
     <React.Fragment>
@@ -248,7 +266,7 @@ export const SampleLights = (props) => {
   );
 };
 
-export const CameraControls = (props) => {
+export const CameraControls = props => {
   const classes = useStyles(props);
   return (
     <React.Fragment>
@@ -256,55 +274,55 @@ export const CameraControls = (props) => {
         <div className={classes.padding}>
           <Typography variant="h5">Camera Exposure and Gain</Typography>
         </div>
-          <OphydSlider
-            device="saxs_video.video_cameras.video_camera_1.cam.acquire_time"
-            step={0.01}
-            min={0}
-            max={2}
-            label="Sample Exp Time"
-            leftIcon={<BrightnessLow />}
-            rightIcon={<BrightnessHigh />}
-          />
-          <OphydSlider
-            device="saxs_video.video_cameras.video_camera_1.cam.gain"
-            step={0.1}
-            min={0}
-            max={40}
-            label="Sample Gain"
-            leftIcon={<BrightnessLow />}
-            rightIcon={<BrightnessHigh />}
-          />
-          <OphydSlider
-            device="saxs_video.video_cameras.video_camera_6.cam.acquire_time"
-            step={0.01}
-            min={0}
-            max={2}
-            label="Wide Exp Time"
-            leftIcon={<BrightnessLow />}
-            rightIcon={<BrightnessHigh />}
-          />
-          <OphydSlider
-            device="saxs_video.video_cameras.video_camera_6.cam.gain"
-            step={0.1}
-            min={0}
-            max={40}
-            label="Wide Gain"
-            leftIcon={<BrightnessLow />}
-            rightIcon={<BrightnessHigh />}
-          />
+        <OphydSlider
+          device="saxs_video.video_cameras.video_camera_1.cam.acquire_time"
+          step={0.01}
+          min={0}
+          max={2}
+          label="Sample Exp Time"
+          leftIcon={<BrightnessLow />}
+          rightIcon={<BrightnessHigh />}
+        />
+        <OphydSlider
+          device="saxs_video.video_cameras.video_camera_1.cam.gain"
+          step={0.1}
+          min={0}
+          max={40}
+          label="Sample Gain"
+          leftIcon={<BrightnessLow />}
+          rightIcon={<BrightnessHigh />}
+        />
+        <OphydSlider
+          device="saxs_video.video_cameras.video_camera_6.cam.acquire_time"
+          step={0.01}
+          min={0}
+          max={2}
+          label="Wide Exp Time"
+          leftIcon={<BrightnessLow />}
+          rightIcon={<BrightnessHigh />}
+        />
+        <OphydSlider
+          device="saxs_video.video_cameras.video_camera_6.cam.gain"
+          step={0.1}
+          min={0}
+          max={40}
+          label="Wide Gain"
+          leftIcon={<BrightnessLow />}
+          rightIcon={<BrightnessHigh />}
+        />
       </Paper>
     </React.Fragment>
   );
 };
 
-export const WindowControls = (props) => {
+export const WindowControls = props => {
   const classes = useStyles(props);
   const [TweakYValue, setTweakYValue] = useState("0.1");
-  const handleChangeY = (event) => {
+  const handleChangeY = event => {
     setTweakYValue(event.target.value);
   };
   const [TweakXValue, setTweakXValue] = useState("0.1");
-  const handleChangeX = (event) => {
+  const handleChangeX = event => {
     setTweakXValue(event.target.value);
   };
   return (
@@ -354,11 +372,12 @@ export const WindowControls = (props) => {
   );
 };
 
-export const FeedbackControls = (props) => {
+export const FeedbackControls = props => {
   const dispatch = useDispatch();
   const classes = useStyles(props);
 
-  const message = useSelector((state) => state.feedback.message);
+  const message = useSelector(state => state.feedback.message);
+  const feedbackStatus = useSelector(state => state.flags.flags.flag_doing_feedback)
 
   const handleDoFeedback = () => {
     dispatch(doFeedback());
@@ -366,19 +385,35 @@ export const FeedbackControls = (props) => {
   const handleStopFeedback = () => {
     dispatch(stopFeedback());
   };
+  const handleFeedbackIn = () => {
+    dispatch(feedbackIn());
+  };
+  const handleFeedbackOut = () => {
+    dispatch(feedbackOut());
+  };
+
   return (
     <React.Fragment>
       <Paper>
         <Grid container direction="column" className={classes.control}>
-          <Grid item>
-            <Typography variant="h5">Feedback</Typography>
+          <Grid container direction="row">
+            <Grid item>
+              <Typography variant="h5">Feedback</Typography>
+            </Grid>
+            <Grid item>
+              {feedbackStatus ? (
+                <Typography variant="h5" className={classes.feedbackActive}>Active</Typography>
+              ) : (
+                <Typography variant="h5" className={classes.feedbackInActive}>Inactive</Typography>
+              )}
+            </Grid>
           </Grid>
           <Grid item direction="row">
             <Button
               variant="contained"
               endIcon={<PlayArrow />}
               onClick={handleDoFeedback}
-              className={clsx(classes.button, classes.feedbackButton)}
+              className={clsx(classes.button, classes.feedbackButtonBase, classes.feedbackButton)}
             >
               Start Feedback
             </Button>
@@ -386,9 +421,39 @@ export const FeedbackControls = (props) => {
               variant="contained"
               endIcon={<Stop />}
               onClick={handleStopFeedback}
-              className={clsx(classes.button, classes.stopFeedbackButton)}
+              className={clsx(
+                classes.button,
+                classes.feedbackButtonBase,
+                classes.stopFeedbackButton
+              )}
             >
               Stop Feedback
+            </Button>
+          </Grid>
+          <Grid item direction="row">
+            <Button
+              variant="contained"
+              endIcon={<ExpandMore />}
+              onClick={handleFeedbackIn}
+              className={clsx(
+                classes.button,
+                classes.feedbackButtonBase,
+                classes.feedbackInOutButton
+              )}
+            >
+              Feedback In
+            </Button>
+            <Button
+              variant="contained"
+              endIcon={<ExpandLess />}
+              onClick={handleFeedbackOut}
+              className={clsx(
+                classes.button,
+                classes.feedbackButtonBase,
+                classes.feedbackInOutButton
+              )}
+            >
+              Feedback Out
             </Button>
           </Grid>
           <Grid container direction="row" className={classes.messageField}>

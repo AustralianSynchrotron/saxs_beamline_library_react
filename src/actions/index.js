@@ -547,6 +547,24 @@ export const stopFeedback = () => ({
   },
 });
 
+export const feedbackIn = () => ({
+  type: actions.FEEDBACKIN,
+  fetch: feedbackURL + "/api/v1.0/feedbackin",
+  data: {
+    method: "POST",
+    mode: "cors"
+  },
+});
+
+export const feedbackOut = () => ({
+  type: actions.FEEDBACKOUT,
+  fetch: feedbackURL + "/api/v1.0/feedbackout",
+  data: {
+    method: "DELETE",
+    mode: "cors"
+  },
+});
+
 export const listNoseCones = () => ({
   type: actions.NOSECONES,
   fetch: cameraLengthURL + "/api/v1.0/nosecones",
