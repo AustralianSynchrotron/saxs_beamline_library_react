@@ -1,32 +1,35 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ArrowForward from "@material-ui/icons/ArrowForward";
+import ArrowBack from "@material-ui/icons/ArrowBack";
+import { OphydTextField } from "../ophyd_components/ophyd_components";
 
-class FilterBank extends Component {
-  constructor(props) {
-    super(props);
-    const size = parseInt(props.size);
-    this.state = {
-      size: size,
-      filters: [],
-      number: 0,
-      transmission: 1
-    };
-    this.filterGroup = this.createFilters(this.props.size, this.state.filters);
-  }
+import { makeStyles } from "@material-ui/styles";
 
-  setNumber = filters => {
+const useStyles = makeStyles({
+  number: { width: "48px" },
+});
+
+const FilterBank = (props) => {
+  const classes = useStyles();
+
+  const [filters, setFilters] = useState([]);
+  const [number, setNumber] = useState(0);
+  const [transmission, setTransmission] = useState(0);
+  const [filterGroup, setFilterGroup] = useState();
+
+  const _setNumber = (filters) => {
     var number = 0;
-    filters.forEach(num => {
+    filters.forEach((num) => {
       number += Math.pow(2, num);
     });
-    this.setState({ number });
+    setNumber(number);
   };
 
-  setFilters = number => {
+  const _setFilters = (number) => {
     var filtArray = [];
     const bin = number.toString(2);
     [...bin]
@@ -37,66 +40,86 @@ class FilterBank extends Component {
           filtArray.push(index);
         }
       });
-    this.setState({ filters: filtArray });
+    setFilters(filtArray);
   };
 
-  handleFilterChange = (event, filters) => {
-    this.setState({ filters });
-    this.setNumber(filters);
+  const handleFilterChange = (event, filters) => {
+    setFilters(filters);
+    _setNumber(filters);
   };
 
-  handleNumberChange = event => {
+  const handleNumberChange = (event) => {
     var number = parseInt(event.target.value);
     if (isFinite(number) !== true) {
       number = 0;
     }
-    this.setState({ number });
-    this.setFilters(number);
-  };
-
-  handleTransmissionChange = (event, transmission) => {
-    this.setState({ transmission });
-  };
-
-  handleIncrementFilter = direction => event => {
-    var number = this.state.number;
-    if (direction === "increase") {
-      ++number;
-    } else if (direction === "decrease") {
-      --number;
+    if (number < 0 || number > 2**props.size - 1) {
+      return
     }
-    this.setState({ number });
-    this.setFilters(number);
+    setNumber(number);
+    _setFilters(number);
   };
 
-  createFilters = (number, filters) => {
-    let filterGroup = [];
-    for (let i = 0; i <= number - 1; i++) {
-      filterGroup.push(
+  const handleTransmissionChange = (event, transmission) => {
+    setTransmission(transmission);
+  };
+
+  const handleIncrementFilter = () => {
+    if (number >= 2**props.size - 1) {
+      return
+    }
+    setNumber(number + 1);
+    _setFilters(number + 1);
+  };
+  
+  const handleDecrementFilter = () => {
+    if (number == 0) {
+      return
+    }
+    setNumber(number - 1);
+    _setFilters(number - 1);
+  };
+
+  useEffect(() => {
+    let _filterGroup = [];
+    for (let i = 0; i <= props.size - 1; i++) {
+      _filterGroup.push(
         <ToggleButton value={i} key={i}>
           {i}
         </ToggleButton>
       );
     }
-    return filterGroup;
-  };
+    setFilterGroup(_filterGroup);
+  }, []);
 
-  render() {
-    return (
-      <div>
-        <Button onClick={this.handleIncrementFilter("decrease")}>
-          <FontAwesomeIcon icon="caret-square-left" size="2x" />
-        </Button>
-        <ToggleButtonGroup value={this.state.filters} onChange={this.handleFilterChange}>
-          {this.filterGroup}
-        </ToggleButtonGroup>
-        <Button onClick={this.handleIncrementFilter("increase")}>
-          <FontAwesomeIcon icon="caret-square-right" size="2x" />
-        </Button>
-        <TextField label="Number" value={this.state.number} onChange={this.handleNumberChange} />
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <OphydTextField
+        label="Transmission"
+        device="saxs_attenuators.saxs_attenuators"
+        type="number"
+        value={number}
+        onChange={handleTransmissionChange}
+        className={classes.number}
+      />
+      <Button onClick={handleDecrementFilter}>
+        <ArrowBack />
+      </Button>
+      <ToggleButtonGroup value={filters} onChange={handleFilterChange}>
+        {filterGroup}
+      </ToggleButtonGroup>
+      <Button onClick={handleIncrementFilter}>
+        <ArrowForward />
+      </Button>
+      <TextField
+        label="Number"
+        type="number"
+        value={number}
+        onChange={handleNumberChange}
+        className={classes.number}
+      />
+    </div>
+  );
+};
 
 export default FilterBank;

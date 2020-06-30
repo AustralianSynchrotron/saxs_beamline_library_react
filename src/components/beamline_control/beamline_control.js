@@ -2,6 +2,7 @@ import green from "@material-ui/core/colors/green";
 import grey from "@material-ui/core/colors/grey";
 import red from "@material-ui/core/colors/red";
 import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/styles";
 import React from "react";
@@ -14,6 +15,7 @@ import {
   WindowControls,
   FeedbackControls,
 } from "./beamline_control_components";
+import FilterBank from "../filter/filter";
 
 const useStyles = makeStyles({
   hidden: { display: "None" },
@@ -75,7 +77,7 @@ const useStyles = makeStyles({
 
   item: {
     margin: "10px",
-  }
+  },
 });
 
 const BeamlineControl = (props) => {
@@ -271,6 +273,22 @@ const BeamlineControl = (props) => {
             >
               <Grid item xs={12} className={classes.item}>
                 <FeedbackControls />
+              </Grid>
+            </Grid>
+            <Grid item />
+            <Grid
+              container
+              className={classes.root}
+              spacing={2}
+              direction="row"
+              alignItems="baseline"
+              justify="center"
+            >
+              <Grid item xs={12} className={classes.item}>
+                <Paper className={classes.padding}>
+                  <Typography variant="h5" className={classes.padding}>Attenuators</Typography>
+                  <FilterBank size={8} />
+                </Paper>
               </Grid>
             </Grid>
             <Grid item />
