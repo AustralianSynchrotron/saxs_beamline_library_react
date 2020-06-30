@@ -279,7 +279,7 @@ export const vac_abort = () => ({
   type: actions.VACABORT,
   fetch: pumpingURL + "/api/v1.0/pump",
   data: {
-    method: "DELETE"
+    method: "DELETE",
   },
 });
 
@@ -534,7 +534,8 @@ export const doFeedback = () => ({
   fetch: feedbackURL + "/api/v1.0/feedback",
   data: {
     method: "POST",
-    mode: "cors"
+    mode: "cors",
+    body: JSON.stringify({}),
   },
 });
 
@@ -543,7 +544,7 @@ export const stopFeedback = () => ({
   fetch: feedbackURL + "/api/v1.0/feedback",
   data: {
     method: "DELETE",
-    mode: "cors"
+    mode: "cors",
   },
 });
 
@@ -552,7 +553,7 @@ export const feedbackIn = () => ({
   fetch: feedbackURL + "/api/v1.0/feedbackin",
   data: {
     method: "POST",
-    mode: "cors"
+    mode: "cors",
   },
 });
 
@@ -561,7 +562,7 @@ export const feedbackOut = () => ({
   fetch: feedbackURL + "/api/v1.0/feedbackout",
   data: {
     method: "DELETE",
-    mode: "cors"
+    mode: "cors",
   },
 });
 
