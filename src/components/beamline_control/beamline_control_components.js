@@ -28,7 +28,7 @@ import {
   OphydToggleButton
 } from "../ophyd_components/ophyd_components";
 
-import { doFeedback, stopFeedback, feedbackIn, feedbackOut } from "../../actions/index";
+import { clearFeedbackLog, doFeedback, stopFeedback, feedbackIn, feedbackOut } from "../../actions/index";
 
 const useStyles = makeStyles({
   hidden: { display: "None" },
@@ -380,6 +380,7 @@ export const FeedbackControls = props => {
   const feedbackStatus = useSelector(state => state.flags.flags.flag_doing_feedback)
 
   const handleDoFeedback = () => {
+    dispatch(clearFeedbackLog());
     dispatch(doFeedback());
   };
   const handleStopFeedback = () => {

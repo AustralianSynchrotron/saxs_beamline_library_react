@@ -529,6 +529,10 @@ export const listGSScan = () => ({
   },
 });
 
+export const clearFeedbackLog = () => ({
+  type: actions.CLEARFEEDBACKLOG,
+})
+
 export const doFeedback = () => ({
   type: actions.DOFEEDBACK,
   fetch: feedbackURL + "/api/v1.0/feedback",
@@ -561,7 +565,7 @@ export const feedbackOut = () => ({
   type: actions.FEEDBACKOUT,
   fetch: feedbackURL + "/api/v1.0/feedbackout",
   data: {
-    method: "DELETE",
+    method: "POST",
     mode: "cors",
   },
 });

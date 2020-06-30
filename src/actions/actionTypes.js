@@ -80,10 +80,11 @@ export const SAVE_GS_SCAN = "save_gs_scan";
 export const LOAD_GS_SCAN = "load_gs_scan";
 export const LIST_GS_SCAN = "list_gs_scan";
 
+export const CLEARFEEDBACKLOG = "clear_feedback_log";
 export const DOFEEDBACK = "do_feedback";
 export const STOPFEEDBACK = "stop_feedback";
-export const FEEDBACKIN = "feedback_out";
-export const FEEDBACKOUT = "feedback_in";
+export const FEEDBACKIN = "feedback_in";
+export const FEEDBACKOUT = "feedback_out";
 
 export const NOSECONES = "nose_cones";
 export const NOSECONE = "nose_cone";

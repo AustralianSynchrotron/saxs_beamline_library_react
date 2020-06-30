@@ -1,7 +1,7 @@
 import * as actions from "../actions/actionTypes";
 
 const default_state = {
-  message: " lkhj",
+  message: " ",
 };
 
 export default (state = default_state, action) => {
@@ -10,6 +10,8 @@ export default (state = default_state, action) => {
       return { ...state, message: action.data.message };
     case actions.STOPFEEDBACK:
       return { ...state, message: action.data.message };
+    case actions.CLEARFEEDBACKLOG:
+      return { ...state, message: " "}
     default:
       return state;
   }
