@@ -14,7 +14,6 @@ const endpoints = {
     status: `ws://dockervip:3143`,
     cameraLength: `ws://dockervip:4004/api/v1.0/ws`,
     flags: `ws://dockervip:4005/api/v1.0/ws`,
-    redis: `ws://dockervip:4006/api/v1.0/ws`,
     energy: `ws://dockervip:4007/api/v1.0/ws`,
     // acquire: `ws://${baseURL}:3142`,
     // // ophyd: `ws://${baseURL}:9999`,

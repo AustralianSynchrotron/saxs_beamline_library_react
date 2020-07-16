@@ -135,7 +135,6 @@ const BeamlineControl = (props) => {
               label="Beam on Sample?"
               device="ophyd_status_devices.ophyd_status.beam_on_sample"
               good_status={0}
-              errorCallback={() => klaxon.play()}
               badStatusText="Yes"
               goodStatusText="No"
             />
