@@ -18,7 +18,7 @@ import classNames from "classnames";
 import DeathStar from "mdi-material-ui/DeathStar";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { abort, acquire, halt, pause, resume } from "../../actions";
 import { pew } from "../../media/sounds";
 import CustomTimeDialog from "../custom_time_dialog/custom_time_dialog";
@@ -123,6 +123,7 @@ const getItemBrowser = (key) => {
 const defaultTimes = [0.1, 0.5, 1, 2, 5, 10, 20, 30, 60, 120, "Calib", "Custom", "Reset"];
 
 const AcquirePage = (props) => {
+  const dispatch = useDispatch();
   const classes = useStyles();
 
   const [times, _setTimes] = useState(getItemBrowser("times") || defaultTimes);
@@ -251,27 +252,27 @@ const AcquirePage = (props) => {
   const handleAcquire = () => {
     setFinishDemanded(false);
     setPauseDemanded(false);
-    acquire(filename, expTimes, adinfinitum ? null : numImages, delay, useShutter, description);
+    dispatch(acquire(filename, expTimes, adinfinitum ? null : numImages, delay, useShutter, description));
     pew.play();
   };
 
   const handlePause = () => {
     if (pauseDemanded) {
-      resume();
+      dispatch(resume());
       setPauseDemanded(false);
     } else {
       setPauseDemanded(true);
-      pause();
+      dispatch(pause());
     }
   };
 
   const handleFinish = () => {
     if (setFinishDemanded) {
-      halt();
+      dispatch(halt());
       setFinishDemanded(false);
     } else {
       setFinishDemanded(true);
-      abort();
+      dispatch(abort());
     }
   };
   const handleAdInfinitum = () => {
