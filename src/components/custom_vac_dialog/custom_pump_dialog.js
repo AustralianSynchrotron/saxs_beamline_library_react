@@ -9,7 +9,7 @@ import { pump } from "../../actions/index";
 
 const PumpDialog = (props) => {
   const dispatch = useDispatch();
-  
+
   const handleClose = () => {
     props.onClose();
   };
@@ -21,9 +21,9 @@ const PumpDialog = (props) => {
 
   return (
     <Dialog fullWidth={true} maxwidth="xs" onClose={handleClose} open={props.open}>
-      <DialogTitle />
+      <DialogTitle title={props.title} />
       <div align="center">
-        <Typography variant="body1">Pump this section?</Typography>
+        <Typography variant="body1">Pump the {props.id} section?</Typography>
       </div>
       <Button onClick={handleClose}>No</Button>
       <Button onClick={handlePump}>Yes</Button>
@@ -32,6 +32,7 @@ const PumpDialog = (props) => {
 };
 
 PumpDialog.propTypes = {
+  title: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   open: PropTypes.object.isRequired,

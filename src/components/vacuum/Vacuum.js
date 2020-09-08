@@ -3,6 +3,10 @@ import { connect } from "react-redux";
 
 import * as actionCreators from "../../actions/index";
 
+import green from "@material-ui/core/colors/green";
+
+import { makeStyles } from "@material-ui/styles";
+
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -16,310 +20,84 @@ import VacComponent from "../vac_component/vacComponent";
 import ManualPumpControl from "../vac_component/ManualPumpControl";
 import ManualBackingPumpControl from "../vac_component/ManualBackingPumpControl";
 import ManualValveControl from "../vac_component/ManualValveControl";
+import Canvas from '../vac_component/VacDiagram'
 import { Typography } from "@material-ui/core";
 
-const styles = theme => ({
-  root: {
-    display: "flex",
-    flexGrow: 1
+
+const useStyles = makeStyles({
+  hidden: { display: "None" },
+  showButton: { marginTop: 0 },
+  slider: { flexDirection: "row" },
+  cssOutlinedInput: {
+    "&:not(hover):not($disabled):not($cssFocused):not($error) $notchedOutline": {
+      borderColor: "red", //default
+    },
   },
-  button: {
+  second: {
+    background: green[500],
     color: "white",
-    margin: "2px",
+    height: 48,
     "&:hover": {
-      color: "white"
-    }
+      backgroundColor: green[700],
+    },
+  },
+  first: {
+    background: red[500],
+    color: "white",
+    height: 48,
+    "&:hover": {
+      backgroundColor: red["A700"],
+    },
   },
 
-  halt: {
-    backgroundColor: red["500"],
-    "&:hover": {
-      backgroundColor: red["A700"]
-    }
+  notchedOutline: {},
+  error: {},
+  disabled: {},
+  horizontal: {
+    display: "flex",
+    flexDireciton: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  chip: {
-    margin: "2px"
+  vertical: {
+    display: "flex",
+    flexDireciton: "column",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  status: {
-    color: grey["400"]
+  statusfield: {
+    padding: "2px",
+    background: grey["900"],
   },
-  small_check: {
-    width: "24px",
-    height: "24px"
+
+  padding: {
+    padding: "3px",
   },
-  label: {
-    color: grey["400"]
+
+  horizontal: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "left",
+    alignItems: "center",
+    padding: "10px",
   },
-  number: {
-    height: "8px"
-  }
+
+  item: {
+    margin: "10px",
+  },
 });
 
-class VacuumPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      customTimeOpen: false,
-      staff: false,
-      password: ""
-    };
-  }
 
-  checkPassword = input => {
-    if (input === "Disneyland") {
-      this.setState({ staff: true });
-      //console.log(this.state.staff);
-      //console.log(this.props.password)
-    } else {
-      this.setState({ staff: false });
-    }
+const VacuumPage = (props) => {
+  const classes = useStyles();
+  return (
+    <React.Fragment>
+
+    <div>
+      <h1>this is a test</h1>
+      <Canvas />
+    </div>
+    </React.Fragment>
+   );
   };
-
-  handleClickDialog = event => {
-    this.setState({ customVacOpen: true });
-  };
-
-  handleClose = event => {
-    this.setState({ customVacOpen: false });
-  };
-
-  handleStaff = event => {
-    if (event.key === "Enter") {
-      this.setState({ password: "" });
-      //console.log(event.target.value);
-      this.checkPassword(event.target.value);
-    }
-  };
-
-  handleConnect = event => {
-    this.props.start_listeners();
-  };
-
-  handleLock = event => {
-    this.setState({ staff: false });
-  };
-
-  handleAbort = event => {
-    this.props.vac_abort();
-  };
-
-  handleInput = event => {
-    const inputPassword = event.target.value;
-    this.setState({ password: inputPassword });
-  };
-
-  render() {
-    const { classes } = this.props;
-    return (
-      <Grid container className={classes.root} spacing={5} direction="column">
-        <Grid
-          container
-          className={classes.root}
-          spacing={5}
-          direction="row"
-          alignItems="baseline"
-          justify="space-evenly"
-        >
-          <Grid item xs={2}>
-            <Button onClick={this.handleConnect}>Connect</Button>
-          </Grid>
-          <Grid item xs={2}>
-            <Button onClick={this.handleLock}>Lock</Button>
-          </Grid>
-          <Grid item xs={2}>
-            <Button onClick={this.handleAbort} className={classNames(classes.button, classes.halt)}>
-              Abort!
-            </Button>
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <VacComponent id="Beamline" staff={this.state.staff} gauge="saxs_vac_gauges.gauge_1" />
-        </Grid>
-        <Grid item xs={12}>
-          <VacComponent id="Chamber" staff={this.state.staff} gauge="saxs_vac_gauges.gauge_2" />
-        </Grid>
-        <Grid item xs={12}>
-          <VacComponent id="Nosecone" staff={this.state.staff} gauge="saxs_vac_gauges.gauge_2" />
-        </Grid>
-
-        <Grid
-          container
-          className={classes.root}
-          spacing={5}
-          direction="row"
-          alignItems="baseline"
-          justify="space-evenly"
-        >
-          <Grid item xs={4} spacing={2} />
-          <Grid item xs={4} spacing={3}>
-            <TextField
-              type="password"
-              value={this.state.password}
-              label="Staff Login"
-              onChange={this.handleInput}
-              onKeyPress={this.handleStaff}
-            />
-          </Grid>
-          <Grid item xs={4} spacing={3} />
-        </Grid>
-
-        <Grid item xs={12}>
-          <VacComponent id="Vessel" staff={this.state.staff} gauge="saxs_vac_gauges.gauge_3" />
-        </Grid>
-
-        <Grid />
-
-        <Grid item xs={12}>
-          <Typography>Roughing Valves</Typography>
-        </Grid>
-
-        <Grid
-          container
-          className={classes.root}
-          spacing={5}
-          alignItems="baseline"
-          direction="row"
-          justify="space-evenly"
-        >
-          <Grid item xs={4} padding={10}>
-            <ManualValveControl
-              valve="saxs_vac_valves.valve07"
-              description="Beamline:"
-              label="VLV07"
-              disable={!this.state.staff}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <ManualValveControl
-              valve="saxs_vac_valves.valve11"
-              description="Nosecone:"
-              label="VLV11"
-              disable={!this.state.staff}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <ManualValveControl
-              valve="saxs_vac_valves.valve10"
-              description="Vessel:"
-              label="VLV10"
-              disable={!this.state.staff}
-            />
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography>Beamline Gate Valves</Typography>
-        </Grid>
-        <Grid
-          container
-          className={classes.root}
-          spacing={5}
-          alignItems="baseline"
-          direction="row"
-          justify="space-evenly"
-        >
-          <Grid item xs={4} padding={10}>
-            <ManualValveControl
-              valve="saxs_vac_valves.igv06"
-              description="Beamline:"
-              label="IGV06"
-              disable={!this.state.staff}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <ManualValveControl
-              valve="saxs_vac_valves.igv08"
-              description="Vessel:"
-              label="IGV08"
-              disable={!this.state.staff}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <ManualValveControl
-              valve="saxs_vac_valves.igv09"
-              description="Sample:"
-              label="IGV09"
-              disable={!this.state.staff}
-            />
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography>Roughing and Turbo Pumps</Typography>
-        </Grid>
-        <Grid
-          container
-          className={classes.root}
-          spacing={3}
-          alignItems="baseline"
-          direction="row"
-          justify="space-evenly"
-        >
-          <Grid item xs={4} padding={10}>
-            <ManualPumpControl
-              pump="saxs_vac_pumps.roughing"
-              description="Roughing:"
-              label="Ebarra"
-              disable={!this.state.staff}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <ManualPumpControl
-              pump="saxs_vac_pumps.chamber_turbo"
-              description="Sample Turbo:"
-              label="Turbo 3"
-              disable={!this.state.staff}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <ManualPumpControl
-              pump="saxs_vac_pumps.vessel_turbo"
-              description="Vessel Turbo:"
-              label="Turbo 4"
-              disable={!this.state.staff}
-            />
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography>Backing Pumps</Typography>
-        </Grid>
-        <Grid
-          container
-          className={classes.root}
-          spacing={5}
-          alignContent="center"
-          direction="row"
-          justifyContent="center"
-        >
-          <Grid item xs={6} padding={10}>
-            <ManualBackingPumpControl
-              pump="saxs_vac_pumps.backing_pump03"
-              description="Sample"
-              label="Backing 3"
-              disable={!this.state.staff}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <ManualBackingPumpControl
-              pump="saxs_vac_pumps.backing_pump04"
-              description="Vessel"
-              label="Backing 4"
-              disable={!this.state.staff}
-            />
-          </Grid>
-        </Grid>
-      </Grid>
-    );
-  }
-}
-
-VacuumPage.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-function mapStateToProps(state) {
-  return {};
-}
-
-export default connect(
-  mapStateToProps,
-  actionCreators
-)(withStyles(styles)(VacuumPage));
+export default VacuumPage;
