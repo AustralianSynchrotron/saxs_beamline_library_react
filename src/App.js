@@ -31,7 +31,7 @@ import Docker from "mdi-material-ui/Docker";
 import Database from "mdi-material-ui/Database";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { connectOphyd, subscribeOphyd, buttonStatus } from "./actions/index";
+import { connectOphyd, subscribeOphyd, buttonStatus, clearSetError } from "./actions/index";
 import AcquirePage from "./components/acquire_page/acquire_page.js";
 import BeamlineControl from "./components/beamline_control/beamline_control.js";
 import ConfigPage from "./components/config_page/config_page.js";
@@ -166,7 +166,7 @@ const App = props => {
   };
 
   const handleErrorClose = () => {
-    props.clearSetError();
+    clearSetError();
   };
 
   const ophydError = useSelector(state => state.ophyd.setError);
