@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { connect } from "react-redux";
 
 import * as actionCreators from "../../actions/index";
 
-import green from "@material-ui/core/colors/green";
+
 
 import { makeStyles } from "@material-ui/styles";
 
@@ -12,6 +12,8 @@ import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import classNames from "classnames";
+import green from "@material-ui/core/colors/green";
+import blue from "@material-ui/core/colors/blue";
 import red from "@material-ui/core/colors/red";
 import grey from "@material-ui/core/colors/grey";
 import Grid from "@material-ui/core/Grid";
@@ -41,12 +43,11 @@ const useStyles = makeStyles({
       backgroundColor: green[700],
     },
   },
-  first: {
-    background: red[500],
+  button: {
     color: "white",
     height: 48,
     "&:hover": {
-      backgroundColor: red["A700"],
+      backgroundColor: blue["A700"],
     },
   },
 
@@ -90,12 +91,65 @@ const useStyles = makeStyles({
 
 const VacuumPage = (props) => {
   const classes = useStyles();
+  const [ChamberIn, setChamberIn] = useState(false);
+  const [disable, setDisable] = useState(true)
+  const [password, setPassword] = useState("")
+  
+  const checkPassword = input => {
+    if (input === "Disneyland") {
+      setDisable(false);
+      //console.log(this.state.staff);
+      //console.log(this.props.password)
+    } else {
+      setDisable(true)
+    }
+  };
+
+  const handleInput = event => {
+    const inputPassword = event.target.value;
+    setPassword(inputPassword);
+  };
+
+  const handleDisable = event => {
+    if (event.key === "Enter") {
+      setPassword("");
+      checkPassword(event.target.value);
+    }
+  };
+
+  const handleClickChamberIn = () => {
+    setChamberIn(true);
+  };
+
+  const handleClickChamberOut = () => {
+    setChamberIn(false);
+  };
+
   return (
     <React.Fragment>
 
     <div>
-      <h1>this is a test</h1>
-      <Canvas />
+      <h1>SAXS Endstation Vacuum System</h1>
+      <Grid container >
+        <Grid><Button className={classes.button} onClick= {handleClickChamberIn} >Chamber In</Button>
+        </Grid>
+        <Grid><Button className={classes.button} onClick={handleClickChamberOut}>Chamber Out</Button>
+        </Grid>
+      </Grid>
+      <Grid container>
+      <Grid item xs={4} spacing={3}>
+            <TextField
+              type="password"
+              value={password}
+              label="Staff Login"
+              onChange={handleInput}
+              onKeyPress={handleDisable}
+            />
+          </Grid>
+      </Grid>
+      <Grid container>
+      <Canvas ChamberIn={ChamberIn} disable={disable}/>
+      </Grid>
     </div>
     </React.Fragment>
    );

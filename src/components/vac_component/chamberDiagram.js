@@ -40,11 +40,6 @@ function SvgChamber(props) {
   const [PumpOpen, setPumpOpen] = useState(false);
   const [VentOpen, setVentOpen] = useState(false);
 
-  const PrintValue = (device) => {
-    var device_name = device;
-    return device_name;
-  };
-
   const OphydStatus = (device) => {
     var deviceData = useSubscribeOphyd(device); //Don't think this is allowed.
     if (deviceData === undefined) {
@@ -79,16 +74,16 @@ function SvgChamber(props) {
 
     var status = deviceData.value;
 
-    console.log("status");
-    console.log(status);
+    //console.log("status");
+    //console.log(status);
     if (status === 0) {
       setOphyd(device, value2);
-      console.log(value2);
+      //console.log(value2);
     } else {
       if (status === 1) {
-        console.log("open, so setting to closed");
+        //console.log("open, so setting to closed");
         setOphyd(device, value1);
-        console.log(value1);
+        //console.log(value1);
       } else console.log("undefined status on" + device);
     }
   };
@@ -114,9 +109,6 @@ function SvgChamber(props) {
   };
 
   const handleClick = (device, value1, value2) => {
-    console.log(device);
-    console.log(value1);
-    console.log(value2);
     // console.log(vacSelectors)
     OphydToggle(device, value1, value2);
   };
@@ -141,12 +133,12 @@ function SvgChamber(props) {
 
   return (
     <React.Fragment>
-      <svg width={2500} height={880} viewBox="0 0 661.46 232.83" {...props}>
+      <svg width={2500} height={850} viewBox="0 0 661.46 232.83" {...props}>
         <rect
           x={1.2574}
-          y={0.48244}
+          y={0}
           width={659.81}
-          height={231.99}
+          height={232.83}
           fill="white"
           style={{
             paintOrder: "fill markers stroke",
@@ -209,7 +201,7 @@ function SvgChamber(props) {
           <path
             d="m515.23 71.96v16.887h18.519v-16.887z"
             fill={props.turboFill}
-            fillOpacity = {OphydStatus("saxs_vac_pumps.chamber_turbo.run_state") === 1 ? 0.6 : 0.1}
+            fillOpacity={OphydStatus("saxs_vac_pumps.chamber_turbo.run_state") === 1 ? 0.6 : 0.1}
             stroke="#000"
             strokeWidth={0.77416}
             id="TurboChamber"
@@ -217,7 +209,7 @@ function SvgChamber(props) {
           <path
             d="m489.35 70.244v13.571h18.601v-13.441z"
             fill={props.backingFill}
-            fillOpacity = {OphydStatus("saxs_vac_pumps.backing_pump03.speed") > 0 ? 0.6 : 0.1}
+            fillOpacity={OphydStatus("saxs_vac_pumps.backing_pump03.speed") > 0 ? 0.6 : 0.1}
             stroke="#000"
             strokeWidth={0.69553}
             id="BackingChamber"
@@ -290,6 +282,17 @@ function SvgChamber(props) {
                   {OphydToggleText("saxs_vac_pumps.backing_pump03.backing_start", "Run", "Run")}
                 </text>
               </a>
+              <text
+                x={492.5}
+                y={78.5}
+                fontFamily="Verdana"
+                fontWeight="bold"
+                fontSize="5"
+                fill="black"
+              >
+                {" "}
+                BP3
+              </text>
             </g>
           )}
           <g>
@@ -321,6 +324,16 @@ function SvgChamber(props) {
                 {OphydToggleText("saxs_vac_pumps.chamber_turbo.start_stop_with_rbv", "Run", "Stop")}
               </text>
             </a>
+            <text
+              x={518.5}
+              y={82.5}
+              fontFamily="Verdana"
+              fontWeight="bold"
+              fontSize="5"
+              fill="black"
+            >
+              TP3
+            </text>
           </g>
           <rect
             transform="rotate(90)"
@@ -358,6 +371,9 @@ function SvgChamber(props) {
                 {OphydToggleText("saxs_vac_valves.igv09.open_close_withrbv", "Open", "Close")}
               </text>
             </a>
+            <text x={538} y={85.5} fontFamily="Verdana" fontWeight="bold" fontSize="5" fill="black">
+              IGV9{" "}
+            </text>
           </g>
         </g>
 
@@ -372,7 +388,7 @@ function SvgChamber(props) {
         <path
           d="m386.91 68.322v16.887h18.519v-16.725z"
           fill={props.turboFill}
-          fillOpacity = {OphydStatus("saxs_vac_pumps.vessel_turbo.run_state") === 1 ? 0.6 : 0.1}
+          fillOpacity={OphydStatus("saxs_vac_pumps.vessel_turbo.run_state") === 1 ? 0.6 : 0.1}
           stroke="#000"
           strokeWidth={0.77416}
           id="TurboVessel"
@@ -410,19 +426,10 @@ function SvgChamber(props) {
           strokeWidth=".77294px"
           id="Section5"
         />
-
         <path
           d="m485.27 180.35 19.057-0.0942-0.158-18.026 5.4337 0.0191 0.178 17.864 32.04 0.24014 18.115 0.0428-0.178-37.28 5.5346 0.024 0.6484 37.257h13.341v-6.4313l5.1808 0.024 0.102 6.4077h9.5421v4.6642l-108.79-0.046z"
           fill="green"
-          fillOpacity={
-            OphydStatus("saxs_vac_valves.vavle07.open_close_withrbv") === 1
-              ? SetOpacity("saxs_vac_gauges.gauge_1.pressure_4", 1000)
-              : OphydStatus("saxs_vac_valves.vavle10.open_close_withrbv") === 1
-              ? SetOpacity("saxs_vac_gauges.gauge_1.pressure_4", 1000)
-              : OphydStatus("saxs_vac_valves.vavle11.open_close_withrbv") === 1
-              ? SetOpacity("saxs_vac_gauges.gauge_2.pressure_4", 1000)
-              : 0
-          }
+          fillOpacity={0.2}
           stroke="#000"
           strokeWidth=".77294px"
           id="CommonRoughing"
@@ -454,8 +461,8 @@ function SvgChamber(props) {
 
         <path
           d="m361.03 66.606v13.571h18.601v-13.441z"
-          fill = {props.backingFill}
-          fillOpacity = {OphydStatus("saxs_vac_pumps.backing_pump04.speed") > 0 ? 0.6 : 0.1}
+          fill={props.backingFill}
+          fillOpacity={OphydStatus("saxs_vac_pumps.backing_pump04.speed") > 0 ? 0.6 : 0.1}
           stroke="#000"
           strokeWidth={0.69553}
           id="BackingVessel"
@@ -630,18 +637,32 @@ function SvgChamber(props) {
               </text>
             </a>
           )}
+          <text
+            x={635.0}
+            y={109.41}
+            fontFamily="Verdana"
+            fontWeight="bold"
+            fontSize="5"
+            fill="black"
+          >
+            IGV4
+          </text>
         </g>
         <g>
           <a
             href="javascript:void(0)"
-            onClick={() => handleClick("saxs_vac_pumps.vessel_turbo.start_stop_with_rbv", 1, 2)}
+            onClick={
+              props.disable === false
+                ? () => handleClick("saxs_vac_pumps.vessel_turbo.start_stop_with_rbv", 1, 2)
+                : console.log("disbaled")
+            }
           >
             <rect
               x={388.27}
               y={58.751}
               width={16.875}
               height={7.1924}
-              fill="none"
+              fill={props.disable === false ? "none" : "grey"}
               stroke="#000"
               strokeWidth={0.53975}
               style={{
@@ -660,20 +681,33 @@ function SvgChamber(props) {
               {OphydToggleText("saxs_vac_pumps.vessel_turbo.start_stop_with_rbv", "Run", "Stop")}
             </text>
           </a>
+          <text
+            x={389.27}
+            y={77.9}
+            fontFamily="Verdana"
+            fontWeight="bold"
+            fontSize="5"
+            fill="black"
+          >
+            TP4
+          </text>
         </g>
 
         {OphydStatus("saxs_vac_pumps.backing_pump04.speed") > 0 ? (
           <g>
             <a
               href="javascript:void(0)"
-              onClick={() => handleClick("saxs_vac_pumps.backing_pump04.backing_stop", 1, 1)}
+              onClick={
+                props.disable === false
+                  ? () => handleClick("saxs_vac_pumps.backing_pump04.backing_stop", 1, 1)
+                  : console.log("disabled")}
             >
               <rect
                 x={362.54}
                 y={56.231}
                 width={16.875}
                 height={7.1924}
-                fill="none"
+                fill={props.disable === false ? "none" : "grey"}
                 stroke="#000"
                 strokeWidth={0.53975}
                 style={{
@@ -690,14 +724,16 @@ function SvgChamber(props) {
           <g>
             <a
               href="javascript:void(0)"
-              onClick={() => handleClick("saxs_vac_pumps.backing_pump04.backing_start", 1, 1)}
+              onClick={props.disable === false
+                ? () => handleClick("saxs_vac_pumps.backing_pump04.backing_start", 1, 1)
+                : console.log("disabled")}
             >
               <rect
                 x={362.54}
                 y={56.231}
                 width={16.875}
                 height={7.1924}
-                fill="none"
+                fill= {props.disable === false ? "none" : "grey"}
                 stroke="#000"
                 strokeWidth={0.53975}
                 style={{
@@ -711,11 +747,13 @@ function SvgChamber(props) {
             </a>
           </g>
         )}
-
+        <text x={363} y={76} fontFamily="Verdana" fontWeight="bold" fontSize="5" fill="black">
+          BP4
+        </text>
         <g>
           <a
             href="javascript:void(0)"
-            onClick={() => handleClick("saxs_vac_valves.valve10.open_close_withrbv", 1, 2)}
+            onClick={() => handleClick("saxs_vac_valves.valve11.open_close_withrbv", 1, 2)}
           >
             <rect
               x={514.99}
@@ -741,6 +779,9 @@ function SvgChamber(props) {
               {OphydToggleText("saxs_vac_valves.valve11.open_close_withrbv", "Open", "Close")}
             </text>
           </a>
+          <text x={515.5} y={170} fontFamily="Verdana" fontWeight="bold" fontSize="5" fill="black">
+            Valve 11
+          </text>
         </g>
         <g>
           <a
@@ -771,6 +812,9 @@ function SvgChamber(props) {
               {OphydToggleText("saxs_vac_valves.valve07.open_close_withrbv", "Open", "Close")}
             </text>
           </a>
+          <text x={570.6} y={151} fontFamily="Verdana" fontWeight="bold" fontSize="5" fill="black">
+            Valve 7
+          </text>
         </g>
         <g>
           <a
@@ -801,6 +845,16 @@ function SvgChamber(props) {
               {OphydToggleText("saxs_vac_valves.igv06.open_close_withrbv", "Open", "Close")}
             </text>
           </a>
+          <text
+            x={576.5}
+            y={115.5}
+            fontFamily="Verdana"
+            fontWeight="bold"
+            fontSize="5"
+            fill="black"
+          >
+            IGV6
+          </text>
         </g>
         <g>
           <a
@@ -831,6 +885,16 @@ function SvgChamber(props) {
               {OphydToggleText("saxs_vac_pumps.roughing.start_stop_with_rbv", "Run", "Stop")}
             </text>
           </a>
+          <text
+            x={600.3}
+            y={183.03}
+            fontFamily="Verdana"
+            fontWeight="bold"
+            fontSize="5"
+            fill="black"
+          >
+            Roughing
+          </text>
         </g>
         <g>
           <a
@@ -861,18 +925,25 @@ function SvgChamber(props) {
               {OphydToggleText("saxs_vac_valves.valve12.open_close_withrbv", "Open", "Close")}
             </text>
           </a>
+          <text x={568} y={190.44} fontFamily="Verdana" fontWeight="bold" fontSize="5" fill="black">
+            Valve 12
+          </text>
         </g>
         <g>
           <a
             href="javascript:void(0)"
-            onClick={() => handleClick("saxs_vac_valves.valve10.open_close_withrbv", 1, 2)}
+            onClick={
+              props.disable === false
+                ? () => handleClick("saxs_vac_valves.valve10.open_close_withrbv", 1, 2)
+                : console.log("disabled")
+            }
           >
             <rect
               x={476.75}
               y={190.53}
               width={16.875}
               height={7.1924}
-              fill="none"
+              fill={props.disable === false ? "none" : "grey"}
               stroke="#000"
               strokeWidth={0.53975}
               style={{
@@ -891,6 +962,9 @@ function SvgChamber(props) {
               {OphydToggleText("saxs_vac_valves.valve10.open_close_withrbv", "Open", "Close")}
             </text>
           </a>
+          <text x={475.25} y={204} fontFamily="Verdana" fontWeight="bold" fontSize="5" fill="black">
+            Valve 10
+          </text>
         </g>
         <g>
           <a
@@ -921,6 +995,9 @@ function SvgChamber(props) {
               {OphydToggleText("saxs_vac_valves.igv08.open_close_withrbv", "Open", "Close")}
             </text>
           </a>
+          <text x={477} y={166.0} fontFamily="Verdana" fontWeight="bold" fontSize="5" fill="black">
+            IGV8
+          </text>
         </g>
         <g>
           {OphydStatus("saxs_vac_valves.igv05.open_state") !== 1 ? (
@@ -982,6 +1059,16 @@ function SvgChamber(props) {
               </text>
             </a>
           )}
+          <text
+            x={591.0}
+            y={105.31}
+            fontFamily="Verdana"
+            fontWeight="bold"
+            fontSize="5"
+            fill="black"
+          >
+            IGV5
+          </text>
         </g>
         <a href="javascript:void(0)" onClick={() => handleClick("", 0, 0)}>
           <rect
@@ -990,7 +1077,8 @@ function SvgChamber(props) {
             width={16.875}
             height={7.1924}
             fill="none"
-            stroke="#000"
+            // stroke="#000"
+            stroke="none"
             strokeWidth={0.53975}
             style={{
               paintOrder: "fill markers stroke",
@@ -998,6 +1086,9 @@ function SvgChamber(props) {
             id="Turbo5Button"
           />
         </a>
+        <text x={610.0} y={95.31} fontFamily="Verdana" fontWeight="bold" fontSize="5" fill="black">
+          TP5
+        </text>
         <g>
           <rect
             x={536.71}

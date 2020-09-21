@@ -3,23 +3,19 @@ import green from "@material-ui/core/colors/green";
 import grey from "@material-ui/core/colors/grey";
 
 import SvgChamber from "./chamberDiagram.js";
-import SvgSample from "./sampleChamber.js";
 
-const Canvas = () => {
-  const [ChamberIn, setChamberIn] = useState(false);
-  const [chamber_opacity, setChamberopacity] = useState(0.5);
-
-
+const Canvas = (props) => {
   return (
     <React.Fragment>
       <SvgChamber
-        height={1000}
-        width={2000}
+        height={800}
+        width= {2000}
         fill_chamber="green"
         fill_vessel="green"
-        backingFill = "blue"
-        turboFill = "blue"
-        chamberIn={ChamberIn}
+        backingFill="blue"
+        turboFill="blue"
+        chamberIn={props.ChamberIn}
+        disable={props.disable}
       />
     </React.Fragment>
   );
