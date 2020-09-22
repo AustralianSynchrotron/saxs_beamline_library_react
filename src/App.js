@@ -25,6 +25,7 @@ import SwapHoriz from "@material-ui/icons/SwapHoriz";
 import Videocam from "@material-ui/icons/Videocam";
 import SwitchCameraIcon from "@material-ui/icons/SwitchCamera";
 import Warning from "@material-ui/icons/Warning";
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import { makeStyles, ThemeProvider } from "@material-ui/styles";
 import classNames from "classnames";
 import Docker from "mdi-material-ui/Docker";
@@ -40,6 +41,7 @@ import FlagsPage from "./components/flags_page/flags_page";
 import RedisPage from "./components/redis_page/redis_page";
 import GrazingPage from "./components/grazing_page/grazing_page";
 import LoggerPage from "./components/logger_page/logger_page";
+import MailInPage from "./components/mailin/mailin.js"
 import { OphydButton, OphydStatusField } from "./components/ophyd_components/ophyd_components.js";
 import TensilePage from "./components/tensile/Tensile";
 import VacuumPage from "./components/vacuum/Vacuum";
@@ -296,7 +298,8 @@ const App = props => {
               ["Python Logger", <Warning />],
               ["Docker", <Docker />],
               ["Flags", <FlagIcon />],
-              ["Redis", <Database />]
+              ["Redis", <Database />],
+              ["Mail In", <MailOutlineIcon />]
             ].map((item, index) => (
               <ListItem button key={item[0]} onClick={() => handlePageChange(index)}>
                 <ListItemIcon>{item[1]}</ListItemIcon>
@@ -366,6 +369,11 @@ const App = props => {
           {page === 11 && (
             <div>
               <RedisPage />
+            </div>
+          )}
+          {page === 12 && (
+            <div>
+              <MailInPage />
             </div>
           )}
           <SnackBar

@@ -14,6 +14,7 @@ const flagsURL = "http://dockervip:4005";
 const redisURL = "http://dockervip:4006";
 const energyURL = "http://dockervip:4007";
 const pumpingURL = "http://dockervip:4008";
+const mailinURL = "http://dockervip:4009"; //placeholder
 const beamlineConfigURL = "http://dockervip:8086";
 
 export const acquire = (filename, exp_times, num_images, delay, use_shutter, description) => ({
@@ -679,5 +680,43 @@ export const getKVs = () => ({
   data: {
     method: "GET",
     mode: "cors",
+  },
+});
+
+// Tim's attempts to write actions for mailin.
+export const updateMailin = (type) => ({
+  type: actions.UPDATEMAILIN,
+  fetch: mailinURL + "/api/v1.0/mailin/" + type,
+  data: {
+    method: "GET",
+    mode: "cors",
+  },
+});
+
+export const getMailinEPNs = (type) => ({
+  type: actions.GETMAILINEPNS,
+  fetch: mailinURL + "/api/v1.0/mailin/" + type + "/epns",
+  data: {
+    method: "GET",
+    mode: "cors",
+  },
+});
+
+export const getMailinPlates = (type, epn) => ({
+  type: actions.GETMAILINPLATES,
+  fetch: mailinURL + "/api/v1.0/mailin/" + type + epn + "/plates",
+  data: {
+    method: "GET",
+    mode: "cors",
+  },
+});
+
+export const runMailin = (type, epn, plate) => ({
+  type: actions.RUNMAILIN,
+  fetch: mailinURL + "/api/v1.0/mailin/run",
+  data: {
+    method: "PUT",
+    mode: "cors",
+    body: JSON.stringify({type, epn, plate}), 
   },
 });

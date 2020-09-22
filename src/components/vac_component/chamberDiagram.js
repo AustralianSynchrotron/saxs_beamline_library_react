@@ -1103,7 +1103,7 @@ function SvgChamber(props) {
             }}
             id="BeamlineExitPressure"
           />
-          <text x={537} y={109} fontFamily="Verdana" fontSize="11" fill="black">
+          <text x={537} y={109} fontFamily="Verdana" fontSize="10" fill="black">
             {parseFloat(OphydStatus("saxs_vac_gauges.gauge_1.pressure_4")).toExponential()}
           </text>
         </g>
@@ -1121,7 +1121,7 @@ function SvgChamber(props) {
             }}
             id="ChamberNoseconePressure"
           />
-          <text x={491} y={116} fontFamily="Verdana" fontSize="11" fill="black">
+          <text x={491} y={116} fontFamily="Verdana" fontSize="10" fill="black">
             {parseFloat(OphydStatus("saxs_vac_gauges.gauge_2.pressure_4")).toExponential()}
           </text>
         </g>
@@ -1139,7 +1139,7 @@ function SvgChamber(props) {
             }}
             id="VesselPressure"
           />
-          <text x={385} y={127} fontFamily="Verdana" fontSize="11" fill="black">
+          <text x={385} y={127} fontFamily="Verdana" fontSize="10" fill="black">
             {parseFloat(OphydStatus("saxs_vac_gauges.gauge_3.pressure_4")).toExponential()}
           </text>
         </g>
