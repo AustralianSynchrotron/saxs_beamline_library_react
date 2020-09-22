@@ -161,7 +161,7 @@ const App = props => {
     setDrawerOpen(false);
   };
 
-  const handlePageChange = page => {
+  const handlePageChange = (page) => {
     setPage(page);
   };
 

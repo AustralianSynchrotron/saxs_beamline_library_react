@@ -6,6 +6,8 @@ import IconButton from "@material-ui/core/IconButton";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Slider from "@material-ui/core/Slider";
 import TextField from "@material-ui/core/TextField";
 import ArrowBackIos from "@material-ui/icons/ArrowBackIos";
@@ -28,8 +30,8 @@ const useStyles = makeStyles({
   slider: { flexDirection: "row" },
   cssOutlinedInput: {
     "&:not(hover):not($disabled):not($cssFocused):not($error) $notchedOutline": {
-      borderColor: "red" //default
-    }
+      borderColor: "red", //default
+    },
   },
   notchedOutline: {},
   error: {},
@@ -38,35 +40,35 @@ const useStyles = makeStyles({
     display: "flex",
     flexDireciton: "row",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   vertical: {
     display: "flex",
     flexDireciton: "column",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   statusField: {
     padding: "2px",
-    margin: "5px"
+    margin: "5px",
   },
   statusFieldInput: {
-    background: "transparent"
+    background: "transparent",
   },
   statusFieldGood: {},
   statusFieldBad: {
-    background: "red"
+    background: "red",
   },
   padding: {
-    padding: "2px"
+    padding: "2px",
   },
   formControl: {
     margin: "5px",
-    minWidth: 130
-  }
+    minWidth: 130,
+  },
 });
 
-export const OphydStatusField = props => {
+export const OphydStatusField = (props) => {
   const classes = useStyles(props);
   var deviceData = useSubscribeOphyd(props.device);
   if (deviceData === undefined) {
@@ -85,7 +87,7 @@ export const OphydStatusField = props => {
     if (props.good_status !== undefined && props.errorCallback !== undefined) {
       if (deviceData.value !== props.good_status) {
         try {
-          props.errorCallback()
+          props.errorCallback();
         } catch {
           console.log("Error Callback didn't work");
         }
@@ -115,18 +117,18 @@ export const OphydStatusField = props => {
                 ? deviceData.obj_value
                 : deviceData.value
               : deviceData.value === props.good_status
-                ? props.goodStatusText !== undefined
-                  ? props.goodStatusText
-                  : deviceData.value
-                : props.badStatusText
+              ? props.goodStatusText !== undefined
+                ? props.goodStatusText
+                : deviceData.value
+              : props.badStatusText
             : props.toNumber === true
-              ? props.toExp === true
-                ? parseFloat(deviceData.value).toExponential()
-                : parseFloat(deviceData.value)
-              : deviceData.value
+            ? props.toExp === true
+              ? parseFloat(deviceData.value).toExponential()
+              : parseFloat(deviceData.value)
+            : deviceData.value
           : props.undef_val !== undefined
-            ? props.undef_val
-            : "Status Unavailable") +
+          ? props.undef_val
+          : "Status Unavailable") +
         (deviceData.name !== undefined
           ? props.suffix !== undefined
             ? " " + props.suffix
@@ -137,7 +139,7 @@ export const OphydStatusField = props => {
   );
 };
 
-export const OphydTextField = props => {
+export const OphydTextField = (props) => {
   const classes = useStyles(props);
   const setOphyd = useSetOphyd();
   const [tempValue, setTempValue] = useState("");
@@ -154,11 +156,11 @@ export const OphydTextField = props => {
     deviceData.value = parseFloat(deviceData.value).toPrecision(6);
   }
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     setTempValue(event.target.value);
   };
 
-  const handleKeyDown = event => {
+  const handleKeyDown = (event) => {
     if (editing === false) {
       setTempValue(event.target.value);
       setEditing(true);
@@ -169,8 +171,8 @@ export const OphydTextField = props => {
         deviceData.dtype === "number"
           ? parseFloat(tempValue)
           : deviceData.dtype === "integer"
-            ? parseInt(tempValue)
-            : tempValue
+          ? parseInt(tempValue)
+          : tempValue
       );
       setEditing(false);
     }
@@ -195,19 +197,19 @@ export const OphydTextField = props => {
         deviceData.set_success === undefined
           ? null
           : deviceData.set_success
-            ? null
-            : {
+          ? null
+          : {
               classes: {
                 root: classes.cssOutlinedInput,
-                notchedOutline: classes.notchedOutline
-              }
+                notchedOutline: classes.notchedOutline,
+              },
             }
       }
     />
   );
 };
 
-export const OphydButton = props => {
+export const OphydButton = (props) => {
   const setOphyd = useSetOphyd();
   const classes = useStyles(props);
   const handleClick = () => {
@@ -228,7 +230,7 @@ export const OphydButton = props => {
   );
 };
 
-export const OphydToggleButton = props => {
+export const OphydToggleButton = (props) => {
   const classes = useStyles(props);
   const setOphyd = useSetOphyd();
   var status = 0;
@@ -279,7 +281,9 @@ export const OphydToggleButton = props => {
           <ToggleButton
             value={props.label !== undefined ? props.label : deviceData.name}
             onChange={handleChange}
-            className={classNames(status === 1 ? props.toggleClasses.second : props.toggleClasses.first)}
+            className={classNames(
+              status === 1 ? props.toggleClasses.second : props.toggleClasses.first
+            )}
             disabled={props.disable !== undefined ? props.disable : false}
           >
             {status === 1 ? props.labelSecond : status === 2 ? props.labelFirst : "Not Connected"}
@@ -290,7 +294,7 @@ export const OphydToggleButton = props => {
   );
 };
 
-export const OphydIconButton = props => {
+export const OphydIconButton = (props) => {
   const setOphyd = useSetOphyd();
 
   const handleClick = () => {
@@ -299,7 +303,7 @@ export const OphydIconButton = props => {
   return <IconButton onClick={handleClick}>{props.children}</IconButton>;
 };
 
-export const OphydSlider = props => {
+export const OphydSlider = (props) => {
   const classes = useStyles(props);
   const setOphyd = useSetOphyd();
 
@@ -309,7 +313,7 @@ export const OphydSlider = props => {
     deviceData = { value: 0 };
   }
 
-  if (typeof (deviceData.value) !== "number") {
+  if (typeof deviceData.value !== "number") {
     deviceData.value = parseFloat(deviceData.value);
   }
 
@@ -323,9 +327,13 @@ export const OphydSlider = props => {
   return (
     <React.Fragment>
       <Grid container direction={props.orientation === "vertical" ? "column" : "row"} spacing={1}>
-        <Grid item xs={2} >{props.label}</Grid>
-        <Grid item xs={1} >{props.leftIcon}</Grid>
-        <Grid item xs={8} >
+        <Grid item xs={2}>
+          {props.label}
+        </Grid>
+        <Grid item xs={1}>
+          {props.leftIcon}
+        </Grid>
+        <Grid item xs={8}>
           <Slider
             value={deviceData.value}
             onChange={handleChange}
@@ -335,27 +343,29 @@ export const OphydSlider = props => {
             min={props.min === "undefined" ? deviceData.lower_disp_limit : props.min}
           />
         </Grid>
-        <Grid item xs={1}>{props.rightIcon}</Grid>
+        <Grid item xs={1}>
+          {props.rightIcon}
+        </Grid>
       </Grid>
     </React.Fragment>
   );
 };
 
-export const OphydMotorCompact = props => {
+export const OphydMotorCompact = (props) => {
   const classes = useStyles(props);
   const setOphyd = useSetOphyd();
   const [tweak, setTweak] = useState(0);
   const [showTweak, setShowTweak] = useState(false);
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     setTweak(event.target.value);
   };
 
-  const handleTweakChange = event => {
+  const handleTweakChange = (event) => {
     setTweak(event.currentTarget.dataset.tweak * tweak);
   };
 
-  const handleTweak = event => {
+  const handleTweak = (event) => {
     console.log(event.currentTarget);
     console.log(tweak * event.currentTarget.dataset.dir);
     setOphyd(props.device + "._tweak", tweak * event.currentTarget.dataset.dir);
@@ -417,11 +427,7 @@ export const OphydMotorCompact = props => {
           </Grid>
         </Grid>
         <Grid container direction="row" justify="center">
-          <IconButton
-            size="small"
-            onClick={handleShowTweak}
-            className={classes.showButton}
-          >
+          <IconButton size="small" onClick={handleShowTweak} className={classes.showButton}>
             <DragHandle />
           </IconButton>
         </Grid>
@@ -430,14 +436,14 @@ export const OphydMotorCompact = props => {
   );
 };
 
-export const OphydMotorBundleCompact = props => {
+export const OphydMotorBundleCompact = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getBundleList(props.bundle));
   }, []);
 
-  const bundleDeviceList = useSelector(state => state.ophyd.bundles[props.bundle]) || null;
+  const bundleDeviceList = useSelector((state) => state.ophyd.bundles[props.bundle]) || null;
 
   if (bundleDeviceList === null) {
     return <div />;
@@ -447,7 +453,7 @@ export const OphydMotorBundleCompact = props => {
         <Grid item>
           <Typography align="center">{bundleDeviceList.name}</Typography>
         </Grid>
-        {bundleDeviceList.list.map(device => (
+        {bundleDeviceList.list.map((device) => (
           <Grid item>
             <OphydMotorCompact label={device} device={props.bundle + "." + device} />
           </Grid>
@@ -457,11 +463,11 @@ export const OphydMotorBundleCompact = props => {
   }
 };
 
-export const OphydDropdown = props => {
+export const OphydDropdown = (props) => {
   const setOphyd = useSetOphyd();
   const classes = useStyles();
   const [values, setValues] = React.useState({
-    input_value: ""
+    input_value: "",
   });
 
   var deviceData = useSubscribeOphyd(props.device);
@@ -475,14 +481,19 @@ export const OphydDropdown = props => {
       enum_strs = [0, 1, 2];
     }
     return enum_strs.map((el, i) => {
-      return <MenuItem value={i} key={i}> {el}</MenuItem>;
+      return (
+        <MenuItem value={i} key={i}>
+          {" "}
+          {el}
+        </MenuItem>
+      );
     });
   };
 
-  const handleChange = event => {
-    setValues(oldValues => ({
+  const handleChange = (event) => {
+    setValues((oldValues) => ({
       ...oldValues,
-      input_value: event.target.value
+      input_value: event.target.value,
     }));
     setOphyd(props.device, event.target.value);
   };
@@ -499,7 +510,7 @@ export const OphydDropdown = props => {
   );
 };
 
-export const OphydStateIcon = props => {
+export const OphydStateIcon = (props) => {
   const classes = useStyles(props);
   var deviceData = useSubscribeOphyd(props.device);
   if (deviceData === undefined) {
@@ -517,13 +528,43 @@ export const OphydStateIcon = props => {
             deviceData.value !== props.good_value ? (
               <CloseOutline color="secondary" />
             ) : (
-                <CheckAll color="primary" />
-              )
+              <CheckAll color="primary" />
+            )
           ) : (
-              <Help color="error" />
-            )}
+            <Help color="error" />
+          )}
         </div>
       </div>
+    </React.Fragment>
+  );
+};
+
+export const OphydCheckBox = (props) => {
+  const classes = useStyles(props);
+  const setOphyd = useSetOphyd();
+  var deviceData = useSubscribeOphyd(props.device);
+  if (deviceData === undefined) {
+    deviceData = { value: true, dtype: "boolean" };
+  }
+
+  const handleChange = (event) => {
+    setOphyd(props.device, !deviceData.value);
+  };
+
+  return (
+    <React.Fragment>
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={deviceData.value}
+            onChange={handleChange}
+            value="checkbox"
+            className={classes.small_check}
+          />
+        }
+        label={props.label}
+        className={classes.label}
+      />
     </React.Fragment>
   );
 };

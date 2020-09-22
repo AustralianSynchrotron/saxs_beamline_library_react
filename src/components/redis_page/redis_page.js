@@ -107,7 +107,7 @@ const RedisPage = (props) => {
                       <TableCell component="th" scope="row">
                         {kv[0]}
                       </TableCell>
-                      <TableCell align="left">{kv[1]}</TableCell>
+                      <TableCell align="left">{JSON.stringify(kv[1])}</TableCell>
                     </TableRow>
                   ))}
               </TableBody>

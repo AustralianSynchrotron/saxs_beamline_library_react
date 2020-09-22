@@ -23,7 +23,7 @@ import { abort, acquire, halt, pause, resume } from "../../actions";
 import { pew } from "../../media/sounds";
 import CustomTimeDialog from "../custom_time_dialog/custom_time_dialog";
 import GenericScan from "../generic_scan/generic_scan";
-import { OphydToggleButton } from "../ophyd_components/ophyd_components";
+import { OphydToggleButton, OphydCheckBox } from "../ophyd_components/ophyd_components";
 
 const useStyles = makeStyles({
   root: {
@@ -474,6 +474,9 @@ const AcquirePage = (props) => {
                 device={"saxs_kv_conf.save_video_image"}
                 toggleClasses={classes}
               />
+              {/* <OphydCheckbox
+              label="flag_testing_123"
+              device={""} */}
             </Grid>
           </Grid>
         </Grid>
