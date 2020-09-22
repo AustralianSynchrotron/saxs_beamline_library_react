@@ -85,19 +85,25 @@ const useStyles = makeStyles({
 
 const MailInPage = (props) => {
   const classes = useStyles();
-  const [type, setType] = React.useState("plates");
+  const [measurementtype, setType] = React.useState("plates");
   const handleTypeChange = (event) => {
     setType(event.target.value);
+    //actionCreators.getMailinEpns(type);
+    setEpns([Math.floor(Math.random()*15000), Math.floor(Math.random()*15000), Math.floor(Math.random()*15000), Math.floor(Math.random()*15000), Math.floor(Math.random()*15000)])
   };
 
-  const epns = [15232, 13433, 398492];
+  const [epns, setEpns]  =  React.useState([]); // these should be in redux when we couple the reducers in.
 
-  const plates = [1, 2, 3, 4];
+  const [plates, setPlates] = React.useState([]); // these should be in redux when we couple the reducers in.
 
   const [epn, setEPN] = React.useState("");
+  
   const handleEpnChange = (event) => {
     setEPN(event.target.value);
+    //actionCreators.getMailinPlates(type, epn);
+    setPlates([1, 1 + Math.floor(Math.random()*2), 2 + Math.floor(Math.random()*2), 3 + Math.floor(Math.random()*2)]);
   };
+
   const [plate, setPlate] = React.useState("");
   const handlePlateChange = (event) => {
     setPlate(event.target.value);
@@ -112,7 +118,7 @@ const MailInPage = (props) => {
             <Select
               labelId="mailin-type-select-label"
               id="mailin-type-select"
-              value={type}
+              value={measurementtype}
               onChange={handleTypeChange}
             >
               <MenuItem value="plates">Plates</MenuItem>
@@ -125,9 +131,9 @@ const MailInPage = (props) => {
         </Grid>
 
         <Grid>
-          <Button id="update-epns" className={classes.button}>
+          {/* <Button id="update-epns" className={classes.button}>
             Update EPNs
-          </Button>
+          </Button> */}
         </Grid>
         <Grid>
           <FormControl className={classes.formControl}>
@@ -145,9 +151,9 @@ const MailInPage = (props) => {
           </FormControl>
         </Grid>
         <Grid>
-          <Button id="update-sample-holders" className={classes.button}>
+          {/* <Button id="update-sample-holders" className={classes.button}>
             Update Sample Holder
-          </Button>
+          </Button> */}
         </Grid>
         <Grid>
           <FormControl className={classes.formControl}>
