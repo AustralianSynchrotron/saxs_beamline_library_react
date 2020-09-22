@@ -105,3 +105,8 @@ export const GETKVS = "get_kvs";
 export const REDISUPDATE = "redis_update";
 
 export const GAMEPAD_BUTTON_STATUS = "gamepad_button_status";
+
+export const UPDATEMAILIN = "update_mail_in"
+export const GETMAILINEPNS = "get_mail_in_epns"
+export const GETMAILINPLATES = "get_mail_in_plates"
+export const RUNMAILIN = "run_mail_in"

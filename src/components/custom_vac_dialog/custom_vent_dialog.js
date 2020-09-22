@@ -23,7 +23,7 @@ const VentDialog = (props) => {
     <Dialog fullWidth={true} maxwidth="xs" onClose={handleClose} open={props.open}>
       <DialogTitle />
       <div align="center">
-        <Typography variant="body1">Vent this section?</Typography>
+        <Typography variant="body1">Vent the {props.id} section?</Typography>
       </div>
       <Button onClick={handleClose}>No</Button>
       <Button onClick={handleVent}>Yes</Button>
