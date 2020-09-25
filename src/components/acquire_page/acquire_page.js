@@ -166,12 +166,12 @@ const AcquirePage = (props) => {
   };
   const [finishDemanded, setFinishDemanded] = useState(false);
   const [pauseDemanded, setPauseDemanded] = useState(false);
-  const [adinfinitum, _setAdinfinitum] = useState(localStorage.getItem("adinfinitum") || false);
+  const [adinfinitum, _setAdinfinitum] = useState(getItemBrowser("adinfinitum") || false);
   const setAdinfinitum = (_adinfinitum) => {
     _setAdinfinitum(_adinfinitum);
     storeItemBrowser("adinfinitum", _adinfinitum);
   };
-  const [useShutter, _setUseShutter] = useState(localStorage.getItem("useShutter") || false);
+  const [useShutter, _setUseShutter] = useState(getItemBrowser("useShutter") || false);
   const setUseShutter = (_useShutter) => {
     _setUseShutter(_useShutter);
     storeItemBrowser("useShutter", _useShutter);
